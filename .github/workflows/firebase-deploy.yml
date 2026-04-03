@@ -1,0 +1,74 @@
+name: Deploy e-RAB Desa to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # ===== VERSION BUMP =====
+      # Auto-update CACHE_VERSION in sw.js based on git commit hash
+      # This ensures every deploy gets a fresh service worker
+      - name: Update SW cache version
+        run: |
+          COMMIT_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
+          TIMESTAMP=$(date +%Y%m%d%H%M)
+          # Get current version from sw.js
+          CURRENT_VER=$(grep "const CACHE_VERSION" public/sw.js | grep -o "'[^']*'" | tr -d "'")
+          echo "Current SW version: $CURRENT_VER"
+          echo "New build: $COMMIT_SHORT at $TIMESTAMP"
+          # Update cache version with timestamp for this build
+          sed -i "s/const CACHE_VERSION = '.*'/const CACHE_VERSION = '$CURRENT_VER-$TIMESTAMP'/" public/sw.js
+          echo "Updated SW cache version"
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting (Preview - PR)
+        if: github.event_name == 'pull_request'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_E_RAB_DESA }}'
+          projectId: e-rab-desa
+          channelId: pr-${{ github.event.pull_request.number }}
+
+      - name: Deploy to Firebase Hosting (Production - Main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_E_RAB_DESA }}'
+          projectId: e-rab-desa
+          channelId: live
+
+      - name: Deploy Firestore Rules
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          firebase deploy --only firestore:rules,firestore:indexes \
+            --project e-rab-desa \
+            --token "${{ secrets.FIREBASE_TOKEN }}"
+        continue-on-error: true
+
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "✅ e-RAB Desa v1.0 berhasil di-deploy!"
+          echo "🌐 URL: https://e-rab-desa.web.app"
+          echo "📦 Commit: $GITHUB_SHA"

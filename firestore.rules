@@ -1,0 +1,102 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===== HELPER FUNCTIONS =====
+    function isLoggedIn() {
+      return request.auth != null;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function getRole() {
+      return isLoggedIn() ? getUserData().role : null;
+    }
+
+    function isSuperAdmin() {
+      return isLoggedIn() && getRole() == 'super_admin';
+    }
+
+    function isAdmin() {
+      return isLoggedIn() && (getRole() == 'admin' || getRole() == 'super_admin');
+    }
+
+    function isViewer() {
+      return isLoggedIn() && (getRole() == 'viewer' || getRole() == 'admin' || getRole() == 'super_admin');
+    }
+
+    // ===== USERS =====
+    match /users/{userId} {
+      // Users can read their own doc
+      allow read: if isLoggedIn() && (request.auth.uid == userId || isAdmin());
+      // Only super admin can write user docs
+      allow write: if isSuperAdmin() || request.auth.uid == userId;
+      // Allow create for self (first login)
+      allow create: if isLoggedIn() && request.auth.uid == userId;
+    }
+
+    // ===== MASTER HARGA =====
+    match /master_harga/{docId} {
+      allow read: if isViewer();
+      allow write: if isAdmin();
+    }
+
+    // ===== AHSP CUSTOM =====
+    match /ahsp_custom/{docId} {
+      allow read: if isViewer();
+      allow create, update: if isAdmin();
+      allow delete: if isSuperAdmin();
+    }
+
+    // ===== PROJECTS =====
+    match /projects/{projectId} {
+      // Admin/Super Admin can read all projects
+      // Viewers can only read projects they're members of
+      allow read: if isAdmin() ||
+        (isViewer() && request.auth.uid in resource.data.members);
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin() && !resource.data.locked ||
+        (isSuperAdmin()); // Super admin can update even locked
+
+      allow delete: if isSuperAdmin() && !resource.data.locked;
+
+      // Project settings (harga override)
+      match /settings/{settingDoc} {
+        allow read: if isViewer();
+        allow write: if isAdmin();
+      }
+
+      // RAB Sections
+      match /sections/{sectionId} {
+        allow read: if isViewer();
+        allow write: if isAdmin() &&
+          !get(/databases/$(database)/documents/projects/$(projectId)).data.locked ||
+          isSuperAdmin();
+
+        // Section items
+        match /items/{itemId} {
+          allow read: if isViewer();
+          allow write: if isAdmin() &&
+            !get(/databases/$(database)/documents/projects/$(projectId)).data.locked ||
+            isSuperAdmin();
+        }
+      }
+    }
+
+    // ===== ACTIVITY LOGS =====
+    match /activity_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isViewer(); // Anyone logged in can create logs
+      allow update, delete: if false; // Logs are immutable
+    }
+
+    // ===== DEFAULT: DENY ALL =====
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

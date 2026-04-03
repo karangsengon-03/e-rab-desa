@@ -1,0 +1,38 @@
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# Node
+node_modules/
+npm-debug.log
+.npmrc
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp
+*.tmp
+*.temp
+
+# Secrets (NEVER commit these)
+.env
+.env.local
+.env.production
+service-account.json
+*-credentials.json
+
+# Build artifacts
+dist/
+build/
+
+# Generated
+generate-icons.py
