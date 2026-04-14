@@ -1,5 +1,5 @@
 /* ============================================================
-   e-RAB Desa v1.0 — app.js
+   e-RAB Desa v1.2 — app.js
    Main application controller: navigation, modal, toast, theme
    ============================================================ */
 
@@ -43,8 +43,7 @@ function navigate(page, param = null) {
       Pages.renderDashboard(container);
       break;
     case 'projects':
-      Pages.renderProjects ? Pages.renderProjects(container) : Projects.renderPage('page-content');
-      Projects.renderPage('page-content');
+      Pages.renderProjects(container);
       break;
     case 'rab-detail':
       Pages.renderRABDetail(container, param);
@@ -212,34 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(startAuth, 100);
 });
 
-// ===== REGISTER SERVICE WORKER (PWA) =====
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').then(reg => {
-      // Check for updates
-      reg.addEventListener('updatefound', () => {
-        const newWorker = reg.installing;
-        newWorker?.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            // New version available - show notification
-            const updateToast = document.getElementById('update-toast');
-            if (updateToast) {
-              updateToast.classList.remove('hidden');
-              // Reload after 2.5 seconds
-              setTimeout(() => {
-                newWorker.postMessage({ type: 'SKIP_WAITING' });
-                window.location.reload();
-              }, 2500);
-            }
-          }
-        });
-      });
-    }).catch(err => console.log('SW registration failed:', err));
 
-    // Handle controller change (after skipWaiting)
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      window.location.reload();
-    });
+// ===== SERVICE WORKER AUTO-UPDATE =====
+// Jika SW baru mengambil alih (setelah skipWaiting), reload otomatis tanpa hard refresh
+if ('serviceWorker' in navigator) {
+  let _swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (_swRefreshing) return;
+    _swRefreshing = true;
+    window.location.reload();
   });
 }
 

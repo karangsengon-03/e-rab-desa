@@ -1,7 +1,6 @@
 /* ============================================================
-   e-RAB Desa v1.0 — export-excel.js
-   Excel export using SheetJS (xlsx)
-   Sheets: Cover, Rekapitulasi, RAB per Bagian, AHSP Detail, HSD
+   e-RAB Desa v1.2 — export-excel.js
+   Excel Export: Sheet I Rekap, II AHSP, III HSP×Vol, IV STA, V Kebutuhan+Admin
    ============================================================ */
 
 'use strict';
@@ -11,10 +10,7 @@ const ExportExcel = {
   async generate(projectId) {
     showToast('Menyiapkan file Excel...', 'info');
 
-    // Load SheetJS dynamically
-    if (!window.XLSX) {
-      await this._loadXLSX();
-    }
+    if (!window.XLSX) await this._loadXLSX();
 
     const project = await Projects.load(projectId);
     if (!project) { showToast('Proyek tidak ditemukan', 'error'); return; }
@@ -26,288 +22,321 @@ const ExportExcel = {
     const sections = await ExportPDF._getProjectSections(projectId);
     const calc = await Kalkulasi.calcFullRAB(projectId, sections);
 
+    // Administrasi kegiatan
+    const adm = project.administrasi_kegiatan || { mode: 'pct', pct: 3, items: [] };
+    const subtotalFisik = calc.grandTotal;
+    const admTotal = adm.mode === 'pct'
+      ? Math.round(subtotalFisik * (Number(adm.pct) || 3) / 100)
+      : (adm.items || []).reduce((s, i) => s + (Number(i.nilai) || 0), 0);
+    const grandTotal = subtotalFisik + admTotal;
+
     const wb = XLSX.utils.book_new();
+    const overhead = project.overhead_pct ?? 15;
 
-    // Sheet 1: Cover / Info Proyek
-    this._addCoverSheet(wb, project, calc);
+    this._sheetCover(wb, project, grandTotal, admTotal, subtotalFisik);
+    this._sheetRekap(wb, project, calc, adm, admTotal, grandTotal);
+    this._sheetAHSP(wb, project, calc, overhead);
+    this._sheetHSPVol(wb, project, calc);
+    this._sheetSTA(wb, project, calc);
+    this._sheetKebutuhan(wb, project, calc, adm, admTotal, grandTotal);
 
-    // Sheet 2: Rekapitulasi
-    this._addRekapSheet(wb, project, calc);
-
-    // Sheet 3+: RAB per Bagian
-    calc.sections.forEach((sec, i) => {
-      this._addSectionSheet(wb, project, sec, i + 1, calc);
-    });
-
-    // Sheet N-1: AHSP Detail
-    this._addAHSPSheet(wb, calc);
-
-    // Sheet N: HSD
-    this._addHSDSheet(wb, projectId);
-
-    // Save file
-    const filename = `RAB-${(project.nama || 'Dokumen').replace(/[\/\\:*?"<>|]/g, '-')}-${project.tahun_anggaran || new Date().getFullYear()}.xlsx`;
+    const safeName = (project.nama || 'RAB').replace(/[\/\\:*?"<>|]/g, '-');
+    const filename = `RAB-${safeName}-${project.tahun_anggaran || new Date().getFullYear()}.xlsx`;
     XLSX.writeFile(wb, filename);
+
     showToast('File Excel berhasil diunduh!', 'success');
-    ActivityLog.export('excel', project.nama, projectId);
+    if (window.ActivityLog) ActivityLog.export('Excel', project.nama, projectId);
   },
 
   async _loadXLSX() {
     return new Promise((resolve, reject) => {
       const s = document.createElement('script');
       s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-      s.onload = resolve;
-      s.onerror = reject;
+      s.onload = resolve; s.onerror = reject;
       document.head.appendChild(s);
     });
   },
 
-  // ===== HELPERS =====
   _rp(n) { return Math.round(Number(n) || 0); },
+  _num(n, d = 3) { return parseFloat(Number(n).toFixed(d)); },
 
-  _cell(v, t = 's', numFmt = '') {
-    const c = { v, t };
-    if (numFmt) c.z = numFmt;
-    return c;
+  // Append sheet helper
+  _addSheet(wb, rows, name) {
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const safeName = name.slice(0, 31).replace(/[\\\/:*?[\]]/g, '-');
+    XLSX.utils.book_append_sheet(wb, ws, safeName);
+    return ws;
   },
 
-  _numCell(v) {
-    return { v: this._rp(v), t: 'n', z: '#,##0' };
-  },
-
-  _headerRow(headers) {
-    return headers.map(h => ({ v: h, t: 's' }));
-  },
-
-  _applyStyles(ws, range) {
-    // SheetJS CE doesn't support cell styling - we use column widths instead
-    // Styling requires SheetJS Pro; we maximize readability via structure
-  },
-
-  _setColWidths(ws, widths) {
-    ws['!cols'] = widths.map(w => ({ wch: w }));
-  },
-
-  // ===== SHEET 1: COVER =====
-  _addCoverSheet(wb, project, calc) {
-    const now = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-    const data = [
+  // ========== COVER ==========
+  _sheetCover(wb, project, grandTotal, admTotal, subtotalFisik) {
+    const rows = [
       ['RENCANA ANGGARAN BIAYA (RAB)'],
+      ['e-RAB Desa v1.2 | Berdasarkan Permen PUPR No.8/2023'],
       [''],
       ['Nama Kegiatan', project.nama || ''],
-      ['Lokasi', [project.lokasi_desa, project.lokasi_kecamatan, project.lokasi_kabupaten, project.lokasi_provinsi].filter(Boolean).join(', ')],
+      ['Lokasi', [project.lokasi_desa, project.lokasi_kecamatan, project.lokasi_kabupaten].filter(Boolean).join(', ')],
       ['Tahun Anggaran', project.tahun_anggaran || ''],
       ['Sumber Dana', Utils.sumberDanaLabel(project.sumber_dana)],
-      ['No. Dokumen', project.no_dokumen || '-'],
-      ['Overhead', `${project.overhead_pct || 15}%`],
-      ['Status', project.status || 'draft'],
+      ['Overhead & Profit', (project.overhead_pct ?? 15) + '%'],
+      ['No. Dokumen', project.no_dokumen || ''],
       [''],
-      ['TOTAL NILAI RAB', this._rp(calc.grandTotal)],
-      ['Terbilang', Utils.terbilang(calc.grandTotal)],
+      ['Subtotal Pekerjaan Fisik (Rp)', this._rp(subtotalFisik)],
+      ['Administrasi Kegiatan (Rp)', this._rp(admTotal)],
+      ['GRAND TOTAL RAB (Rp)', this._rp(grandTotal)],
+      ['Terbilang', Utils.terbilang(grandTotal)],
       [''],
-      ['Dibuat dengan', 'e-RAB Desa v1.0'],
-      ['Berdasarkan', 'Permen PUPR No.8 Tahun 2023'],
-      ['Tanggal Cetak', now],
+      ['Dicetak', new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })]
     ];
-
-    const wsData = data.map(row => row.map((cell, ci) => {
-      if (ci === 1 && row[0] === 'TOTAL NILAI RAB') return this._numCell(cell);
-      return { v: String(cell ?? ''), t: 's' };
-    }));
-
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    this._setColWidths(ws, [30, 60]);
-    ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
-    XLSX.utils.book_append_sheet(wb, ws, 'Informasi Proyek');
+    this._addSheet(wb, rows, 'Cover');
   },
 
-  // ===== SHEET 2: REKAPITULASI =====
-  _addRekapSheet(wb, project, calc) {
+  // ========== SHEET I: REKAPITULASI ==========
+  _sheetRekap(wb, project, calc, adm, admTotal, grandTotal) {
     const rows = [
-      ['REKAPITULASI RENCANA ANGGARAN BIAYA'],
+      ['I. REKAPITULASI RENCANA ANGGARAN BIAYA'],
       [project.nama || ''],
       [''],
-      ['No', 'Uraian Pekerjaan', 'Jumlah Biaya (Rp)'],
+      ['No', 'Uraian Pekerjaan', 'Jumlah (Rp)']
     ];
 
     calc.sections.forEach((sec, i) => {
       rows.push([i + 1, sec.nama, this._rp(sec.total)]);
     });
 
-    rows.push(['', 'JUMLAH TOTAL', this._rp(calc.grandTotal)]);
-    rows.push(['', 'Terbilang:', Utils.terbilang(calc.grandTotal)]);
+    rows.push(['', '', '']);
+    rows.push(['', 'Subtotal Pekerjaan Fisik', this._rp(calc.grandTotal)]);
 
-    const wsData = rows.map((row, ri) => row.map((cell, ci) => {
-      if (ri >= 4 && ci === 2 && typeof cell === 'number') return this._numCell(cell);
-      return { v: String(cell ?? ''), t: 's' };
-    }));
+    if (admTotal > 0) {
+      rows.push(['—', 'Administrasi Kegiatan', this._rp(admTotal)]);
+    }
 
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    this._setColWidths(ws, [8, 55, 22]);
-    ws['!merges'] = [
-      { s: { r: 0, c: 0 }, e: { r: 0, c: 2 } },
-      { s: { r: 1, c: 0 }, e: { r: 1, c: 2 } },
-    ];
-    XLSX.utils.book_append_sheet(wb, ws, 'Rekapitulasi');
+    rows.push(['', 'GRAND TOTAL RAB', this._rp(grandTotal)]);
+    rows.push(['', 'Terbilang:', Utils.terbilang(grandTotal)]);
+
+    this._addSheet(wb, rows, 'I. Rekapitulasi');
   },
 
-  // ===== SHEET PER BAGIAN =====
-  _addSectionSheet(wb, project, sec, num, calc) {
+  // ========== SHEET II: AHSP (Koefisien × HSD) ==========
+  _sheetAHSP(wb, project, calc, overhead) {
     const rows = [
-      [`${num}. ${sec.nama}`],
+      ['II. ANALISA HARGA SATUAN PEKERJAAN (AHSP)'],
       [project.nama || ''],
-      [''],
-      ['No', 'Uraian Pekerjaan', 'Kode AHSP', 'Mutu', 'STA / Keterangan', 'Satuan', 'Volume', 'Harga Satuan (Rp)', 'Jumlah (Rp)'],
+      ['Overhead & Profit: ' + overhead + '%'],
+      ['']
     ];
 
-    sec.items.forEach((item, ii) => {
-      const ahsp = item.ahsp;
-      const mutu = ahsp?.mutu_fc ? `f'c ${ahsp.mutu_fc} MPa / K-${ahsp.mutu_k || Utils.fcToK(ahsp.mutu_fc)}` : '';
-      const staInfo = item.sta_mode === 'subrows' && item.sta_rows?.length
-        ? item.sta_rows.map(r => `${r.sta_awal||''}-${r.sta_akhir||''}: P=${r.panjang}m L=${r.lebar}m T=${r.tinggi}m`).join(' | ')
-        : item.keterangan || '';
+    calc.sections.forEach((sec, si) => {
+      rows.push([`${si + 1}. ${sec.nama}`]);
+      rows.push(['']);
 
-      rows.push([
-        ii + 1,
-        item.nama_tampil || ahsp?.nama || '–',
-        ahsp?.kode || item.ahsp_id || '',
-        mutu,
-        staInfo,
-        item.display_satuan || ahsp?.satuan || '',
-        item.display_volume || 0,
-        this._rp(item.hsp),
-        this._rp(item.jumlah)
-      ]);
+      sec.items.forEach((item, ii) => {
+        if (!item.breakdown || !item.ahsp) return;
+        const bd = item.breakdown;
+        const sat = item.display_satuan || item.ahsp?.satuan || '';
 
-      // Add STA detail rows if subrows mode
-      if (item.sta_mode === 'subrows' && item.sta_rows?.length > 1) {
-        item.sta_rows.forEach((row, ri) => {
-          const p = Number(row.panjang)||0, l = Number(row.lebar)||0, t = Number(row.tinggi)||0;
-          rows.push([
-            `  ${ii+1}.${ri+1}`,
-            `  STA ${row.sta_awal||''} – ${row.sta_akhir||''}`,
-            '', '', `P=${p} × L=${l} × T=${t}`, ahsp?.satuan || '',
-            parseFloat((p*l*t).toFixed(4)), '', ''
-          ]);
-        });
-      }
+        rows.push([`${ii + 1}. ${item.ahsp.kode} — ${item.ahsp.nama}`]);
+        rows.push(['Satuan Analisa:', sat, '', 'Overhead:', overhead + '%']);
+        rows.push(['']);
+        rows.push(['Kode', 'Komponen', 'Koefisien', 'Satuan', 'HSD (Rp)', 'Jumlah (Rp)']);
+
+        // Fix e: filter komponen koefisien 0
+        const filtComp = (comps) => (comps||[]).filter(c => c.koefisien > 0 && c.hsd > 0);
+        // Upah
+        if (filtComp(bd.upah).length) {
+          rows.push(['A. Upah Tenaga Kerja', '', '', '', '', '']);
+          filtComp(bd.upah).forEach(c => {
+            rows.push([c.kode, c.nama, this._num(c.koefisien, 4), c.satuan, this._rp(c.hsd), this._rp(c.koefisien * c.hsd)]);
+          });
+          rows.push(['', 'Jumlah A (Upah)', '', '', '', this._rp(bd.totalUpah)]);
+        }
+        // Bahan
+        if (filtComp(bd.bahan).length) {
+          rows.push(['B. Bahan & Material', '', '', '', '', '']);
+          filtComp(bd.bahan).forEach(c => {
+            rows.push([c.kode, c.nama, this._num(c.koefisien, 4), c.satuan, this._rp(c.hsd), this._rp(c.koefisien * c.hsd)]);
+          });
+          rows.push(['', 'Jumlah B (Bahan)', '', '', '', this._rp(bd.totalBahan)]);
+        }
+        // Alat
+        if (filtComp(bd.alat).length) {
+          rows.push(['C. Alat & Peralatan', '', '', '', '', '']);
+          filtComp(bd.alat).forEach(c => {
+            rows.push([c.kode, c.nama, this._num(c.koefisien, 4), c.satuan, this._rp(c.hsd), this._rp(c.koefisien * c.hsd)]);
+          });
+          rows.push(['', 'Jumlah C (Alat)', '', '', '', this._rp(bd.totalAlat)]);
+        }
+
+        rows.push(['', 'D. Biaya Langsung (A+B+C)', '', '', '', this._rp(bd.biayaLangsung)]);
+        if (overhead > 0) rows.push(['', `E. Overhead & Profit ${overhead}% × D`, '', '', '', this._rp(bd.overhead)]);
+        rows.push(['', `F. HSP per ${sat} (D+E)`, '', '', '', this._rp(bd.hsp)]);
+        rows.push(['']);
+      });
+
+      rows.push(['']);
     });
 
-    rows.push(['', `Jumlah ${sec.nama}`, '', '', '', '', '', '', this._rp(sec.total)]);
-
-    const wsData = rows.map((row, ri) => row.map((cell, ci) => {
-      if (ri >= 4 && (ci === 6 || ci === 7 || ci === 8) && typeof cell === 'number') {
-        return { v: cell, t: 'n', z: ci === 6 ? '#,##0.000' : '#,##0' };
-      }
-      return { v: String(cell ?? ''), t: 's' };
-    }));
-
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    this._setColWidths(ws, [6, 40, 14, 18, 35, 8, 12, 16, 18]);
-    ws['!merges'] = [
-      { s: { r: 0, c: 0 }, e: { r: 0, c: 8 } },
-      { s: { r: 1, c: 0 }, e: { r: 1, c: 8 } },
-    ];
-
-    const sheetName = `${num}. ${sec.nama}`.slice(0, 31).replace(/[\\\/\?\*\[\]:]/g, '-');
-    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    this._addSheet(wb, rows, 'II. AHSP');
   },
 
-  // ===== SHEET AHSP DETAIL =====
-  _addAHSPSheet(wb, calc) {
+  // ========== SHEET III: HSP × VOLUME ==========
+  _sheetHSPVol(wb, project, calc) {
     const rows = [
-      ['ANALISA HARGA SATUAN PEKERJAAN (AHSP)'],
-      ['Berdasarkan Permen PUPR No.8 Tahun 2023 + Lampiran IV AHSP Bidang Cipta Karya dan Perumahan'],
+      ['III. VOLUME × HSP PER PEKERJAAN'],
+      [project.nama || ''],
       [''],
+      ['No', 'Uraian Pekerjaan', 'Kode AHSP', 'Volume', 'Satuan', 'HSP/Sat (Rp)', 'Jumlah (Rp)']
     ];
 
-    const usedAHSP = new Map();
+    let grandRow = 0;
+    calc.sections.forEach((sec, si) => {
+      rows.push([`${si + 1}. ${sec.nama}`, '', '', '', '', '', '']);
+      sec.items.forEach((item, ii) => {
+        rows.push([
+          `  ${ii + 1}`,
+          item.nama_tampil || item.ahsp?.nama || '',
+          item.ahsp?.kode || '',
+          this._num(item.display_volume || 0, 3),
+          item.display_satuan || item.ahsp?.satuan || '',
+          this._rp(item.hsp),
+          this._rp(item.jumlah)
+        ]);
+        // Baris STA detail
+        const hasSTA = (item.sta_mode==='sta'||item.sta_mode==='subrows') && item.sta_rows?.length;
+        if (hasSTA) {
+          rows.push(['', '  Breakdown STA:', 'STA Dari', 'STA Ke', 'P(m)', 'L(m)', 'T(m)', 'Vol(m³)']);
+          item.sta_rows.forEach(r => {
+            const v = parseFloat(((r.panjang||0)*(r.lebar||0)*(r.tinggi||0)).toFixed(3));
+            rows.push(['', '', r.sta_dari||'', r.sta_ke||'',
+              this._num(r.panjang||0,2), this._num(r.lebar||0,2), this._num(r.tinggi||0,3), v]);
+          });
+          const totVol = item.sta_rows.reduce((s,r)=>s+parseFloat(((r.panjang||0)*(r.lebar||0)*(r.tinggi||0)).toFixed(3)),0);
+          rows.push(['','','','','','','Total STA:', this._num(totVol,3)]);
+        }
+      });
+      rows.push(['', `Subtotal ${sec.nama}`, '', '', '', '', this._rp(sec.total)]);
+      rows.push(['']);
+    });
+
+    rows.push(['', 'GRAND TOTAL PEKERJAAN FISIK', '', '', '', '', this._rp(calc.grandTotal)]);
+    this._addSheet(wb, rows, 'III. HSP x Volume');
+  },
+
+  // ========== SHEET IV: BREAKDOWN STA ==========
+  _sheetSTA(wb, project, calc) {
+    const staItems = [];
     calc.sections.forEach(sec => {
       sec.items.forEach(item => {
-        if (item.ahsp && item.breakdown && !usedAHSP.has(item.ahsp_id)) {
-          usedAHSP.set(item.ahsp_id, { ahsp: item.ahsp, breakdown: item.breakdown });
+        if ((item.sta_mode === 'sta' || item.sta_mode === 'subrows') && item.sta_rows?.length) {
+          staItems.push({ sec, item });
         }
       });
     });
 
-    usedAHSP.forEach(({ ahsp, breakdown: bd }) => {
-      const mutu = ahsp.mutu_fc ? ` / K-${ahsp.mutu_k || Utils.fcToK(ahsp.mutu_fc)}` : '';
-      rows.push([`${ahsp.kode || ''} — ${ahsp.nama}${mutu} (per ${ahsp.satuan})`]);
-      rows.push(['Kel', 'Kode', 'Uraian Komponen', 'Satuan', 'Koefisien', 'HSD (Rp)', 'Jumlah (Rp)']);
+    const rows = [
+      ['IV. BREAKDOWN PER STA (STATION)'],
+      [project.nama || ''],
+      ['']
+    ];
 
-      const pushComps = (comps, label) => {
-        if (!comps?.length) return;
-        rows.push([label, '', '', '', '', '', '']);
-        comps.forEach(c => {
-          rows.push(['', c.kode, c.nama, c.satuan, c.koefisien, this._rp(c.hsd), this._rp(c.jumlah)]);
-        });
-      };
+    if (!staItems.length) {
+      rows.push(['Tidak ada item pekerjaan dengan input per STA pada proyek ini.']);
+      this._addSheet(wb, rows, 'IV. STA');
+      return;
+    }
 
-      pushComps(bd.upah, 'A. Upah');
-      rows.push(['', '', 'Jumlah A (Upah)', '', '', '', this._rp(bd.totalUpah)]);
-      pushComps(bd.bahan, 'B. Bahan');
-      rows.push(['', '', 'Jumlah B (Bahan)', '', '', '', this._rp(bd.totalBahan)]);
-      pushComps(bd.alat, 'C. Alat');
-      rows.push(['', '', 'Jumlah C (Alat)', '', '', '', this._rp(bd.totalAlat)]);
-      rows.push(['', '', 'D. Biaya Langsung (A+B+C)', '', '', '', this._rp(bd.biayaLangsung)]);
-      rows.push(['', '', `E. Overhead ${bd.overheadPct}% × D`, '', '', '', this._rp(bd.overhead)]);
-      rows.push(['', '', 'F. HARGA SATUAN PEKERJAAN (D+E)', '', '', '', this._rp(bd.hsp)]);
+    rows.push(['Bagian', 'Uraian Pekerjaan', 'STA Dari', 'STA Ke', 'Panjang (m)', 'Lebar (m)', 'Tebal (m)', 'Volume (m³)']);
+
+    staItems.forEach(({ sec, item }) => {
+      item.sta_rows.forEach((r, ri) => {
+        const vol = (Number(r.panjang) || 0) * (Number(r.lebar) || 0) * (Number(r.tinggi) || 0);
+        rows.push([
+          ri === 0 ? sec.nama : '',
+          ri === 0 ? (item.nama_tampil || item.ahsp?.nama || '') : '',
+          r.sta_dari || '',
+          r.sta_ke || '',
+          this._num(r.panjang || 0, 2),
+          this._num(r.lebar || 0, 2),
+          this._num(r.tinggi || 0, 3),
+          this._num(vol, 4)
+        ]);
+      });
+      rows.push([
+        '', 'Total Volume ' + (item.nama_tampil || ''), '', '', '', '', '',
+        this._num(item.display_volume || 0, 4)
+      ]);
       rows.push(['']);
     });
 
-    const wsData = rows.map((row, ri) => row.map((cell, ci) => {
-      if (ci >= 4 && ci <= 6 && typeof cell === 'number') {
-        return { v: cell, t: 'n', z: ci === 4 ? '#,##0.0000' : '#,##0' };
-      }
-      return { v: String(cell ?? ''), t: 's' };
-    }));
-
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    this._setColWidths(ws, [12, 14, 42, 10, 12, 16, 16]);
-    ws['!merges'] = [
-      { s: { r: 0, c: 0 }, e: { r: 0, c: 6 } },
-      { s: { r: 1, c: 0 }, e: { r: 1, c: 6 } },
-    ];
-    XLSX.utils.book_append_sheet(wb, ws, 'Analisa AHSP');
+    this._addSheet(wb, rows, 'IV. STA');
   },
 
-  // ===== SHEET HSD =====
-  _addHSDSheet(wb, projectId) {
-    const gh = MasterHarga._globalHarga;
-    if (!gh) return;
-    const overrides = MasterHarga._projectOverrides[projectId] || {};
+  // ========== SHEET V: REKAP KEBUTUHAN + ADMIN ==========
+  _sheetKebutuhan(wb, project, calc, adm, admTotal, grandTotal) {
+    const mr = Kalkulasi.buildMaterialRekap(calc);
 
     const rows = [
-      ['DAFTAR HARGA SATUAN DASAR (HSD)'],
+      ['V. REKAPITULASI KEBUTUHAN BAHAN, UPAH, SEWA ALAT & ADMINISTRASI'],
+      [project.nama || ''],
+      ['Akumulasi seluruh kebutuhan dari semua item pekerjaan'],
       [''],
-      ['Kode', 'Uraian', 'Satuan', 'Harga (Rp)', 'Override', 'Catatan'],
+      ['Kode', 'Nama', 'Total Kebutuhan', 'Satuan', 'HSD (Rp)', 'Total (Rp)']
     ];
 
-    ['upah', 'bahan', 'alat'].forEach(cat => {
-      const label = { upah: 'A. UPAH TENAGA KERJA', bahan: 'B. BAHAN & MATERIAL', alat: 'C. SEWA ALAT' };
-      rows.push([label[cat], '', '', '', '', '']);
-      const items = Object.values(gh[cat] || {}).sort((a, b) => a.kode.localeCompare(b.kode));
-      items.forEach(item => {
-        const ov = overrides[item.kode];
-        const h = MasterHarga.getHarga(item.kode, projectId);
+    const addCat = (items, label) => {
+      // Fix e: filter nilai 0
+      const vis = items.filter(i => i.totalRp > 0 || (i.totalKebutuhanRaw || 0) > 0);
+      if (!vis.length) return;
+      rows.push([label, '', '', '', '', '']);
+      vis.forEach(i => {
+        const fmt = Kalkulasi.formatKebutuhan(i.kode, i.satuan, i.totalKebutuhanRaw || i.totalKebutuhan || 0);
+        // Fix g: HSD semen per sak
+        const hsdVal = fmt.isSemen ? this._rp(i.hsd * 40) : this._rp(i.hsd);
         rows.push([
-          item.kode, item.nama, item.satuan,
-          this._rp(h),
-          ov ? (ov.mode === 'allin' ? `All-in: ${Utils.formatRp(ov.harga_allin)}` : `Base ${Utils.formatRp(ov.harga_base)} + Angkut ${Utils.formatRp(ov.harga_transport)}`) : '-',
-          item.catatan || ''
+          i.kode,
+          i.nama + (fmt.isSemen ? ' (per sak 40 kg)' : ''),
+          fmt.nilai,
+          fmt.satuan,
+          hsdVal,
+          this._rp(i.totalRp)
         ]);
       });
-    });
+      rows.push(['']);
+    };
 
-    const wsData = rows.map((row, ri) => row.map((cell, ci) => {
-      if (ri >= 3 && ci === 3 && typeof cell === 'number') return this._numCell(cell);
-      return { v: String(cell ?? ''), t: 's' };
-    }));
+    addCat(mr.upah,  'A. Upah Tenaga Kerja');
+    rows.push(['', 'Sub-Total A (Upah)', '', '', '', this._rp(mr.totalUpah)]);
+    rows.push(['']);
 
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    this._setColWidths(ws, [16, 45, 10, 18, 35, 30]);
-    ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }];
-    XLSX.utils.book_append_sheet(wb, ws, 'HSD');
+    addCat(mr.bahan, 'B. Bahan & Material');
+    rows.push(['', 'Sub-Total B (Bahan)', '', '', '', this._rp(mr.totalBahan)]);
+    rows.push(['']);
+
+    addCat(mr.alat,  'C. Sewa Alat & Peralatan');
+    rows.push(['', 'Sub-Total C (Alat)', '', '', '', this._rp(mr.totalAlat)]);
+    rows.push(['']);
+
+    rows.push(['', 'Sub-Total Fisik (A+B+C)', '', '', '', this._rp(mr.grandTotal)]);
+    rows.push(['']);
+
+    // Administrasi Kegiatan
+    if (admTotal > 0) {
+      rows.push(['D. Administrasi Kegiatan', '', '', '', '', '']);
+      if (adm.mode === 'pct') {
+        rows.push(['ADM', `${adm.pct || 3}% dari Subtotal Fisik`, 1, 'ls', this._rp(admTotal), this._rp(admTotal)]);
+      } else {
+        (adm.items || []).forEach(it => {
+          rows.push(['ADM', it.nama, 1, it.satuan || 'ls', this._rp(it.nilai), this._rp(it.nilai)]);
+        });
+      }
+      rows.push(['', 'Sub-Total D (Administrasi)', '', '', '', this._rp(admTotal)]);
+      rows.push(['']);
+    }
+
+    rows.push(['', 'GRAND TOTAL RAB (A+B+C+D)', '', '', '', this._rp(grandTotal)]);
+    rows.push(['', 'Terbilang:', Utils.terbilang(grandTotal), '', '', '']);
+
+    this._addSheet(wb, rows, 'V. Kebutuhan+Admin');
   }
 };
 

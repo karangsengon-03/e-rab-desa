@@ -1,10 +1,11 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "sumber": "Permen PUPR No.8 Tahun 2023 + Lampiran IV AHSP Bidang Cipta Karya dan Perumahan",
+  "catatan_upah": "Kepala Tukang (L03) dan Mandor (L04) bersifat opsional di level desa padat karya. Set koefisien 0 jika tidak digunakan.",
   "kelompok": [
     {
       "id": "umum",
-      "nama": "Pekerjaan Umum",
+      "nama": "Pekerjaan Umum (Galian, Urugan, Pasangan, Plesteran, Beton)",
       "warna": "#1565C0",
       "items": [
         {
@@ -14,8 +15,18 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.750},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.025}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.75
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.025
+              }
             ],
             "bahan": [],
             "alat": []
@@ -28,8 +39,18 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.900},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.030}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.9
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.03
+              }
             ],
             "bahan": [],
             "alat": []
@@ -42,12 +63,27 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [],
             "alat": [
-              {"nama": "Excavator Mini (0.2 m³)", "kode": "E.10a", "satuan": "Jam", "koefisien": 0.030}
+              {
+                "nama": "Excavator Mini (0,2 m³)",
+                "kode": "E10a",
+                "satuan": "Jam",
+                "koefisien": 0.03
+              }
             ]
           }
         },
@@ -58,11 +94,26 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.300},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.3
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [
-              {"nama": "Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 1.200}
+              {
+                "nama": "Pasir Urug",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 1.2
+              }
             ],
             "alat": []
           }
@@ -74,8 +125,18 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.008}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.008
+              }
             ],
             "bahan": [],
             "alat": []
@@ -88,12 +149,27 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.005}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.1
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.005
+              }
             ],
             "bahan": [],
             "alat": [
-              {"nama": "Stamper Kodok 150 kg", "kode": "E.16a", "satuan": "Hari", "koefisien": 0.075}
+              {
+                "nama": "Stamper Kodok 150 kg",
+                "kode": "E16a",
+                "satuan": "Hari",
+                "koefisien": 0.075
+              }
             ]
           }
         },
@@ -104,12 +180,27 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.083},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.004}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.083
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.004
+              }
             ],
             "bahan": [],
             "alat": [
-              {"nama": "Stamper Kuda", "kode": "E.16b", "satuan": "Hari", "koefisien": 0.050}
+              {
+                "nama": "Stamper Kuda/Vibrating Plate",
+                "kode": "E16b",
+                "satuan": "Hari",
+                "koefisien": 0.05
+              }
             ]
           }
         },
@@ -120,15 +211,50 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.500},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.750},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.075},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.075}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.75
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.075
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.075
+              }
             ],
             "bahan": [
-              {"nama": "Batu Kali/Belah", "kode": "M.10.a", "satuan": "m³", "koefisien": 1.200},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 163.000},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.485}
+              {
+                "nama": "Batu Kali/Belah",
+                "kode": "M10a",
+                "satuan": "m³",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 163.0
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.485
+              }
             ],
             "alat": []
           }
@@ -140,15 +266,50 @@
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.500},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.750},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.075},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.075}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.75
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.075
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.075
+              }
             ],
             "bahan": [
-              {"nama": "Batu Kali/Belah", "kode": "M.10.a", "satuan": "m³", "koefisien": 1.200},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 136.000},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.544}
+              {
+                "nama": "Batu Kali/Belah",
+                "kode": "M10a",
+                "satuan": "m³",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 136.0
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.544
+              }
             ],
             "alat": []
           }
@@ -160,14 +321,93 @@
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.300},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.150},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.015},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.015}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.3
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.015
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.015
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 6.240},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.024}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 6.24
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.024
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "U-PLS-02",
+          "kode": "U.6.1.b",
+          "nama": "Plesteran 1:4 (tebal 15 mm)",
+          "satuan": "m²",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.3
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.015
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.015
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 4.7
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.028
+              }
             ],
             "alat": []
           }
@@ -179,99 +419,573 @@
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.200},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.010},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.2
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.1
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.01
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 3.250}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 3.25
+              }
             ],
             "alat": []
           }
         },
         {
-          "id": "U-BET-01",
-          "kode": "U.4.1.a",
+          "id": "U-BET-K100",
+          "kode": "U.4.1.K100",
+          "nama": "Beton f'c 7,5 MPa / K-100 — Lantai Kerja (Manual)",
+          "satuan": "m³",
+          "mutu_fc": 7.5,
+          "mutu_k": 100,
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.65
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.275
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.028
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.083
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 230.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.88
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.96
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 215.0
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "U-BET-K125",
+          "kode": "U.4.1.K125",
           "nama": "Beton f'c 10 MPa / K-125 (Manual)",
           "satuan": "m³",
-          "mutu_fc": 10, "mutu_k": 125,
+          "mutu_fc": 10,
+          "mutu_k": 125,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.650},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.275},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.028},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.65
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.275
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.028
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.083
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 247.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 869.000},
-              {"nama": "Kerikil/Agregat Kasar uk 19mm", "kode": "M.08.a", "satuan": "kg", "koefisien": 999.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 215.000}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 247.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.869
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.999
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 215.0
+              }
             ],
             "alat": []
           }
         },
         {
-          "id": "U-BET-02",
-          "kode": "U.4.1.b",
-          "nama": "Beton f'c 15 MPa / K-175 (Manual)",
+          "id": "U-BET-K175",
+          "kode": "U.4.1.K175",
+          "nama": "Beton f'c 14 MPa / K-175 (Manual)",
           "satuan": "m³",
-          "mutu_fc": 15, "mutu_k": 175,
+          "mutu_fc": 14,
+          "mutu_k": 175,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.650},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.275},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.028},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.65
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.275
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.028
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.083
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 276.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 828.000},
-              {"nama": "Kerikil/Agregat Kasar uk 19mm", "kode": "M.08.a", "satuan": "kg", "koefisien": 1012.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 215.000}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 276.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.828
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 1.012
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 215.0
+              }
             ],
             "alat": []
           }
         },
         {
-          "id": "U-BET-03",
-          "kode": "U.4.1.c",
+          "id": "U-BET-K200",
+          "kode": "U.4.1.K200",
           "nama": "Beton f'c 17 MPa / K-200 (Manual)",
           "satuan": "m³",
-          "mutu_fc": 17, "mutu_k": 200,
+          "mutu_fc": 17,
+          "mutu_k": 200,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.650},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.275},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.028},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.65
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.275
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.028
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.083
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 326.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 760.000},
-              {"nama": "Kerikil/Agregat Kasar uk 19mm", "kode": "M.08.a", "satuan": "kg", "koefisien": 1029.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 215.000}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 326.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.76
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 1.029
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 215.0
+              }
             ],
             "alat": []
+          }
+        },
+        {
+          "id": "U-BET-K225",
+          "kode": "U.4.1.K225",
+          "nama": "Beton f'c 19 MPa / K-225 (Semi Mekanis — Molen)",
+          "satuan": "m³",
+          "mutu_fc": 19,
+          "mutu_k": 225,
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.06
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 352.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.731
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.989
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 194.0
+              }
+            ],
+            "alat": [
+              {
+                "nama": "Molen Beton 0,35 m³",
+                "kode": "E06",
+                "satuan": "Hari",
+                "koefisien": 0.125
+              },
+              {
+                "nama": "Concrete Vibrator",
+                "kode": "ECV",
+                "satuan": "Hari",
+                "koefisien": 0.083
+              }
+            ]
+          }
+        },
+        {
+          "id": "U-BET-K250",
+          "kode": "U.4.1.K250",
+          "nama": "Beton f'c 20 MPa / K-250 (Semi Mekanis — Molen)",
+          "satuan": "m³",
+          "mutu_fc": 20,
+          "mutu_k": 250,
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.06
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 384.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.692
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.965
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 185.0
+              }
+            ],
+            "alat": [
+              {
+                "nama": "Molen Beton 0,35 m³",
+                "kode": "E06",
+                "satuan": "Hari",
+                "koefisien": 0.125
+              },
+              {
+                "nama": "Concrete Vibrator",
+                "kode": "ECV",
+                "satuan": "Hari",
+                "koefisien": 0.083
+              }
+            ]
+          }
+        },
+        {
+          "id": "U-BET-K300",
+          "kode": "U.4.1.K300",
+          "nama": "Beton f'c 25 MPa / K-300 (Semi Mekanis — Molen)",
+          "satuan": "m³",
+          "mutu_fc": 25,
+          "mutu_k": 300,
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.06
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 413.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.668
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.944
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 178.0
+              }
+            ],
+            "alat": [
+              {
+                "nama": "Molen Beton 0,35 m³",
+                "kode": "E06",
+                "satuan": "Hari",
+                "koefisien": 0.125
+              },
+              {
+                "nama": "Concrete Vibrator",
+                "kode": "ECV",
+                "satuan": "Hari",
+                "koefisien": 0.083
+              }
+            ]
           }
         },
         {
           "id": "U-BEK-01",
           "kode": "U.4.4.a",
-          "nama": "Bekisting Pondasi/Sloof",
+          "nama": "Bekisting Pondasi / Sloof / Lantai",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.520},
-              {"nama": "Tukang Kayu", "kode": "L.02", "satuan": "OH", "koefisien": 0.260},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.026},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.026}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.52
+              },
+              {
+                "nama": "Tukang Kayu",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.26
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.026
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.026
+              }
             ],
             "bahan": [
-              {"nama": "Kayu Kaso 5/7 Kelas II", "kode": "M.35.a", "satuan": "m³", "koefisien": 0.040},
-              {"nama": "Paku 5 cm & 7 cm", "kode": "M.72.b", "satuan": "kg", "koefisien": 0.400},
-              {"nama": "Minyak Bekisting", "kode": "M.09.a", "satuan": "liter", "koefisien": 0.200}
+              {
+                "nama": "Kayu Papan Bekisting",
+                "kode": "M35b",
+                "satuan": "m³",
+                "koefisien": 0.04
+              },
+              {
+                "nama": "Paku Campur 5 & 7 cm",
+                "kode": "M72b",
+                "satuan": "kg",
+                "koefisien": 0.4
+              },
+              {
+                "nama": "Minyak Bekisting",
+                "kode": "M09a",
+                "satuan": "liter",
+                "koefisien": 0.2
+              }
             ],
             "alat": []
           }
@@ -279,38 +993,104 @@
         {
           "id": "U-BEK-02",
           "kode": "U.4.4.b",
-          "nama": "Bekisting Kolom/Balok/Ring Balok",
+          "nama": "Bekisting Kolom / Balok / Ring Balok",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.660},
-              {"nama": "Tukang Kayu", "kode": "L.02", "satuan": "OH", "koefisien": 0.330},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.033},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.033}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.66
+              },
+              {
+                "nama": "Tukang Kayu",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.33
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.033
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.033
+              }
             ],
             "bahan": [
-              {"nama": "Kayu Kaso 5/7 Kelas II", "kode": "M.35.a", "satuan": "m³", "koefisien": 0.045},
-              {"nama": "Paku 5 cm & 7 cm", "kode": "M.72.b", "satuan": "kg", "koefisien": 0.500},
-              {"nama": "Minyak Bekisting", "kode": "M.09.a", "satuan": "liter", "koefisien": 0.200}
+              {
+                "nama": "Kayu Papan Bekisting",
+                "kode": "M35b",
+                "satuan": "m³",
+                "koefisien": 0.045
+              },
+              {
+                "nama": "Paku Campur 5 & 7 cm",
+                "kode": "M72b",
+                "satuan": "kg",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Minyak Bekisting",
+                "kode": "M09a",
+                "satuan": "liter",
+                "koefisien": 0.2
+              }
             ],
             "alat": []
           }
         },
         {
           "id": "U-TUL-01",
-          "kode": "U.4.6.a.1",
-          "nama": "Pembesian/Tulangan BjTP/BjTS diameter < 12 mm (Manual)",
+          "kode": "U.4.6.a",
+          "nama": "Pembesian Besi Polos/Ulir (per kg — semua ukuran)",
           "satuan": "kg",
+          "catatan": "Pilih ukuran besi di master harga. Koefisien sudah termasuk waste 5%.",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.070},
-              {"nama": "Tukang Besi/Besi Beton", "kode": "L.02", "satuan": "OH", "koefisien": 0.070},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.007},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.004}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.07
+              },
+              {
+                "nama": "Tukang Besi",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.07
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.007
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.004
+              }
             ],
             "bahan": [
-              {"nama": "Besi Tulangan BjTP/BjTS", "kode": "M.54.a", "satuan": "kg", "koefisien": 1.050},
-              {"nama": "Kawat Beton", "kode": "M.53.a", "satuan": "kg", "koefisien": 0.015}
+              {
+                "nama": "Besi Tulangan (pilih ukuran)",
+                "kode": "M54a",
+                "satuan": "kg",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Kawat Beton",
+                "kode": "M53a",
+                "satuan": "kg",
+                "koefisien": 0.015
+              }
             ],
             "alat": []
           }
@@ -325,18 +1105,48 @@
         {
           "id": "PV-01",
           "kode": "7.1.1.1",
-          "nama": "Paving Block 6 cm f'c 20 MPa - Jalan Lokal/Lingkungan",
+          "nama": "Paving Block 6 cm f'c 20 MPa — Jalan Lokal/Lingkungan",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.025},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.008
+              }
             ],
             "bahan": [
-              {"nama": "Paving Block Tebal 6 cm f'c 20 MPa", "kode": "M.PV.01", "satuan": "m²", "koefisien": 1.010},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "m³", "koefisien": 0.080}
+              {
+                "nama": "Paving Block 6cm f'c 20 MPa",
+                "kode": "MPV01",
+                "satuan": "m²",
+                "koefisien": 1.01
+              },
+              {
+                "nama": "Pasir Beton (filler)",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.08
+              }
             ],
             "alat": []
           }
@@ -344,18 +1154,48 @@
         {
           "id": "PV-02",
           "kode": "7.1.1.2",
-          "nama": "Paving Block 6 cm f'c 25 MPa - Jalan Kolektor/Akses",
+          "nama": "Paving Block 6 cm f'c 25 MPa — Jalan Kolektor/Akses",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.025},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.008
+              }
             ],
             "bahan": [
-              {"nama": "Paving Block Tebal 6 cm f'c 25 MPa", "kode": "M.PV.02", "satuan": "m²", "koefisien": 1.010},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "m³", "koefisien": 0.080}
+              {
+                "nama": "Paving Block 6cm f'c 25 MPa",
+                "kode": "MPV02",
+                "satuan": "m²",
+                "koefisien": 1.01
+              },
+              {
+                "nama": "Pasir Beton (filler)",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.08
+              }
             ],
             "alat": []
           }
@@ -363,18 +1203,48 @@
         {
           "id": "PV-03",
           "kode": "7.1.1.3",
-          "nama": "Paving Block 8 cm f'c 20 MPa - Jalan Lokal/Lingkungan",
+          "nama": "Paving Block 8 cm f'c 20 MPa — Jalan Lokal/Lingkungan",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.500},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.500},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.050},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0167}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.017
+              }
             ],
             "bahan": [
-              {"nama": "Paving Block Tebal 8 cm f'c 20 MPa", "kode": "M.PV.03", "satuan": "m²", "koefisien": 1.010},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "m³", "koefisien": 0.080}
+              {
+                "nama": "Paving Block 8cm f'c 20 MPa",
+                "kode": "MPV03",
+                "satuan": "m²",
+                "koefisien": 1.01
+              },
+              {
+                "nama": "Pasir Beton (filler)",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.08
+              }
             ],
             "alat": []
           }
@@ -382,18 +1252,48 @@
         {
           "id": "PV-04",
           "kode": "7.1.1.4",
-          "nama": "Paving Block 8 cm f'c 25 MPa - Jalan Kolektor/Akses",
+          "nama": "Paving Block 8 cm f'c 25 MPa — Jalan Kolektor/Akses",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.500},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.500},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.050},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0167}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.017
+              }
             ],
             "bahan": [
-              {"nama": "Paving Block Tebal 8 cm f'c 25 MPa", "kode": "M.PV.04", "satuan": "m²", "koefisien": 1.010},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "m³", "koefisien": 0.080}
+              {
+                "nama": "Paving Block 8cm f'c 25 MPa",
+                "kode": "MPV04",
+                "satuan": "m²",
+                "koefisien": 1.01
+              },
+              {
+                "nama": "Pasir Beton (filler)",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.08
+              }
             ],
             "alat": []
           }
@@ -401,55 +1301,105 @@
         {
           "id": "PV-05",
           "kode": "7.1.1.5",
-          "nama": "Timbunan & Pemadatan Pasir Filler (Stamper Kodok)",
+          "nama": "Pemadatan Pasir Filler Paving (Stamper Kodok)",
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.0418},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0021}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.042
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.002
+              }
             ],
             "bahan": [
-              {"nama": "Pasir Filler", "kode": "M.05.d", "satuan": "m³", "koefisien": 1.200}
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 1.2
+              }
             ],
             "alat": [
-              {"nama": "Stamper Kodok 150 kg", "kode": "E.16a", "satuan": "Hari", "koefisien": 0.0574}
+              {
+                "nama": "Stamper Kodok 150 kg",
+                "kode": "E16a",
+                "satuan": "Hari",
+                "koefisien": 0.057
+              }
             ]
           }
         },
         {
           "id": "PV-06",
           "kode": "7.1.2.1",
-          "nama": "Kanstin Beton 10x20x40 cm f'c 20 MPa - Jalan Lokal",
-          "satuan": "m'",
+          "nama": "Kanstin Beton Cor Sendiri (K-175) — Input ukuran sesuai kebutuhan",
+          "satuan": "m³",
+          "catatan": "Cor di tempat (tidak beli jadi). Masukkan dimensi: Panjang × Lebar × Tinggi dalam meter. Contoh kanstin 15×20 cm = L:0.15 T:0.20",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.0333},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.0167},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0017}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.125
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.013
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.013
+              }
             ],
             "bahan": [
-              {"nama": "Kanstin 10x20x40 cm f'c 20 MPa", "kode": "M.KS.01", "satuan": "buah", "koefisien": 2.500},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 1.2854},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 7.2244}
-            ],
-            "alat": []
-          }
-        },
-        {
-          "id": "PV-07",
-          "kode": "7.1.2.2",
-          "nama": "Kanstin Beton 15x40x60 cm f'c 25 MPa - Jalan Kolektor",
-          "satuan": "m'",
-          "komponen": {
-            "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.0333},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.0167},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.0017}
-            ],
-            "bahan": [
-              {"nama": "Kanstin 15x40x60 cm f'c 25 MPa", "kode": "M.KS.02", "satuan": "buah", "koefisien": 1.667},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 1.9282},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 10.8366}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 4.14
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.012
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.018
+              },
+              {
+                "nama": "Kayu Papan Bekisting",
+                "kode": "M35b",
+                "satuan": "m³",
+                "koefisien": 0.005
+              },
+              {
+                "nama": "Paku Campur 5 & 7 cm",
+                "kode": "M72b",
+                "satuan": "kg",
+                "koefisien": 0.05
+              }
             ],
             "alat": []
           }
@@ -458,95 +1408,294 @@
     },
     {
       "id": "beton",
-      "nama": "Jalan Rabat Beton",
+      "nama": "Jalan Rabat Beton / Perkerasan Beton",
       "warna": "#4527A0",
       "items": [
         {
           "id": "JB-01",
           "kode": "7.2.1.1",
-          "nama": "Beton Kurus/Lantai Kerja f'c 10 MPa / K-125 - Semi Mekanis",
+          "nama": "Beton Lantai Kerja f'c 10 MPa / K-125 (Semi Mekanis)",
           "satuan": "m³",
-          "mutu_fc": 10, "mutu_k": 125,
+          "mutu_fc": 10,
+          "mutu_k": 125,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.050},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.2625},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.0263},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.1050}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.263
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.026
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.105
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 279.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 873.000},
-              {"nama": "Agregat Kasar uk 38 mm", "kode": "M.08.b", "satuan": "kg", "koefisien": 909.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 195.000},
-              {"nama": "Kayu Kaso 5/7 Kelas II", "kode": "M.35.a", "satuan": "m³", "koefisien": 0.0127},
-              {"nama": "Multiplek 12 mm", "kode": "M.33.d", "satuan": "lembar", "koefisien": 0.1818},
-              {"nama": "Paku 7 cm", "kode": "M.72.c", "satuan": "kg", "koefisien": 0.0968}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 247.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.869
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.999
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 195.0
+              },
+              {
+                "nama": "Kayu Papan Bekisting",
+                "kode": "M35b",
+                "satuan": "m³",
+                "koefisien": 0.013
+              },
+              {
+                "nama": "Paku Campur 5 & 7 cm",
+                "kode": "M72b",
+                "satuan": "kg",
+                "koefisien": 0.097
+              }
             ],
             "alat": [
-              {"nama": "Molen 0,35 m³", "kode": "E.06", "satuan": "Hari", "koefisien": 0.1050},
-              {"nama": "Tandon Air Kap. 2 m³", "kode": "E.TA", "satuan": "Hari", "koefisien": 0.5385},
-              {"nama": "Concrete Vibrator", "kode": "E.CV", "satuan": "Hari", "koefisien": 0.0614}
+              {
+                "nama": "Molen Beton 0,35 m³",
+                "kode": "E06",
+                "satuan": "Hari",
+                "koefisien": 0.105
+              },
+              {
+                "nama": "Concrete Vibrator",
+                "kode": "ECV",
+                "satuan": "Hari",
+                "koefisien": 0.061
+              }
             ]
           }
         },
         {
           "id": "JB-02",
           "kode": "7.2.2.1",
-          "nama": "Perkerasan Beton Sc 3,5 MPa / f'c 25 MPa / K-300 - Semi Mekanis",
+          "nama": "Perkerasan Beton Rabat f'c 20 MPa / K-250 — Jalan Desa (Semi Mekanis)",
           "satuan": "m³",
-          "mutu_fc": 25, "mutu_k": 300,
+          "mutu_fc": 20,
+          "mutu_k": 250,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.230},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.2875},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.0288},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.1230}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.275
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.028
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.06
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 340.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 724.000},
-              {"nama": "Agregat Kasar", "kode": "M.08.a", "satuan": "kg", "koefisien": 925.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 168.000},
-              {"nama": "Kayu Kaso 5/7 Kelas II", "kode": "M.35.a", "satuan": "m³", "koefisien": 0.0252},
-              {"nama": "Multiplek 12 mm", "kode": "M.33.d", "satuan": "lembar", "koefisien": 0.2546},
-              {"nama": "Paku 7 cm", "kode": "M.72.c", "satuan": "kg", "koefisien": 0.1159},
-              {"nama": "Joint Sealant", "kode": "M.JS.01", "satuan": "kg", "koefisien": 0.625},
-              {"nama": "Curing Compound", "kode": "M.CC.01", "satuan": "liter", "koefisien": 1.000},
-              {"nama": "Polytene 125 mikron", "kode": "M.PT.01", "satuan": "kg", "koefisien": 0.4167}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 384.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.692
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.965
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 185.0
+              },
+              {
+                "nama": "Kayu Papan Bekisting",
+                "kode": "M35b",
+                "satuan": "m³",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Paku Campur 5 & 7 cm",
+                "kode": "M72b",
+                "satuan": "kg",
+                "koefisien": 0.116
+              },
+              {
+                "nama": "Curing Compound",
+                "kode": "MCC01",
+                "satuan": "liter",
+                "koefisien": 1.0
+              }
             ],
             "alat": [
-              {"nama": "Molen 0,35 m³ + Automatic Feeder", "kode": "E.06a", "satuan": "Hari", "koefisien": 0.1475},
-              {"nama": "Tandon Air Kap. 2 m³", "kode": "E.TA", "satuan": "Hari", "koefisien": 0.7554},
-              {"nama": "Concrete Vibrator", "kode": "E.CV", "satuan": "Hari", "koefisien": 0.0861},
-              {"nama": "Concrete Cutter", "kode": "E.CC", "satuan": "Hari", "koefisien": 0.0051}
+              {
+                "nama": "Molen Beton 0,35 m³",
+                "kode": "E06",
+                "satuan": "Hari",
+                "koefisien": 0.148
+              },
+              {
+                "nama": "Concrete Vibrator",
+                "kode": "ECV",
+                "satuan": "Hari",
+                "koefisien": 0.086
+              },
+              {
+                "nama": "Concrete Cutter",
+                "kode": "ECC",
+                "satuan": "Hari",
+                "koefisien": 0.005
+              }
             ]
           }
         },
         {
           "id": "JB-03",
-          "kode": "7.2.2.3",
-          "nama": "Perkerasan Beton Sc 3,5 MPa / f'c 25 MPa / K-300 - Ready Mix",
+          "kode": "7.2.2.2",
+          "nama": "Perkerasan Beton f'c 25 MPa / K-300 — Jalan Kolektor Desa (Semi Mekanis)",
           "satuan": "m³",
-          "mutu_fc": 25, "mutu_k": 300,
+          "mutu_fc": 25,
+          "mutu_k": 300,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.460},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.115},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.0115},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.046}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.23
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.288
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.029
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.061
+              }
             ],
             "bahan": [
-              {"nama": "Beton Ready Mix f'c 25 MPa / K-300", "kode": "M.RM.01", "satuan": "m³", "koefisien": 1.020},
-              {"nama": "Kayu Kaso 5/7 Kelas II", "kode": "M.35.a", "satuan": "m³", "koefisien": 0.0324},
-              {"nama": "Multiplek 12 mm", "kode": "M.33.d", "satuan": "lembar", "koefisien": 0.2546},
-              {"nama": "Paku 7 cm", "kode": "M.72.c", "satuan": "kg", "koefisien": 0.1486},
-              {"nama": "Joint Sealant", "kode": "M.JS.01", "satuan": "kg", "koefisien": 0.625},
-              {"nama": "Curing Compound", "kode": "M.CC.01", "satuan": "liter", "koefisien": 1.333},
-              {"nama": "Polytene 125 mikron", "kode": "M.PT.01", "satuan": "kg", "koefisien": 0.5556}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 413.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.668
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 0.944
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 178.0
+              },
+              {
+                "nama": "Kayu Papan Bekisting",
+                "kode": "M35b",
+                "satuan": "m³",
+                "koefisien": 0.025
+              },
+              {
+                "nama": "Paku Campur 5 & 7 cm",
+                "kode": "M72b",
+                "satuan": "kg",
+                "koefisien": 0.116
+              },
+              {
+                "nama": "Curing Compound",
+                "kode": "MCC01",
+                "satuan": "liter",
+                "koefisien": 1.0
+              }
             ],
             "alat": [
-              {"nama": "Concrete Vibrator", "kode": "E.CV", "satuan": "Hari", "koefisien": 0.0861}
+              {
+                "nama": "Molen Beton 0,35 m³",
+                "kode": "E06",
+                "satuan": "Hari",
+                "koefisien": 0.148
+              },
+              {
+                "nama": "Concrete Vibrator",
+                "kode": "ECV",
+                "satuan": "Hari",
+                "koefisien": 0.086
+              },
+              {
+                "nama": "Concrete Cutter",
+                "kode": "ECC",
+                "satuan": "Hari",
+                "koefisien": 0.005
+              }
             ]
           }
         }
@@ -560,123 +1709,284 @@
         {
           "id": "AS-01",
           "kode": "7.3.1",
-          "nama": "Lapis Antara AC-BC (Hotmix)",
+          "nama": "Lapis Antara AC-BC Hotmix",
           "satuan": "ton",
           "satuan_alternatif": "m²",
           "berat_jenis": 2.25,
-          "catatan_konversi": "1 m³ campuran aspal panas ≈ 2,25 ton. Input tebal dalam cm, sistem otomatis konversi ke ton.",
+          "catatan_konversi": "Input: Panjang × Lebar × Tebal (m). Sistem otomatis konversi ke ton (× 2,25 t/m³).",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.2008},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.201
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [
-              {"nama": "Agregat Lolos Screen uk 9,5-19,0 mm", "kode": "M.AG.01", "satuan": "m³", "koefisien": 0.331},
-              {"nama": "Agregat Lolos Screen uk 0-5 mm", "kode": "M.AG.02", "satuan": "m³", "koefisien": 0.321},
-              {"nama": "Semen Portland (filler)", "kode": "M.01.a", "satuan": "kg", "koefisien": 9.870},
-              {"nama": "Aspal", "kode": "M.AS.01", "satuan": "kg", "koefisien": 62.830}
+              {
+                "nama": "Agregat 9,5-19,0 mm",
+                "kode": "MAG01",
+                "satuan": "m³",
+                "koefisien": 0.331
+              },
+              {
+                "nama": "Agregat 0-5 mm",
+                "kode": "MAG02",
+                "satuan": "m³",
+                "koefisien": 0.321
+              },
+              {
+                "nama": "Semen Portland (filler)",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 9.87
+              },
+              {
+                "nama": "Aspal Hotmix",
+                "kode": "MAS01",
+                "satuan": "kg",
+                "koefisien": 62.83
+              }
             ],
             "alat": [
-              {"nama": "Wheel Loader", "kode": "E.15", "satuan": "Jam", "koefisien": 0.0096},
-              {"nama": "AMP (Asphalt Mixing Plant)", "kode": "E.01", "satuan": "Jam", "koefisien": 0.0201},
-              {"nama": "Genset", "kode": "E.GS", "satuan": "Jam", "koefisien": 0.0201},
-              {"nama": "Dump Truck", "kode": "E.35", "satuan": "Jam", "koefisien": 0.2589},
-              {"nama": "Asphalt Finisher", "kode": "E.02", "satuan": "Jam", "koefisien": 0.1370},
-              {"nama": "Tandem Roller", "kode": "E.17", "satuan": "Jam", "koefisien": 0.0135},
-              {"nama": "Pneumatic Tire Roller", "kode": "E.18", "satuan": "Jam", "koefisien": 0.0058}
+              {
+                "nama": "AMP",
+                "kode": "E01",
+                "satuan": "Jam",
+                "koefisien": 0.02
+              },
+              {
+                "nama": "Dump Truck 10 Ton",
+                "kode": "E35",
+                "satuan": "Jam",
+                "koefisien": 0.259
+              },
+              {
+                "nama": "Asphalt Finisher",
+                "kode": "E02",
+                "satuan": "Jam",
+                "koefisien": 0.137
+              },
+              {
+                "nama": "Tandem Roller",
+                "kode": "E17",
+                "satuan": "Jam",
+                "koefisien": 0.014
+              },
+              {
+                "nama": "Pneumatic Tire Roller",
+                "kode": "E18",
+                "satuan": "Jam",
+                "koefisien": 0.006
+              }
             ]
           }
         },
         {
           "id": "AS-02",
           "kode": "7.3.2",
-          "nama": "Lapis Aus AC-WC (Hotmix)",
+          "nama": "Lapis Aus AC-WC Hotmix",
           "satuan": "ton",
           "satuan_alternatif": "m²",
           "berat_jenis": 2.25,
-          "catatan_konversi": "1 m³ campuran aspal panas ≈ 2,25 ton. Input tebal dalam cm, sistem otomatis konversi ke ton.",
+          "catatan_konversi": "Input: Panjang × Lebar × Tebal (m). Sistem otomatis konversi ke ton (× 2,25 t/m³).",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.2008},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.201
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [
-              {"nama": "Agregat Lolos Screen uk 9,5-19,0 mm", "kode": "M.AG.01", "satuan": "m³", "koefisien": 0.389},
-              {"nama": "Agregat Lolos Screen uk 0-5 mm", "kode": "M.AG.02", "satuan": "m³", "koefisien": 0.253},
-              {"nama": "Semen Portland (filler)", "kode": "M.01.a", "satuan": "kg", "koefisien": 9.870},
-              {"nama": "Aspal", "kode": "M.AS.01", "satuan": "kg", "koefisien": 65.000}
+              {
+                "nama": "Agregat 9,5-19,0 mm",
+                "kode": "MAG01",
+                "satuan": "m³",
+                "koefisien": 0.389
+              },
+              {
+                "nama": "Agregat 0-5 mm",
+                "kode": "MAG02",
+                "satuan": "m³",
+                "koefisien": 0.253
+              },
+              {
+                "nama": "Semen Portland (filler)",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 9.87
+              },
+              {
+                "nama": "Aspal Hotmix",
+                "kode": "MAS01",
+                "satuan": "kg",
+                "koefisien": 65.0
+              }
             ],
             "alat": [
-              {"nama": "Wheel Loader", "kode": "E.15", "satuan": "Jam", "koefisien": 0.0096},
-              {"nama": "AMP (Asphalt Mixing Plant)", "kode": "E.01", "satuan": "Jam", "koefisien": 0.0201},
-              {"nama": "Genset", "kode": "E.GS", "satuan": "Jam", "koefisien": 0.0201},
-              {"nama": "Dump Truck", "kode": "E.35", "satuan": "Jam", "koefisien": 0.2589},
-              {"nama": "Asphalt Finisher", "kode": "E.02", "satuan": "Jam", "koefisien": 0.1370},
-              {"nama": "Tandem Roller", "kode": "E.17", "satuan": "Jam", "koefisien": 0.0135},
-              {"nama": "Pneumatic Tire Roller", "kode": "E.18", "satuan": "Jam", "koefisien": 0.0058}
+              {
+                "nama": "AMP",
+                "kode": "E01",
+                "satuan": "Jam",
+                "koefisien": 0.02
+              },
+              {
+                "nama": "Dump Truck 10 Ton",
+                "kode": "E35",
+                "satuan": "Jam",
+                "koefisien": 0.259
+              },
+              {
+                "nama": "Asphalt Finisher",
+                "kode": "E02",
+                "satuan": "Jam",
+                "koefisien": 0.137
+              },
+              {
+                "nama": "Tandem Roller",
+                "kode": "E17",
+                "satuan": "Jam",
+                "koefisien": 0.014
+              },
+              {
+                "nama": "Pneumatic Tire Roller",
+                "kode": "E18",
+                "satuan": "Jam",
+                "koefisien": 0.006
+              }
             ]
           }
         },
         {
           "id": "AS-03",
           "kode": "LP-01",
-          "nama": "Lapis Penetrasi Macadam / Lapen (Semi Mekanis)",
+          "nama": "Lapis Penetrasi Macadam / Lapen t=5 cm (Semi Mekanis)",
           "satuan": "m²",
-          "catatan": "Tebal nominal 5 cm. Untuk tebal berbeda, kalikan koefisien × (tebal/5)",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.150},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.008}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.008
+              }
             ],
             "bahan": [
-              {"nama": "Batu Pokok (Agregat 3-5 cm)", "kode": "M.BP.01", "satuan": "m³", "koefisien": 0.052},
-              {"nama": "Batu Pengunci (Agregat 1-2 cm)", "kode": "M.BP.02", "satuan": "m³", "koefisien": 0.012},
-              {"nama": "Aspal Cair (MC-30/MC-70)", "kode": "M.AS.02", "satuan": "liter", "koefisien": 4.800},
-              {"nama": "Pasir Penutup", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.006}
+              {
+                "nama": "Batu Pokok Lapen 3-5 cm",
+                "kode": "MBP01",
+                "satuan": "m³",
+                "koefisien": 0.052
+              },
+              {
+                "nama": "Batu Pengunci Lapen 1-2 cm",
+                "kode": "MBP02",
+                "satuan": "m³",
+                "koefisien": 0.012
+              },
+              {
+                "nama": "Aspal Cair MC-30/MC-70",
+                "kode": "MAS02",
+                "satuan": "liter",
+                "koefisien": 4.8
+              },
+              {
+                "nama": "Pasir Urug (penutup)",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 0.006
+              }
             ],
             "alat": [
-              {"nama": "Compressor", "kode": "E.05", "satuan": "Jam", "koefisien": 0.050},
-              {"nama": "Asphalt Hand Sprayer/Distributor", "kode": "E.41", "satuan": "Jam", "koefisien": 0.045},
-              {"nama": "Stamper/Tandem Roller Kecil", "kode": "E.17a", "satuan": "Hari", "koefisien": 0.008}
+              {
+                "nama": "Compressor",
+                "kode": "E05",
+                "satuan": "Jam",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Asphalt Distributor",
+                "kode": "E41",
+                "satuan": "Jam",
+                "koefisien": 0.045
+              },
+              {
+                "nama": "Tandem Roller Kecil",
+                "kode": "E17a",
+                "satuan": "Hari",
+                "koefisien": 0.008
+              }
             ]
           }
         },
         {
           "id": "AS-04",
-          "kode": "PC-01",
-          "nama": "Prime Coat / Lapis Resap Pengikat",
-          "satuan": "liter",
-          "komponen": {
-            "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.010},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.001}
-            ],
-            "bahan": [
-              {"nama": "Aspal Cair untuk Prime Coat", "kode": "M.AS.02", "satuan": "liter", "koefisien": 1.000}
-            ],
-            "alat": [
-              {"nama": "Compressor", "kode": "E.05", "satuan": "Jam", "koefisien": 0.003},
-              {"nama": "Asphalt Distributor", "kode": "E.41", "satuan": "Jam", "koefisien": 0.003}
-            ]
-          }
-        },
-        {
-          "id": "AS-05",
           "kode": "LPA-01",
           "nama": "Lapis Pondasi Agregat (LPA) Kelas A",
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.005}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.1
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.005
+              }
             ],
             "bahan": [
-              {"nama": "Agregat Kelas A", "kode": "M.AG.03", "satuan": "m³", "koefisien": 1.200}
+              {
+                "nama": "Agregat Kelas A (LPA)",
+                "kode": "MAG03",
+                "satuan": "m³",
+                "koefisien": 1.2
+              }
             ],
             "alat": [
-              {"nama": "Motor Grader", "kode": "E.04", "satuan": "Jam", "koefisien": 0.015},
-              {"nama": "Vibro Roller", "kode": "E.19", "satuan": "Jam", "koefisien": 0.018},
-              {"nama": "Water Tanker", "kode": "E.WT", "satuan": "Jam", "koefisien": 0.010}
+              {
+                "nama": "Motor Grader",
+                "kode": "E04",
+                "satuan": "Jam",
+                "koefisien": 0.015
+              },
+              {
+                "nama": "Vibro Roller",
+                "kode": "E19",
+                "satuan": "Jam",
+                "koefisien": 0.018
+              },
+              {
+                "nama": "Water Tanker",
+                "kode": "EWT",
+                "satuan": "Jam",
+                "koefisien": 0.01
+              }
             ]
           }
         }
@@ -690,151 +2000,354 @@
         {
           "id": "DR-01",
           "kode": "8.1.1.1",
-          "nama": "Saluran U-Ditch 30x30x120 cm + Lantai Kerja f'c 10 MPa",
+          "nama": "Saluran U-Ditch 30×30×120 cm + LK f'c 10 MPa",
           "satuan": "m'",
-          "dimensi": {"lebar": 30, "tinggi": 30},
+          "dimensi": {
+            "lebar": 30,
+            "tinggi": 30
+          },
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OJ", "koefisien": 0.0976},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OJ", "koefisien": 0.0976},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OJ", "koefisien": 0.0049}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OJ",
+                "koefisien": 0.098
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OJ",
+                "koefisien": 0.098
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OJ",
+                "koefisien": 0.005
+              }
             ],
             "bahan": [
-              {"nama": "Lantai Kerja f'c 10 MPa", "kode": "M.LK.01", "satuan": "m³", "koefisien": 0.0270},
-              {"nama": "Urukan Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.0540},
-              {"nama": "U-Ditch 30x30x120 cm", "kode": "M.UD.01", "satuan": "buah", "koefisien": 0.8333}
+              {
+                "nama": "Lantai Kerja f'c 10 MPa (ready mix)",
+                "kode": "MLK01",
+                "satuan": "m³",
+                "koefisien": 0.027
+              },
+              {
+                "nama": "Pasir Urug",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 0.054
+              },
+              {
+                "nama": "U-Ditch 30×30×120 cm",
+                "kode": "MUD01",
+                "satuan": "buah",
+                "koefisien": 0.833
+              }
             ],
             "alat": [
-              {"nama": "Crane Truck 3 Ton + Winch 5 Ton", "kode": "E.CT3", "satuan": "Jam", "koefisien": 0.0976}
+              {
+                "nama": "Crane Truck 3 Ton + Winch",
+                "kode": "ECT3",
+                "satuan": "Jam",
+                "koefisien": 0.098
+              }
             ]
           }
         },
         {
           "id": "DR-02",
-          "kode": "8.1.1.2",
-          "nama": "Saluran U-Ditch 30x40x120 cm + Lantai Kerja f'c 10 MPa",
+          "kode": "8.1.1.3",
+          "nama": "Saluran U-Ditch 40×40×120 cm + LK f'c 10 MPa",
           "satuan": "m'",
-          "dimensi": {"lebar": 30, "tinggi": 40},
+          "dimensi": {
+            "lebar": 40,
+            "tinggi": 40
+          },
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OJ", "koefisien": 0.1131},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OJ", "koefisien": 0.1131},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OJ", "koefisien": 0.0057}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OJ",
+                "koefisien": 0.125
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OJ",
+                "koefisien": 0.125
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OJ",
+                "koefisien": 0.006
+              }
             ],
             "bahan": [
-              {"nama": "Lantai Kerja f'c 10 MPa", "kode": "M.LK.01", "satuan": "m³", "koefisien": 0.0270},
-              {"nama": "Urukan Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.0540},
-              {"nama": "U-Ditch 30x40x120 cm", "kode": "M.UD.02", "satuan": "buah", "koefisien": 0.8333}
+              {
+                "nama": "Lantai Kerja f'c 10 MPa (ready mix)",
+                "kode": "MLK01",
+                "satuan": "m³",
+                "koefisien": 0.033
+              },
+              {
+                "nama": "Pasir Urug",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 0.065
+              },
+              {
+                "nama": "U-Ditch 40×40×120 cm",
+                "kode": "MUD03",
+                "satuan": "buah",
+                "koefisien": 0.833
+              }
             ],
             "alat": [
-              {"nama": "Crane Truck 3 Ton + Winch 5 Ton", "kode": "E.CT3", "satuan": "Jam", "koefisien": 0.1131}
+              {
+                "nama": "Crane Truck 3 Ton + Winch",
+                "kode": "ECT3",
+                "satuan": "Jam",
+                "koefisien": 0.125
+              }
             ]
           }
         },
         {
           "id": "DR-03",
-          "kode": "8.1.1.3",
-          "nama": "Saluran U-Ditch 40x40x120 cm + Lantai Kerja f'c 10 MPa",
+          "kode": "8.1.1.5",
+          "nama": "Saluran U-Ditch 40×60×120 cm + LK f'c 10 MPa",
           "satuan": "m'",
-          "dimensi": {"lebar": 40, "tinggi": 40},
+          "dimensi": {
+            "lebar": 40,
+            "tinggi": 60
+          },
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OJ", "koefisien": 0.1251},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OJ", "koefisien": 0.1251},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OJ", "koefisien": 0.0063}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OJ",
+                "koefisien": 0.142
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OJ",
+                "koefisien": 0.142
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OJ",
+                "koefisien": 0.007
+              }
             ],
             "bahan": [
-              {"nama": "Lantai Kerja f'c 10 MPa", "kode": "M.LK.01", "satuan": "m³", "koefisien": 0.0325},
-              {"nama": "Urukan Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.0650},
-              {"nama": "U-Ditch 40x40x120 cm", "kode": "M.UD.03", "satuan": "buah", "koefisien": 0.8333}
+              {
+                "nama": "Lantai Kerja f'c 10 MPa (ready mix)",
+                "kode": "MLK01",
+                "satuan": "m³",
+                "koefisien": 0.033
+              },
+              {
+                "nama": "Pasir Urug",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 0.065
+              },
+              {
+                "nama": "U-Ditch 40×60×120 cm",
+                "kode": "MUD04",
+                "satuan": "buah",
+                "koefisien": 0.833
+              }
             ],
             "alat": [
-              {"nama": "Crane Truck 3 Ton + Winch 5 Ton", "kode": "E.CT3", "satuan": "Jam", "koefisien": 0.1251}
+              {
+                "nama": "Crane Truck 3 Ton + Winch",
+                "kode": "ECT3",
+                "satuan": "Jam",
+                "koefisien": 0.142
+              }
             ]
           }
         },
         {
           "id": "DR-04",
-          "kode": "8.1.1.5",
-          "nama": "Saluran U-Ditch 40x60x120 cm + Lantai Kerja f'c 10 MPa",
+          "kode": "8.1.1.6",
+          "nama": "Saluran U-Ditch 50×50×120 cm + LK f'c 10 MPa",
           "satuan": "m'",
-          "dimensi": {"lebar": 40, "tinggi": 60},
+          "dimensi": {
+            "lebar": 50,
+            "tinggi": 50
+          },
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OJ", "koefisien": 0.1424},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OJ", "koefisien": 0.1424},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OJ", "koefisien": 0.0071}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OJ",
+                "koefisien": 0.148
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OJ",
+                "koefisien": 0.148
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OJ",
+                "koefisien": 0.007
+              }
             ],
             "bahan": [
-              {"nama": "Lantai Kerja f'c 10 MPa", "kode": "M.LK.01", "satuan": "m³", "koefisien": 0.0325},
-              {"nama": "Urukan Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.0650},
-              {"nama": "U-Ditch 40x60x120 cm", "kode": "M.UD.04", "satuan": "buah", "koefisien": 0.8333}
+              {
+                "nama": "Lantai Kerja f'c 10 MPa (ready mix)",
+                "kode": "MLK01",
+                "satuan": "m³",
+                "koefisien": 0.04
+              },
+              {
+                "nama": "Pasir Urug",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 0.079
+              },
+              {
+                "nama": "U-Ditch 50×50×120 cm",
+                "kode": "MUD05",
+                "satuan": "buah",
+                "koefisien": 0.833
+              }
             ],
             "alat": [
-              {"nama": "Crane Truck 3 Ton + Winch 5 Ton", "kode": "E.CT3", "satuan": "Jam", "koefisien": 0.1424}
+              {
+                "nama": "Crane Truck 3 Ton + Winch",
+                "kode": "ECT3",
+                "satuan": "Jam",
+                "koefisien": 0.148
+              }
             ]
           }
         },
         {
           "id": "DR-05",
-          "kode": "8.1.1.6",
-          "nama": "Saluran U-Ditch 50x50x120 cm + Lantai Kerja f'c 10 MPa",
+          "kode": "8.1.1.9",
+          "nama": "Saluran U-Ditch 60×60×120 cm + LK f'c 10 MPa",
           "satuan": "m'",
-          "dimensi": {"lebar": 50, "tinggi": 50},
+          "dimensi": {
+            "lebar": 60,
+            "tinggi": 60
+          },
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OJ", "koefisien": 0.1481},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OJ", "koefisien": 0.1481},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OJ", "koefisien": 0.0074}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OJ",
+                "koefisien": 0.216
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OJ",
+                "koefisien": 0.216
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OJ",
+                "koefisien": 0.011
+              }
             ],
             "bahan": [
-              {"nama": "Lantai Kerja f'c 10 MPa", "kode": "M.LK.01", "satuan": "m³", "koefisien": 0.0395},
-              {"nama": "Urukan Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.0790},
-              {"nama": "U-Ditch 50x50x120 cm", "kode": "M.UD.05", "satuan": "buah", "koefisien": 0.8333}
+              {
+                "nama": "Lantai Kerja f'c 10 MPa (ready mix)",
+                "kode": "MLK01",
+                "satuan": "m³",
+                "koefisien": 0.045
+              },
+              {
+                "nama": "Pasir Urug",
+                "kode": "M05a",
+                "satuan": "m³",
+                "koefisien": 0.089
+              },
+              {
+                "nama": "U-Ditch 60×60×120 cm",
+                "kode": "MUD06",
+                "satuan": "buah",
+                "koefisien": 0.833
+              }
             ],
             "alat": [
-              {"nama": "Crane Truck 3 Ton + Winch 5 Ton", "kode": "E.CT3", "satuan": "Jam", "koefisien": 0.1481}
+              {
+                "nama": "Crane Truck 3 Ton + Winch",
+                "kode": "ECT3",
+                "satuan": "Jam",
+                "koefisien": 0.216
+              }
             ]
           }
         },
         {
           "id": "DR-06",
-          "kode": "8.1.1.9",
-          "nama": "Saluran U-Ditch 60x60x120 cm + Lantai Kerja f'c 10 MPa",
-          "satuan": "m'",
-          "dimensi": {"lebar": 60, "tinggi": 60},
-          "komponen": {
-            "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OJ", "koefisien": 0.2158},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OJ", "koefisien": 0.2158},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OJ", "koefisien": 0.0108}
-            ],
-            "bahan": [
-              {"nama": "Lantai Kerja f'c 10 MPa", "kode": "M.LK.01", "satuan": "m³", "koefisien": 0.0445},
-              {"nama": "Urukan Pasir Urug", "kode": "M.05.a", "satuan": "m³", "koefisien": 0.0890},
-              {"nama": "U-Ditch 60x60x120 cm", "kode": "M.UD.06", "satuan": "buah", "koefisien": 0.8333}
-            ],
-            "alat": [
-              {"nama": "Crane Truck 3 Ton + Winch 5 Ton", "kode": "E.CT3", "satuan": "Jam", "koefisien": 0.2158}
-            ]
-          }
-        },
-        {
-          "id": "DR-07",
           "kode": "SAL-01",
           "nama": "Saluran Pasangan Batu Kali 1:4 (Cast In Situ)",
           "satuan": "m'",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 2.100},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 1.050},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.105},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.105}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 2.1
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.105
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.105
+              }
             ],
             "bahan": [
-              {"nama": "Batu Kali/Belah", "kode": "M.10.a", "satuan": "m³", "koefisien": 1.680},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 228.200},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.679}
+              {
+                "nama": "Batu Kali/Belah",
+                "kode": "M10a",
+                "satuan": "m³",
+                "koefisien": 1.68
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 228.2
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.679
+              }
             ],
             "alat": []
           }
@@ -843,18 +2356,28 @@
     },
     {
       "id": "tpt",
-      "nama": "Tembok Penahan Tanah",
+      "nama": "Tembok Penahan Tanah (TPT)",
       "warna": "#558B2F",
       "items": [
         {
           "id": "TPT-01",
           "kode": "TPT.1",
-          "nama": "Pekerjaan Persiapan & Pembersihan TPT",
-          "satuan": "m²",
+          "nama": "Galian Tanah untuk Pondasi TPT (Manual)",
+          "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.005}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.9
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.03
+              }
             ],
             "bahan": [],
             "alat": []
@@ -862,53 +2385,141 @@
         },
         {
           "id": "TPT-02",
-          "kode": "U.3.4.1.a.2",
-          "nama": "Galian Tanah untuk Pondasi TPT (Manual)",
+          "kode": "TPT.2",
+          "nama": "Pasangan Batu Kali 1:4 untuk TPT",
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.900},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.030}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.75
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.075
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.075
+              }
             ],
-            "bahan": [],
+            "bahan": [
+              {
+                "nama": "Batu Kali/Belah",
+                "kode": "M10a",
+                "satuan": "m³",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 163.0
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.485
+              }
+            ],
             "alat": []
           }
         },
         {
           "id": "TPT-03",
-          "kode": "U.5.1.a",
-          "nama": "Pasangan Batu Kali 1:4 untuk TPT",
-          "satuan": "m³",
+          "kode": "TPT.3",
+          "nama": "Plesteran 1:3 Sisi Muka TPT (t=15 mm)",
+          "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.500},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.750},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.075},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.075}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.3
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.015
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.015
+              }
             ],
             "bahan": [
-              {"nama": "Batu Kali/Belah", "kode": "M.10.a", "satuan": "m³", "koefisien": 1.200},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 163.000},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.485}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 6.24
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.024
+              }
             ],
             "alat": []
           }
         },
         {
           "id": "TPT-04",
-          "kode": "U.6.1.a",
-          "nama": "Plesteran 1:3 Sisi Muka TPT (t=15 mm)",
-          "satuan": "m²",
+          "kode": "TPT.4",
+          "nama": "Weep Hole Pipa PVC 3/4\" L=30 cm (per titik)",
+          "satuan": "buah",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.300},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.150},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.015},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.015}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.1
+              },
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.005
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 6.240},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.024}
+              {
+                "nama": "Pipa PVC 3/4\" per batang 4m",
+                "kode": "MPP075",
+                "satuan": "batang",
+                "koefisien": 0.1
+              }
             ],
             "alat": []
           }
@@ -916,29 +2527,22 @@
         {
           "id": "TPT-05",
           "kode": "TPT.5",
-          "nama": "Weep Hole Pipa PVC dia 3\" (7,5 cm)",
-          "satuan": "buah",
-          "komponen": {
-            "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.200},
-              {"nama": "Tukang Pipa", "kode": "L.02", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
-            ],
-            "bahan": [
-              {"nama": "Pipa PVC dia 3\" (7,5 cm) L=30 cm", "kode": "M.PP.01", "satuan": "buah", "koefisien": 1.000}
-            ],
-            "alat": []
-          }
-        },
-        {
-          "id": "TPT-06",
-          "kode": "U.3.5.1.d",
-          "nama": "Urugan Tanah Kembali di Belakang TPT",
+          "nama": "Urugan Tanah Kembali Belakang TPT",
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.250},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.008}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.008
+              }
             ],
             "bahan": [],
             "alat": []
@@ -948,18 +2552,28 @@
     },
     {
       "id": "gedung",
-      "nama": "Rehab Gedung Balai/Kantor Desa",
+      "nama": "Rehab Gedung Balai / Kantor Desa",
       "warna": "#AD1457",
       "items": [
         {
           "id": "GD-01",
-          "kode": "1.1.1",
+          "kode": "GD.1",
           "nama": "Pembersihan & Persiapan Lahan",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.005}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.1
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.005
+              }
             ],
             "bahan": [],
             "alat": []
@@ -967,64 +2581,173 @@
         },
         {
           "id": "GD-02",
-          "kode": "U.5.1.a",
+          "kode": "GD.2",
           "nama": "Pasangan Pondasi Batu Kali 1:4",
           "satuan": "m³",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.500},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.750},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.075},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.075}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.75
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.075
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.075
+              }
             ],
             "bahan": [
-              {"nama": "Batu Kali/Belah", "kode": "M.10.a", "satuan": "m³", "koefisien": 1.200},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 163.000},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.485}
+              {
+                "nama": "Batu Kali/Belah",
+                "kode": "M10a",
+                "satuan": "m³",
+                "koefisien": 1.2
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 163.0
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.485
+              }
             ],
             "alat": []
           }
         },
         {
           "id": "GD-03",
-          "kode": "U.4.1.b",
-          "nama": "Beton Sloof f'c 15 MPa / K-175",
+          "kode": "GD.3",
+          "nama": "Beton Sloof / Kolom Praktis / Ring Balok f'c 17 MPa / K-200",
           "satuan": "m³",
-          "mutu_fc": 15, "mutu_k": 175,
+          "mutu_fc": 17,
+          "mutu_k": 200,
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.650},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.275},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.028},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 1.65
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.275
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.028
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.083
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 276.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 828.000},
-              {"nama": "Kerikil/Agregat Kasar uk 19mm", "kode": "M.08.a", "satuan": "kg", "koefisien": 1012.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 215.000}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 326.0
+              },
+              {
+                "nama": "Pasir Beton",
+                "kode": "M05c",
+                "satuan": "m³",
+                "koefisien": 0.76
+              },
+              {
+                "nama": "Kerikil/Batu Pecah",
+                "kode": "M08a",
+                "satuan": "m³",
+                "koefisien": 1.029
+              },
+              {
+                "nama": "Air",
+                "kode": "M00a",
+                "satuan": "liter",
+                "koefisien": 215.0
+              }
             ],
             "alat": []
           }
         },
         {
           "id": "GD-04",
-          "kode": "U.4.1.c",
-          "nama": "Beton Kolom Praktis f'c 17 MPa / K-200",
-          "satuan": "m³",
-          "mutu_fc": 17, "mutu_k": 200,
+          "kode": "GD.4",
+          "nama": "Pasangan Dinding Bata Merah 1:4",
+          "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 1.650},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.275},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.028},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.083}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.52
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.26
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.026
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.026
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 326.000},
-              {"nama": "Pasir Beton", "kode": "M.05.c", "satuan": "kg", "koefisien": 760.000},
-              {"nama": "Kerikil/Agregat Kasar uk 19mm", "kode": "M.08.a", "satuan": "kg", "koefisien": 1029.000},
-              {"nama": "Air", "kode": "M.00.a", "satuan": "liter", "koefisien": 215.000}
+              {
+                "nama": "Bata Merah 5×11×22 cm",
+                "kode": "MBT01",
+                "satuan": "buah",
+                "koefisien": 70.0
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 9.68
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.036
+              }
             ],
             "alat": []
           }
@@ -1032,56 +2755,146 @@
         {
           "id": "GD-05",
           "kode": "GD.5",
-          "nama": "Pasangan Dinding Bata Merah 1:4",
+          "nama": "Plesteran Dinding 1:3 (t=15 mm)",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.520},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.260},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.026},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.026}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.3
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.015
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.015
+              }
             ],
             "bahan": [
-              {"nama": "Bata Merah uk 5x11x22 cm", "kode": "M.BT.01", "satuan": "buah", "koefisien": 70.000},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 9.680},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.036}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 6.24
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.024
+              }
             ],
             "alat": []
           }
         },
         {
           "id": "GD-06",
-          "kode": "U.6.1.a",
-          "nama": "Plesteran Dinding 1:3 (t=15 mm)",
+          "kode": "GD.6",
+          "nama": "Acian Dinding Semen PC",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.300},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.150},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.015},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.015}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.2
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.1
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.01
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 6.240},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.024}
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 3.25
+              }
             ],
             "alat": []
           }
         },
         {
           "id": "GD-07",
-          "kode": "U.6.2.a",
-          "nama": "Acian Dinding Semen PC",
+          "kode": "GD.7",
+          "nama": "Rangka Atap Baja Ringan (Truss + Reng)",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.200},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.100},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.010},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Tukang Besi/Las",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.15
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.015
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.008
+              }
             ],
             "bahan": [
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 3.250}
+              {
+                "nama": "Baja Ringan Truss (pilih spek)",
+                "kode": "MBR01",
+                "satuan": "m²",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Reng Baja Ringan (pilih spek)",
+                "kode": "MBR02",
+                "satuan": "m²",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Baut Sekrup Self Drilling",
+                "kode": "MBS01",
+                "satuan": "buah",
+                "koefisien": 20.0
+              }
             ],
             "alat": []
           }
@@ -1089,19 +2902,48 @@
         {
           "id": "GD-08",
           "kode": "GD.8",
-          "nama": "Rangka Atap Baja Ringan",
+          "nama": "Penutup Atap Genteng Keramik",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.150},
-              {"nama": "Tukang Besi/Las", "kode": "L.02", "satuan": "OH", "koefisien": 0.150},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.015},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.008}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.2
+              },
+              {
+                "nama": "Tukang Kayu",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.2
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.02
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.01
+              }
             ],
             "bahan": [
-              {"nama": "Baja Ringan (Truss 75.75)", "kode": "M.BR.01", "satuan": "m²", "koefisien": 1.050},
-              {"nama": "Reng Baja Ringan", "kode": "M.BR.02", "satuan": "m²", "koefisien": 1.050},
-              {"nama": "Baut Sekrup", "kode": "M.BS.01", "satuan": "buah", "koefisien": 20.000}
+              {
+                "nama": "Genteng Keramik",
+                "kode": "MGT01",
+                "satuan": "buah",
+                "koefisien": 25.0
+              },
+              {
+                "nama": "Bubungan Genteng Keramik",
+                "kode": "MGT02",
+                "satuan": "buah",
+                "koefisien": 0.5
+              }
             ],
             "alat": []
           }
@@ -1109,18 +2951,60 @@
         {
           "id": "GD-09",
           "kode": "GD.9",
-          "nama": "Penutup Atap Genteng Keramik",
+          "nama": "Lantai Keramik 25×25 cm",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.200},
-              {"nama": "Tukang Kayu", "kode": "L.02", "satuan": "OH", "koefisien": 0.200},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.020},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.010}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.025
+              }
             ],
             "bahan": [
-              {"nama": "Genteng Keramik", "kode": "M.GT.01", "satuan": "buah", "koefisien": 25.000},
-              {"nama": "Bubungan Genteng Keramik", "kode": "M.GT.02", "satuan": "buah", "koefisien": 0.500}
+              {
+                "nama": "Keramik Lantai 25×25 cm",
+                "kode": "MKR25",
+                "satuan": "m²",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 10.8
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.045
+              },
+              {
+                "nama": "Semen Nat/Grout",
+                "kode": "MSN01",
+                "satuan": "kg",
+                "koefisien": 0.4
+              }
             ],
             "alat": []
           }
@@ -1128,20 +3012,60 @@
         {
           "id": "GD-10",
           "kode": "GD.10",
-          "nama": "Lantai Keramik 40x40 cm",
+          "nama": "Lantai Keramik 40×40 cm",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.450},
-              {"nama": "Tukang Batu/Tembok", "kode": "L.02", "satuan": "OH", "koefisien": 0.450},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.045},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.023}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.45
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.45
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.045
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.023
+              }
             ],
             "bahan": [
-              {"nama": "Keramik Lantai 40x40 cm", "kode": "M.KR.01", "satuan": "m²", "koefisien": 1.050},
-              {"nama": "Semen Portland", "kode": "M.01.a", "satuan": "kg", "koefisien": 9.800},
-              {"nama": "Pasir Pasang", "kode": "M.05.b", "satuan": "m³", "koefisien": 0.045},
-              {"nama": "Semen Nat/Grout", "kode": "M.SN.01", "satuan": "kg", "koefisien": 0.350}
+              {
+                "nama": "Keramik Lantai 40×40 cm",
+                "kode": "MKR40",
+                "satuan": "m²",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 9.8
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.045
+              },
+              {
+                "nama": "Semen Nat/Grout",
+                "kode": "MSN01",
+                "satuan": "kg",
+                "koefisien": 0.35
+              }
             ],
             "alat": []
           }
@@ -1149,18 +3073,530 @@
         {
           "id": "GD-11",
           "kode": "GD.11",
-          "nama": "Pengecatan Dinding (2 Lapis)",
+          "nama": "Lantai Keramik 50×50 cm",
           "satuan": "m²",
           "komponen": {
             "upah": [
-              {"nama": "Pekerja", "kode": "L.01", "satuan": "OH", "koefisien": 0.070},
-              {"nama": "Tukang Cat", "kode": "L.02", "satuan": "OH", "koefisien": 0.070},
-              {"nama": "Kepala Tukang", "kode": "L.03", "satuan": "OH", "koefisien": 0.007},
-              {"nama": "Mandor", "kode": "L.04", "satuan": "OH", "koefisien": 0.004}
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.42
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.42
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.042
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.021
+              }
             ],
             "bahan": [
-              {"nama": "Cat Dinding", "kode": "M.CT.01", "satuan": "kg", "koefisien": 0.260},
-              {"nama": "Cat Dasar/Plamir", "kode": "M.CT.02", "satuan": "kg", "koefisien": 0.100}
+              {
+                "nama": "Keramik Lantai 50×50 cm",
+                "kode": "MKR50",
+                "satuan": "m²",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 8.8
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.04
+              },
+              {
+                "nama": "Semen Nat/Grout",
+                "kode": "MSN01",
+                "satuan": "kg",
+                "koefisien": 0.3
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "GD-12",
+          "kode": "GD.12",
+          "nama": "Lantai Keramik 60×60 cm",
+          "satuan": "m²",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.4
+              },
+              {
+                "nama": "Tukang Batu/Tembok",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.4
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.04
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.02
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Keramik Lantai 60×60 cm",
+                "kode": "MKR60",
+                "satuan": "m²",
+                "koefisien": 1.05
+              },
+              {
+                "nama": "Semen Portland",
+                "kode": "M01a_kg",
+                "satuan": "kg",
+                "koefisien": 7.5
+              },
+              {
+                "nama": "Pasir Pasang",
+                "kode": "M05b",
+                "satuan": "m³",
+                "koefisien": 0.035
+              },
+              {
+                "nama": "Semen Nat/Grout",
+                "kode": "MSN01",
+                "satuan": "kg",
+                "koefisien": 0.25
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "GD-13",
+          "kode": "GD.13",
+          "nama": "Pengecatan Dinding (2 Lapis Cat Tembok)",
+          "satuan": "m²",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.07
+              },
+              {
+                "nama": "Tukang Cat",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.07
+              },
+              {
+                "nama": "Kepala Tukang",
+                "kode": "L03",
+                "satuan": "OH",
+                "koefisien": 0.007
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.004
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Cat Tembok (pilih satuan kg atau liter)",
+                "kode": "MCT01",
+                "satuan": "kg",
+                "koefisien": 0.26
+              },
+              {
+                "nama": "Cat Dasar/Plamir",
+                "kode": "MCT02",
+                "satuan": "kg",
+                "koefisien": 0.1
+              }
+            ],
+            "alat": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "air_bersih",
+      "nama": "Air Bersih (Pengeboran & Pipanisasi)",
+      "warna": "#0277BD",
+      "items": [
+        {
+          "id": "AB-01",
+          "kode": "AB.1.1",
+          "nama": "Pengeboran Sumur Air Bersih (per meter kedalaman)",
+          "satuan": "m'",
+          "catatan": "Input volume = kedalaman total pengeboran dalam meter.",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Operator Mesin Bor",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.5
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.05
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pipa Casing PVC 4\" per batang 4m",
+                "kode": "MPP400",
+                "satuan": "batang",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Screen/Saringan PVC 4\"",
+                "kode": "MPP400s",
+                "satuan": "m'",
+                "koefisien": 0.1
+              }
+            ],
+            "alat": [
+              {
+                "nama": "Mesin Bor Sumur (sewa)",
+                "kode": "EMB01",
+                "satuan": "Hari",
+                "koefisien": 0.143
+              }
+            ]
+          }
+        },
+        {
+          "id": "AB-02",
+          "kode": "AB.1.2",
+          "nama": "Pengadaan & Pemasangan Pompa Submersible 0,5 HP",
+          "satuan": "unit",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 2.0
+              },
+              {
+                "nama": "Tukang Listrik/Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 1.0
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.1
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pompa Submersible 0,5 HP",
+                "kode": "MPM01",
+                "satuan": "unit",
+                "koefisien": 1.0
+              },
+              {
+                "nama": "Pipa GI/PVC 1\" per batang 6m",
+                "kode": "MPP100",
+                "satuan": "batang",
+                "koefisien": 2.0
+              },
+              {
+                "nama": "Kabel Listrik NYY 3×1,5 mm",
+                "kode": "MKL01",
+                "satuan": "m'",
+                "koefisien": 10.0
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "AB-03",
+          "kode": "AB.2.1",
+          "nama": "Pemasangan Pipa Distribusi PVC 1/2\" (12,7 mm)",
+          "satuan": "m'",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.05
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.003
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pipa PVC 1/2\" AW per batang 4m",
+                "kode": "MPP050",
+                "satuan": "batang",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Lem PVC (kaleng 250ml)",
+                "kode": "MLV01",
+                "satuan": "kaleng",
+                "koefisien": 0.01
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "AB-04",
+          "kode": "AB.2.2",
+          "nama": "Pemasangan Pipa Distribusi PVC 3/4\" (19 mm)",
+          "satuan": "m'",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.055
+              },
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.055
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.003
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pipa PVC 3/4\" AW per batang 4m",
+                "kode": "MPP075",
+                "satuan": "batang",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Lem PVC (kaleng 250ml)",
+                "kode": "MLV01",
+                "satuan": "kaleng",
+                "koefisien": 0.012
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "AB-05",
+          "kode": "AB.2.3",
+          "nama": "Pemasangan Pipa Distribusi Utama PVC 1\" (25 mm)",
+          "satuan": "m'",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.06
+              },
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.06
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.003
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pipa PVC 1\" AW per batang 4m",
+                "kode": "MPP100",
+                "satuan": "batang",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Lem PVC (kaleng 250ml)",
+                "kode": "MLV01",
+                "satuan": "kaleng",
+                "koefisien": 0.015
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "AB-06",
+          "kode": "AB.2.4",
+          "nama": "Pemasangan Pipa Induk PVC 1-1/2\" (38 mm)",
+          "satuan": "m'",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.07
+              },
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.07
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.004
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pipa PVC 1-1/2\" AW per batang 4m",
+                "kode": "MPP150",
+                "satuan": "batang",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Lem PVC (kaleng 250ml)",
+                "kode": "MLV01",
+                "satuan": "kaleng",
+                "koefisien": 0.02
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "AB-07",
+          "kode": "AB.2.5",
+          "nama": "Pemasangan Pipa Induk Besar PVC 2\" (50 mm)",
+          "satuan": "m'",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Pekerja",
+                "kode": "L01",
+                "satuan": "OH",
+                "koefisien": 0.08
+              },
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.08
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.004
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Pipa PVC 2\" AW per batang 4m",
+                "kode": "MPP200",
+                "satuan": "batang",
+                "koefisien": 0.25
+              },
+              {
+                "nama": "Lem PVC (kaleng 250ml)",
+                "kode": "MLV01",
+                "satuan": "kaleng",
+                "koefisien": 0.025
+              }
+            ],
+            "alat": []
+          }
+        },
+        {
+          "id": "AB-08",
+          "kode": "AB.3.1",
+          "nama": "Pengadaan & Pemasangan Fitting Pipa PVC (per buah)",
+          "satuan": "buah",
+          "catatan": "Pilih jenis fitting dari master harga: Elbow, Tee, Shock Drat Dalam/Luar. Upah sudah termasuk pemasangan.",
+          "komponen": {
+            "upah": [
+              {
+                "nama": "Tukang Pipa",
+                "kode": "L02",
+                "satuan": "OH",
+                "koefisien": 0.03
+              },
+              {
+                "nama": "Mandor",
+                "kode": "L04",
+                "satuan": "OH",
+                "koefisien": 0.002
+              }
+            ],
+            "bahan": [
+              {
+                "nama": "Fitting PVC (pilih jenis & ukuran)",
+                "kode": "MFT01",
+                "satuan": "buah",
+                "koefisien": 1.0
+              },
+              {
+                "nama": "Lem PVC (kaleng 250ml)",
+                "kode": "MLV01",
+                "satuan": "kaleng",
+                "koefisien": 0.005
+              }
             ],
             "alat": []
           }
@@ -1170,87 +3606,698 @@
   ],
   "master_harga_default": {
     "upah": [
-      {"kode": "L.01", "nama": "Pekerja", "satuan": "OH", "harga": 100000},
-      {"kode": "L.02", "nama": "Tukang (Batu/Kayu/Besi/Cat/Pipa)", "satuan": "OH", "harga": 120000},
-      {"kode": "L.03", "nama": "Kepala Tukang", "satuan": "OH", "harga": 140000},
-      {"kode": "L.04", "nama": "Mandor", "satuan": "OH", "harga": 150000}
+      {
+        "kode": "L01",
+        "nama": "Pekerja",
+        "satuan": "OH",
+        "harga": 100000
+      },
+      {
+        "kode": "L02",
+        "nama": "Tukang (Batu/Kayu/Besi/Cat/Pipa/Las)",
+        "satuan": "OH",
+        "harga": 120000
+      },
+      {
+        "kode": "L03",
+        "nama": "Kepala Tukang (opsional di desa)",
+        "satuan": "OH",
+        "harga": 140000
+      },
+      {
+        "kode": "L04",
+        "nama": "Mandor (opsional di desa)",
+        "satuan": "OH",
+        "harga": 150000
+      }
     ],
     "bahan": [
-      {"kode": "M.00.a", "nama": "Air", "satuan": "liter", "harga": 0, "catatan": "Biasanya gratis/termasuk overhead"},
-      {"kode": "M.01.a", "nama": "Semen Portland (50 kg)", "satuan": "kg", "harga": 1500, "catatan": "Harga per kg"},
-      {"kode": "M.05.a", "nama": "Pasir Urug", "satuan": "m³", "harga": 150000},
-      {"kode": "M.05.b", "nama": "Pasir Pasang", "satuan": "m³", "harga": 200000},
-      {"kode": "M.05.c", "nama": "Pasir Beton", "satuan": "m³", "harga": 220000},
-      {"kode": "M.05.d", "nama": "Pasir Filler", "satuan": "m³", "harga": 200000},
-      {"kode": "M.08.a", "nama": "Kerikil/Agregat Kasar uk 19mm", "satuan": "kg", "harga": 250},
-      {"kode": "M.08.b", "nama": "Agregat Kasar uk 38mm", "satuan": "kg", "harga": 230},
-      {"kode": "M.09.a", "nama": "Minyak Bekisting", "satuan": "liter", "harga": 25000},
-      {"kode": "M.10.a", "nama": "Batu Kali/Belah", "satuan": "m³", "harga": 200000},
-      {"kode": "M.33.d", "nama": "Multiplek 12 mm", "satuan": "lembar", "harga": 180000},
-      {"kode": "M.35.a", "nama": "Kayu Kaso 5/7 Kelas II", "satuan": "m³", "harga": 3500000},
-      {"kode": "M.53.a", "nama": "Kawat Beton", "satuan": "kg", "harga": 20000},
-      {"kode": "M.54.a", "nama": "Besi Tulangan BjTP/BjTS", "satuan": "kg", "harga": 12000},
-      {"kode": "M.72.b", "nama": "Paku 5 cm & 7 cm", "satuan": "kg", "harga": 18000},
-      {"kode": "M.72.c", "nama": "Paku 7 cm", "satuan": "kg", "harga": 18000},
-      {"kode": "M.PV.01", "nama": "Paving Block 6cm f'c 20 MPa", "satuan": "m²", "harga": 80000},
-      {"kode": "M.PV.02", "nama": "Paving Block 6cm f'c 25 MPa", "satuan": "m²", "harga": 95000},
-      {"kode": "M.PV.03", "nama": "Paving Block 8cm f'c 20 MPa", "satuan": "m²", "harga": 95000},
-      {"kode": "M.PV.04", "nama": "Paving Block 8cm f'c 25 MPa", "satuan": "m²", "harga": 110000},
-      {"kode": "M.KS.01", "nama": "Kanstin 10x20x40 f'c 20 MPa", "satuan": "buah", "harga": 8000},
-      {"kode": "M.KS.02", "nama": "Kanstin 15x40x60 f'c 25 MPa", "satuan": "buah", "harga": 25000},
-      {"kode": "M.RM.01", "nama": "Beton Ready Mix f'c 25 MPa / K-300", "satuan": "m³", "harga": 950000},
-      {"kode": "M.JS.01", "nama": "Joint Sealant", "satuan": "kg", "harga": 50000},
-      {"kode": "M.CC.01", "nama": "Curing Compound", "satuan": "liter", "harga": 35000},
-      {"kode": "M.PT.01", "nama": "Polytene 125 mikron", "satuan": "kg", "harga": 20000},
-      {"kode": "M.AG.01", "nama": "Agregat Lolos Screen 9,5-19,0 mm", "satuan": "m³", "harga": 300000},
-      {"kode": "M.AG.02", "nama": "Agregat Lolos Screen 0-5 mm", "satuan": "m³", "harga": 250000},
-      {"kode": "M.AG.03", "nama": "Agregat Kelas A (LPA)", "satuan": "m³", "harga": 280000},
-      {"kode": "M.AS.01", "nama": "Aspal (Hotmix)", "satuan": "kg", "harga": 8500},
-      {"kode": "M.AS.02", "nama": "Aspal Cair MC-30/MC-70 (Lapen)", "satuan": "liter", "harga": 12000},
-      {"kode": "M.BP.01", "nama": "Batu Pokok Lapen (Agregat 3-5 cm)", "satuan": "m³", "harga": 250000},
-      {"kode": "M.BP.02", "nama": "Batu Pengunci Lapen (Agregat 1-2 cm)", "satuan": "m³", "harga": 280000},
-      {"kode": "M.LK.01", "nama": "Lantai Kerja f'c 10 MPa (ready mix)", "satuan": "m³", "harga": 750000},
-      {"kode": "M.UD.01", "nama": "U-Ditch 30x30x120 cm", "satuan": "buah", "harga": 150000},
-      {"kode": "M.UD.02", "nama": "U-Ditch 30x40x120 cm", "satuan": "buah", "harga": 180000},
-      {"kode": "M.UD.03", "nama": "U-Ditch 40x40x120 cm", "satuan": "buah", "harga": 200000},
-      {"kode": "M.UD.04", "nama": "U-Ditch 40x60x120 cm", "satuan": "buah", "harga": 250000},
-      {"kode": "M.UD.05", "nama": "U-Ditch 50x50x120 cm", "satuan": "buah", "harga": 280000},
-      {"kode": "M.UD.06", "nama": "U-Ditch 60x60x120 cm", "satuan": "buah", "harga": 350000},
-      {"kode": "M.PP.01", "nama": "Pipa PVC dia 3\" L=30 cm (weep hole)", "satuan": "buah", "harga": 25000},
-      {"kode": "M.BT.01", "nama": "Bata Merah uk 5x11x22 cm", "satuan": "buah", "harga": 800},
-      {"kode": "M.BR.01", "nama": "Baja Ringan (Truss 75.75)", "satuan": "m²", "harga": 85000},
-      {"kode": "M.BR.02", "nama": "Reng Baja Ringan", "satuan": "m²", "harga": 25000},
-      {"kode": "M.BS.01", "nama": "Baut Sekrup", "satuan": "buah", "harga": 500},
-      {"kode": "M.GT.01", "nama": "Genteng Keramik", "satuan": "buah", "harga": 5000},
-      {"kode": "M.GT.02", "nama": "Bubungan Genteng Keramik", "satuan": "buah", "harga": 15000},
-      {"kode": "M.KR.01", "nama": "Keramik Lantai 40x40 cm", "satuan": "m²", "harga": 75000},
-      {"kode": "M.SN.01", "nama": "Semen Nat/Grout", "satuan": "kg", "harga": 15000},
-      {"kode": "M.CT.01", "nama": "Cat Dinding", "satuan": "kg", "harga": 35000},
-      {"kode": "M.CT.02", "nama": "Cat Dasar/Plamir", "satuan": "kg", "harga": 20000}
+      {
+        "kode": "M00a",
+        "nama": "Air (biasanya gratis/termasuk overhead)",
+        "satuan": "liter",
+        "harga": 0
+      },
+      {
+        "kode": "M01a_kg",
+        "nama": "Semen Portland (kg/sak — 1 sak=40 kg)",
+        "satuan": "kg",
+        "harga": 1500,
+        "catatan": "Harga per kg. 1 sak = 40 kg. Di Master Harga bisa ganti satuan ke sak.",
+        "harga_per_sak": 60000,
+        "kg_per_sak": 40
+      },
+      {
+        "kode": "M05a",
+        "nama": "Pasir Urug",
+        "satuan": "m³",
+        "harga": 150000
+      },
+      {
+        "kode": "M05b",
+        "nama": "Pasir Pasang",
+        "satuan": "m³",
+        "harga": 200000
+      },
+      {
+        "kode": "M05c",
+        "nama": "Pasir Beton",
+        "satuan": "m³",
+        "harga": 220000
+      },
+      {
+        "kode": "M08a",
+        "nama": "Kerikil/Batu Pecah/Coral (1-2 cm)",
+        "satuan": "m³",
+        "harga": 250000,
+        "catatan": "Satuan m³ (bukan kg)"
+      },
+      {
+        "kode": "M08b",
+        "nama": "Kerikil/Batu Pecah (2-3 cm)",
+        "satuan": "m³",
+        "harga": 230000
+      },
+      {
+        "kode": "M09a",
+        "nama": "Minyak Bekisting",
+        "satuan": "liter",
+        "harga": 25000
+      },
+      {
+        "kode": "M10a",
+        "nama": "Batu Kali/Belah",
+        "satuan": "m³",
+        "harga": 200000
+      },
+      {
+        "kode": "M35a",
+        "nama": "Kayu Kaso 5/7 — per batang 4m",
+        "satuan": "batang",
+        "harga": 35000,
+        "catatan": "Lebih praktis dihitung per batang di lapangan desa"
+      },
+      {
+        "kode": "M35b",
+        "nama": "Kayu Papan Bekisting/Papan 2/20",
+        "satuan": "m³",
+        "harga": 3500000,
+        "catatan": "Satuan m³ untuk kalkulasi volume kayu"
+      },
+      {
+        "kode": "M53a",
+        "nama": "Kawat Beton",
+        "satuan": "kg",
+        "harga": 20000
+      },
+      {
+        "kode": "M54a",
+        "nama": "Besi Tulangan Polos/Ulir ∅6 mm (≈2,7 kg/batang 12m)",
+        "satuan": "kg",
+        "harga": 13000
+      },
+      {
+        "kode": "M54b",
+        "nama": "Besi Tulangan Polos/Ulir ∅8 mm (≈4,7 kg/batang 12m)",
+        "satuan": "kg",
+        "harga": 12500
+      },
+      {
+        "kode": "M54c",
+        "nama": "Besi Tulangan Polos/Ulir ∅10 mm (≈7,4 kg/batang 12m)",
+        "satuan": "kg",
+        "harga": 12000
+      },
+      {
+        "kode": "M54d",
+        "nama": "Besi Tulangan Polos/Ulir ∅12 mm (≈10,6 kg/batang 12m)",
+        "satuan": "kg",
+        "harga": 11500
+      },
+      {
+        "kode": "M54e",
+        "nama": "Besi Tulangan Polos/Ulir ∅16 mm",
+        "satuan": "kg",
+        "harga": 11500
+      },
+      {
+        "kode": "M72b",
+        "nama": "Paku Campur 5 & 7 cm",
+        "satuan": "kg",
+        "harga": 18000
+      },
+      {
+        "kode": "MPV01",
+        "nama": "Paving Block 6cm f'c 20 MPa",
+        "satuan": "m²",
+        "harga": 80000
+      },
+      {
+        "kode": "MPV02",
+        "nama": "Paving Block 6cm f'c 25 MPa",
+        "satuan": "m²",
+        "harga": 95000
+      },
+      {
+        "kode": "MPV03",
+        "nama": "Paving Block 8cm f'c 20 MPa",
+        "satuan": "m²",
+        "harga": 95000
+      },
+      {
+        "kode": "MPV04",
+        "nama": "Paving Block 8cm f'c 25 MPa",
+        "satuan": "m²",
+        "harga": 110000
+      },
+      {
+        "kode": "MCC01",
+        "nama": "Curing Compound",
+        "satuan": "liter",
+        "harga": 35000
+      },
+      {
+        "kode": "MAG01",
+        "nama": "Agregat 9,5-19,0 mm (hotmix)",
+        "satuan": "m³",
+        "harga": 300000
+      },
+      {
+        "kode": "MAG02",
+        "nama": "Agregat 0-5 mm (hotmix)",
+        "satuan": "m³",
+        "harga": 250000
+      },
+      {
+        "kode": "MAG03",
+        "nama": "Agregat Kelas A (LPA)",
+        "satuan": "m³",
+        "harga": 280000
+      },
+      {
+        "kode": "MAS01",
+        "nama": "Aspal Hotmix (AC-BC/AC-WC)",
+        "satuan": "kg",
+        "harga": 8500
+      },
+      {
+        "kode": "MAS02",
+        "nama": "Aspal Cair MC-30/MC-70 (Lapen)",
+        "satuan": "liter",
+        "harga": 12000
+      },
+      {
+        "kode": "MBP01",
+        "nama": "Batu Pokok Lapen 3-5 cm",
+        "satuan": "m³",
+        "harga": 250000
+      },
+      {
+        "kode": "MBP02",
+        "nama": "Batu Pengunci Lapen 1-2 cm",
+        "satuan": "m³",
+        "harga": 280000
+      },
+      {
+        "kode": "MLK01",
+        "nama": "Lantai Kerja f'c 10 MPa (ready mix)",
+        "satuan": "m³",
+        "harga": 750000
+      },
+      {
+        "kode": "MUD01",
+        "nama": "U-Ditch 30×30×120 cm",
+        "satuan": "buah",
+        "harga": 150000
+      },
+      {
+        "kode": "MUD03",
+        "nama": "U-Ditch 40×40×120 cm",
+        "satuan": "buah",
+        "harga": 200000
+      },
+      {
+        "kode": "MUD04",
+        "nama": "U-Ditch 40×60×120 cm",
+        "satuan": "buah",
+        "harga": 250000
+      },
+      {
+        "kode": "MUD05",
+        "nama": "U-Ditch 50×50×120 cm",
+        "satuan": "buah",
+        "harga": 280000
+      },
+      {
+        "kode": "MUD06",
+        "nama": "U-Ditch 60×60×120 cm",
+        "satuan": "buah",
+        "harga": 350000
+      },
+      {
+        "kode": "MBT01",
+        "nama": "Bata Merah 5×11×22 cm",
+        "satuan": "buah",
+        "harga": 800
+      },
+      {
+        "kode": "MBR01",
+        "nama": "Baja Ringan Truss 75.75 tebal 0,75 mm",
+        "satuan": "m²",
+        "harga": 85000,
+        "catatan": "Termasuk aksesoris standar"
+      },
+      {
+        "kode": "MBR01b",
+        "nama": "Baja Ringan Truss 100.100 tebal 1,0 mm (lebih kuat)",
+        "satuan": "m²",
+        "harga": 110000
+      },
+      {
+        "kode": "MBR02",
+        "nama": "Reng Baja Ringan 45.45 tebal 0,45 mm",
+        "satuan": "m²",
+        "harga": 25000
+      },
+      {
+        "kode": "MBR02b",
+        "nama": "Reng Baja Ringan 45.45 tebal 0,55 mm (lebih tebal)",
+        "satuan": "m²",
+        "harga": 30000
+      },
+      {
+        "kode": "MBS01",
+        "nama": "Baut Sekrup Self Drilling 10-16",
+        "satuan": "buah",
+        "harga": 500
+      },
+      {
+        "kode": "MGT01",
+        "nama": "Genteng Keramik",
+        "satuan": "buah",
+        "harga": 5000
+      },
+      {
+        "kode": "MGT02",
+        "nama": "Bubungan Genteng Keramik",
+        "satuan": "buah",
+        "harga": 15000
+      },
+      {
+        "kode": "MKR25",
+        "nama": "Keramik Lantai 25×25 cm",
+        "satuan": "m²",
+        "harga": 55000
+      },
+      {
+        "kode": "MKR40",
+        "nama": "Keramik Lantai 40×40 cm",
+        "satuan": "m²",
+        "harga": 75000
+      },
+      {
+        "kode": "MKR50",
+        "nama": "Keramik Lantai 50×50 cm",
+        "satuan": "m²",
+        "harga": 95000
+      },
+      {
+        "kode": "MKR60",
+        "nama": "Keramik Lantai 60×60 cm",
+        "satuan": "m²",
+        "harga": 120000
+      },
+      {
+        "kode": "MSN01",
+        "nama": "Semen Nat/Grout Keramik",
+        "satuan": "kg",
+        "harga": 15000
+      },
+      {
+        "kode": "MCT01",
+        "nama": "Cat Tembok — per kg",
+        "satuan": "kg",
+        "harga": 35000,
+        "catatan": "±1 liter ≈ 1,3 kg"
+      },
+      {
+        "kode": "MCT01L",
+        "nama": "Cat Tembok — per liter",
+        "satuan": "liter",
+        "harga": 45000
+      },
+      {
+        "kode": "MCT02",
+        "nama": "Cat Dasar/Plamir",
+        "satuan": "kg",
+        "harga": 20000
+      },
+      {
+        "kode": "MPP050",
+        "nama": "Pipa PVC 1/2\" (12,7mm) AW per batang 4m",
+        "satuan": "batang",
+        "harga": 25000
+      },
+      {
+        "kode": "MPP075",
+        "nama": "Pipa PVC 3/4\" (19mm) AW per batang 4m",
+        "satuan": "batang",
+        "harga": 35000
+      },
+      {
+        "kode": "MPP100",
+        "nama": "Pipa PVC 1\" (25mm) AW per batang 4m",
+        "satuan": "batang",
+        "harga": 55000
+      },
+      {
+        "kode": "MPP150",
+        "nama": "Pipa PVC 1-1/2\" (38mm) AW per batang 4m",
+        "satuan": "batang",
+        "harga": 85000
+      },
+      {
+        "kode": "MPP200",
+        "nama": "Pipa PVC 2\" (50mm) AW per batang 4m",
+        "satuan": "batang",
+        "harga": 125000
+      },
+      {
+        "kode": "MPP400",
+        "nama": "Pipa Casing PVC 4\" per batang 4m (sumur)",
+        "satuan": "batang",
+        "harga": 250000
+      },
+      {
+        "kode": "MPP400s",
+        "nama": "Screen/Saringan PVC 4\" (sumur bor)",
+        "satuan": "m'",
+        "harga": 120000
+      },
+      {
+        "kode": "MFT01",
+        "nama": "Elbow/Knee PVC 1/2\" 90°",
+        "satuan": "buah",
+        "harga": 2500
+      },
+      {
+        "kode": "MFT02",
+        "nama": "Elbow/Knee PVC 3/4\" 90°",
+        "satuan": "buah",
+        "harga": 3500
+      },
+      {
+        "kode": "MFT03",
+        "nama": "Elbow/Knee PVC 1\" 90°",
+        "satuan": "buah",
+        "harga": 5000
+      },
+      {
+        "kode": "MFT04",
+        "nama": "Elbow/Knee PVC 1-1/2\" 90°",
+        "satuan": "buah",
+        "harga": 9000
+      },
+      {
+        "kode": "MFT05",
+        "nama": "Elbow/Knee PVC 2\" 90°",
+        "satuan": "buah",
+        "harga": 15000
+      },
+      {
+        "kode": "MFT06",
+        "nama": "Tee PVC 1/2\"",
+        "satuan": "buah",
+        "harga": 3000
+      },
+      {
+        "kode": "MFT07",
+        "nama": "Tee PVC 3/4\"",
+        "satuan": "buah",
+        "harga": 4500
+      },
+      {
+        "kode": "MFT08",
+        "nama": "Tee PVC 1\"",
+        "satuan": "buah",
+        "harga": 7000
+      },
+      {
+        "kode": "MFT09",
+        "nama": "Tee PVC 1-1/2\"",
+        "satuan": "buah",
+        "harga": 12000
+      },
+      {
+        "kode": "MFT10",
+        "nama": "Tee PVC 2\"",
+        "satuan": "buah",
+        "harga": 20000
+      },
+      {
+        "kode": "MFT11",
+        "nama": "Shock Drat Dalam (Sok Drat Dalam) PVC 1/2\"",
+        "satuan": "buah",
+        "harga": 3000
+      },
+      {
+        "kode": "MFT12",
+        "nama": "Shock Drat Dalam (Sok Drat Dalam) PVC 3/4\"",
+        "satuan": "buah",
+        "harga": 4000
+      },
+      {
+        "kode": "MFT13",
+        "nama": "Shock Drat Dalam (Sok Drat Dalam) PVC 1\"",
+        "satuan": "buah",
+        "harga": 6000
+      },
+      {
+        "kode": "MFT14",
+        "nama": "Shock Drat Luar (Sok Drat Luar) PVC 1/2\"",
+        "satuan": "buah",
+        "harga": 3000
+      },
+      {
+        "kode": "MFT15",
+        "nama": "Shock Drat Luar (Sok Drat Luar) PVC 3/4\"",
+        "satuan": "buah",
+        "harga": 4000
+      },
+      {
+        "kode": "MFT16",
+        "nama": "Shock Drat Luar (Sok Drat Luar) PVC 1\"",
+        "satuan": "buah",
+        "harga": 6000
+      },
+      {
+        "kode": "MLV01",
+        "nama": "Lem PVC (kaleng 250ml)",
+        "satuan": "kaleng",
+        "harga": 25000
+      },
+      {
+        "kode": "MPM01",
+        "nama": "Pompa Submersible 0,5 HP",
+        "satuan": "unit",
+        "harga": 1500000
+      },
+      {
+        "kode": "MKL01",
+        "nama": "Kabel Listrik NYY 3×1,5 mm (per meter)",
+        "satuan": "m'",
+        "harga": 20000
+      }
     ],
     "alat": [
-      {"kode": "E.01", "nama": "AMP (Asphalt Mixing Plant)", "satuan": "Jam", "harga": 500000},
-      {"kode": "E.02", "nama": "Asphalt Finisher", "satuan": "Jam", "harga": 350000},
-      {"kode": "E.04", "nama": "Motor Grader", "satuan": "Jam", "harga": 400000},
-      {"kode": "E.05", "nama": "Compressor", "satuan": "Jam", "harga": 150000},
-      {"kode": "E.06", "nama": "Molen 0,35 m³", "satuan": "Hari", "harga": 300000},
-      {"kode": "E.06a", "nama": "Molen 0,35 m³ + Automatic Feeder", "satuan": "Hari", "harga": 350000},
-      {"kode": "E.10a", "nama": "Excavator Mini (0.2 m³)", "satuan": "Jam", "harga": 300000},
-      {"kode": "E.15", "nama": "Wheel Loader", "satuan": "Jam", "harga": 350000},
-      {"kode": "E.16a", "nama": "Stamper Kodok 150 kg", "satuan": "Hari", "harga": 250000},
-      {"kode": "E.16b", "nama": "Stamper Kuda", "satuan": "Hari", "harga": 300000},
-      {"kode": "E.17", "nama": "Tandem Roller", "satuan": "Jam", "harga": 350000},
-      {"kode": "E.17a", "nama": "Tandem Roller Kecil", "satuan": "Hari", "harga": 400000},
-      {"kode": "E.18", "nama": "Pneumatic Tire Roller", "satuan": "Jam", "harga": 300000},
-      {"kode": "E.19", "nama": "Vibro Roller", "satuan": "Jam", "harga": 350000},
-      {"kode": "E.35", "nama": "Dump Truck 10 Ton", "satuan": "Jam", "harga": 200000},
-      {"kode": "E.41", "nama": "Asphalt Distributor", "satuan": "Jam", "harga": 200000},
-      {"kode": "E.CC", "nama": "Concrete Cutter", "satuan": "Hari", "harga": 300000},
-      {"kode": "E.CT3", "nama": "Crane Truck 3 Ton + Winch 5 Ton", "satuan": "Jam", "harga": 400000},
-      {"kode": "E.CV", "nama": "Concrete Vibrator", "satuan": "Hari", "harga": 200000},
-      {"kode": "E.GS", "nama": "Genset", "satuan": "Jam", "harga": 150000},
-      {"kode": "E.TA", "nama": "Tandon Air Kap. 2 m³", "satuan": "Hari", "harga": 100000},
-      {"kode": "E.WT", "nama": "Water Tanker", "satuan": "Jam", "harga": 200000}
+      {
+        "kode": "E01",
+        "nama": "AMP (Asphalt Mixing Plant)",
+        "satuan": "Jam",
+        "harga": 500000
+      },
+      {
+        "kode": "E02",
+        "nama": "Asphalt Finisher",
+        "satuan": "Jam",
+        "harga": 350000
+      },
+      {
+        "kode": "E04",
+        "nama": "Motor Grader",
+        "satuan": "Jam",
+        "harga": 400000
+      },
+      {
+        "kode": "E05",
+        "nama": "Compressor",
+        "satuan": "Jam",
+        "harga": 150000
+      },
+      {
+        "kode": "E06",
+        "nama": "Molen Beton 0,35 m³",
+        "satuan": "Hari",
+        "harga": 300000
+      },
+      {
+        "kode": "E10a",
+        "nama": "Excavator Mini (0,2 m³)",
+        "satuan": "Jam",
+        "harga": 300000
+      },
+      {
+        "kode": "E16a",
+        "nama": "Stamper Kodok 150 kg",
+        "satuan": "Hari",
+        "harga": 250000
+      },
+      {
+        "kode": "E16b",
+        "nama": "Stamper Kuda/Vibrating Plate",
+        "satuan": "Hari",
+        "harga": 300000
+      },
+      {
+        "kode": "E17",
+        "nama": "Tandem Roller",
+        "satuan": "Jam",
+        "harga": 350000
+      },
+      {
+        "kode": "E17a",
+        "nama": "Tandem Roller Kecil",
+        "satuan": "Hari",
+        "harga": 400000
+      },
+      {
+        "kode": "E18",
+        "nama": "Pneumatic Tire Roller",
+        "satuan": "Jam",
+        "harga": 300000
+      },
+      {
+        "kode": "E19",
+        "nama": "Vibro Roller",
+        "satuan": "Jam",
+        "harga": 350000
+      },
+      {
+        "kode": "E35",
+        "nama": "Dump Truck 10 Ton",
+        "satuan": "Jam",
+        "harga": 200000
+      },
+      {
+        "kode": "E41",
+        "nama": "Asphalt Distributor",
+        "satuan": "Jam",
+        "harga": 200000
+      },
+      {
+        "kode": "ECC",
+        "nama": "Concrete Cutter",
+        "satuan": "Hari",
+        "harga": 300000
+      },
+      {
+        "kode": "ECT3",
+        "nama": "Crane Truck 3 Ton + Winch 5 Ton",
+        "satuan": "Jam",
+        "harga": 400000
+      },
+      {
+        "kode": "ECV",
+        "nama": "Concrete Vibrator",
+        "satuan": "Hari",
+        "harga": 200000
+      },
+      {
+        "kode": "EWT",
+        "nama": "Water Tanker",
+        "satuan": "Jam",
+        "harga": 200000
+      },
+      {
+        "kode": "EMB01",
+        "nama": "Mesin Bor Sumur (sewa per hari)",
+        "satuan": "Hari",
+        "harga": 2000000
+      },
+      {
+        "kode": "ALAT01",
+        "nama": "Cangkul (sewa/beli)",
+        "satuan": "buah",
+        "harga": 75000,
+        "catatan": "Harga beli. Bisa dibagi ke beberapa item."
+      },
+      {
+        "kode": "ALAT02",
+        "nama": "Sekop (sewa/beli)",
+        "satuan": "buah",
+        "harga": 60000
+      },
+      {
+        "kode": "ALAT03",
+        "nama": "Gancu/Linggis (sewa/beli)",
+        "satuan": "buah",
+        "harga": 80000
+      },
+      {
+        "kode": "ALAT04",
+        "nama": "Gerobak Dorong/Angkut",
+        "satuan": "buah",
+        "harga": 350000
+      },
+      {
+        "kode": "ALAT05",
+        "nama": "Ember Cor (5 buah/set)",
+        "satuan": "set",
+        "harga": 75000
+      },
+      {
+        "kode": "ALAT06",
+        "nama": "Benang/Tali Bangunan",
+        "satuan": "roll",
+        "harga": 15000
+      },
+      {
+        "kode": "ALAT07",
+        "nama": "Waterpass/Selang Ukur",
+        "satuan": "buah",
+        "harga": 50000
+      },
+      {
+        "kode": "ALAT08",
+        "nama": "Palu Besi",
+        "satuan": "buah",
+        "harga": 45000
+      },
+      {
+        "kode": "ALAT09",
+        "nama": "Besi Perata Beton (jidar)",
+        "satuan": "buah",
+        "harga": 35000
+      },
+      {
+        "kode": "ALAT10",
+        "nama": "Parang/Gergaji Kayu",
+        "satuan": "buah",
+        "harga": 40000
+      },
+      {
+        "kode": "ALAT11",
+        "nama": "BBM Solar Molen (per liter)",
+        "satuan": "liter",
+        "harga": 7000,
+        "catatan": "Konsumsi molen ±2 liter/jam"
+      },
+      {
+        "kode": "ALAT12",
+        "nama": "Kawat Ikat Besi (bendrat)",
+        "satuan": "kg",
+        "harga": 20000
+      }
     ]
   }
 }

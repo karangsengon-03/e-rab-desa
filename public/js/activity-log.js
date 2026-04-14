@@ -85,6 +85,7 @@ const ActivityLog = {
     if (!window._firebaseReady) return [];
     const { db, collection, query, where, orderBy, getDocs } = window._firebase;
     try {
+      // Coba dulu dengan composite query (butuh index Firestore)
       const q = query(
         collection(db, 'activity_logs'),
         where('projectId', '==', projectId),
@@ -93,8 +94,30 @@ const ActivityLog = {
       const snap = await getDocs(q);
       return snap.docs.slice(0, limit).map(d => ({ id: d.id, ...d.data() }));
     } catch (err) {
-      console.warn('Fetch logs error:', err);
-      return [];
+      // Fallback: query tanpa orderBy (tidak butuh composite index)
+      // Ini terjadi jika index belum dibuat di Firestore Console
+      console.warn('Composite query gagal (index belum ada?), pakai fallback:', err.message);
+      try {
+        const { db, collection, query, where, getDocs } = window._firebase;
+        const q2 = query(
+          collection(db, 'activity_logs'),
+          where('projectId', '==', projectId)
+        );
+        const snap2 = await getDocs(q2);
+        // Sort manual di client
+        const docs = snap2.docs
+          .map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => {
+            const ta = a.createdAt?.seconds || 0;
+            const tb = b.createdAt?.seconds || 0;
+            return tb - ta;
+          })
+          .slice(0, limit);
+        return docs;
+      } catch (err2) {
+        console.warn('Fallback logs juga gagal:', err2.message);
+        return [];
+      }
     }
   },
 

@@ -14,7 +14,7 @@
     ],
     "headers": [
       {
-        "source": "**/*.@(js|css|json)",
+        "source": "**/*.@(js|css|json|png|jpg|svg)",
         "headers": [
           {
             "key": "Cache-Control",
@@ -40,31 +40,10 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "no-cache"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "SAMEORIGIN"
-          },
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          }
-        ]
-      },
-      {
-        "source": "**",
-        "headers": [
-          {
-            "key": "X-XSS-Protection",
-            "value": "1; mode=block"
+            "value": "no-cache, no-store, must-revalidate"
           }
         ]
       }
     ]
-  },
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
   }
 }

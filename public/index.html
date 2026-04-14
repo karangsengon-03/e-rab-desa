@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#1B5E20">
 <meta name="description" content="e-RAB Desa - Aplikasi Rencana Anggaran Biaya Pekerjaan Fisik Desa">
-<title>e-RAB Desa v1.0</title>
+<title>e-RAB Desa v1.2</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
@@ -62,7 +62,7 @@
         </div>
         <div class="login-brand">
           <span class="login-brand-e">e-</span>RAB Desa
-          <span class="login-version">v1.0</span>
+          <span class="login-version">v1.2</span>
         </div>
         <p class="login-tagline">Sistem Rencana Anggaran Biaya<br>Pekerjaan Fisik Desa Digital</p>
       </div>
@@ -131,7 +131,7 @@
       </div>
       <div class="sidebar-brand">
         <div class="sidebar-brand-name"><span class="brand-e">e-</span>RAB Desa</div>
-        <div class="sidebar-brand-ver">v1.0</div>
+        <div class="sidebar-brand-ver">v1.2</div>
       </div>
       <button class="sidebar-close-btn" onclick="toggleSidebar()" aria-label="Tutup menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -262,11 +262,38 @@ window.dispatchEvent(new Event('firebase-ready'));
 <script src="js/ahsp.js"></script>
 <script src="js/kalkulasi.js"></script>
 <script src="js/projects.js"></script>
+<script src="js/ahsp-labels.js"></script>
 <script src="js/rab-input.js"></script>
 <script src="js/export-pdf.js"></script>
 <script src="js/export-excel.js"></script>
 <script src="js/pages.js"></script>
 <script src="js/app.js"></script>
 
+<!-- ===== SERVICE WORKER ===== -->
+<script>
+  // Service Worker Registration + Auto-Update
+  // Flow: updatefound → skipWaiting → controllerchange (app.js) → reload otomatis
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            newSW.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                // Tampilkan toast info update
+                document.getElementById('update-toast').classList.remove('hidden');
+                // Minta SW baru langsung aktif (skip waiting)
+                newSW.postMessage({ type: 'SKIP_WAITING' });
+                // Reload ditangani oleh controllerchange listener di app.js
+                // (tidak perlu setTimeout di sini agar tidak double reload)
+              }
+            });
+          });
+        })
+        .catch(err => console.warn('[SW] Register error:', err));
+    });
+  }
+</script>
 </body>
 </html>

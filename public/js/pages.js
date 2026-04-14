@@ -136,18 +136,24 @@ const Pages = {
             </div>
             <h1 style="font-size:1.2rem;font-weight:800;color:var(--text-primary);line-height:1.3">${Utils.escHtml(project.nama)}</h1>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;font-size:0.8rem;color:var(--text-muted)">
-              <span>📍 ${Utils.escHtml(project.lokasi_desa || '–')}, ${Utils.escHtml(project.lokasi_kecamatan || '–')}</span>
+              <span>📍 ${[project.lokasi_desa, project.lokasi_kecamatan, project.lokasi_kabupaten, project.lokasi_provinsi].filter(Boolean).map(Utils.escHtml).join(', ') || '–'}</span>
               <span>📅 TA ${Utils.escHtml(String(project.tahun_anggaran || '–'))}</span>
               <span>💰 ${Utils.escHtml(Utils.sumberDanaLabel(project.sumber_dana))}</span>
-              <span>📐 Overhead ${project.overhead_pct || 15}%</span>
+              <span>📐 Overhead ${project.overhead_pct ?? 15}%</span>
               ${project.no_dokumen ? `<span>📄 ${Utils.escHtml(project.no_dokumen)}</span>` : ''}
             </div>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             ${Auth.can('edit_project') && !project.locked ? `
-              <button class="btn btn-ghost btn-sm" onclick="Projects.openEditModal && Projects.openEditModal('${projectId}')">
+              <button class="btn btn-ghost btn-sm" onclick="Projects.openEditModal('${projectId}')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/></svg>
                 Edit Info
+              </button>
+            ` : ''}
+            ${Auth.can('delete_project') && !project.locked ? `
+              <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="Projects.confirmDelete('${projectId}','${Utils.escHtml(project.nama)}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="2"/></svg>
+                Hapus
               </button>
             ` : ''}
             <button class="btn btn-ghost btn-sm" onclick="Pages._showLogPanel('${projectId}')">
@@ -158,6 +164,19 @@ const Pages = {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6" stroke="currentColor" stroke-width="2"/></svg>
               Harga Lokal
             </button>
+            ${Auth.can('lock_rab') ? project.locked ? `
+              <button class="btn btn-sm" style="background:var(--warning,#f57c00);color:#fff;border:none"
+                onclick="Projects.openUnlockModal('${projectId}','${Utils.escHtml(project.nama)}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1" stroke="currentColor" stroke-width="2"/></svg>
+                Ke Draft
+              </button>
+            ` : `
+              <button class="btn btn-primary btn-sm"
+                onclick="Projects.openLockModal('${projectId}','${Utils.escHtml(project.nama)}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/></svg>
+                Finalkan / Kunci
+              </button>
+            ` : ''}
           </div>
         </div>
       </div>
@@ -181,11 +200,14 @@ const Pages = {
     });
   },
 
+  // ===== PROJECTS PAGE =====
+  async renderProjects(container) {
+    await Projects.renderPage('page-content');
+  },
+
   // ===== MASTER HARGA PAGE =====
   async renderMasterHarga(container, projectId) {
-    container.innerHTML = `<div class="card">
-      <div id="master-harga-content"></div>
-    </div>`;
+    container.innerHTML = `<div id="master-harga-content"></div>`;
     await MasterHarga.renderPage('master-harga-content', projectId || null);
   },
 
@@ -411,8 +433,176 @@ const Pages = {
   },
 
   // ===== RAB PREVIEW CONTENT (used by export + preview modal) =====
-  _renderRABPreviewContent(project, calc) {
+  _renderRABPreviewContent(project, calc, adm = null, admTotal = 0, grandTotalFinal = null) {
     const now = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const overhead = project?.overhead_pct ?? 15;
+    const _grandTotalFisik = calc.grandTotal;
+    const _grandTotal = grandTotalFinal !== null ? grandTotalFinal : _grandTotalFisik;
+    const _admTotal = admTotal || 0;
+    const matRekap = Kalkulasi.buildMaterialRekap(calc);
+
+    // Helper render breakdown tabel AHSP per satuan + kebutuhan nyata
+    const renderItemBreakdown = (item) => {
+      if (!item.breakdown || !item.ahsp) return '';
+      const bd = item.breakdown;
+      const vol = item.display_volume || 0;
+      const satuan = item.display_satuan || item.ahsp?.satuan || '';
+
+      const renderRows = (comps, label) => {
+        if (!comps?.length) return '';
+        const headerRow = `<tr style="background:#e8f5e9"><td colspan="7" style="padding:4px 8px;font-weight:700;font-size:0.75rem;color:#1B5E20">${label}</td></tr>`;
+        const rows = comps.map(c => {
+          const kebutuhan = parseFloat((c.koefisien * vol).toFixed(4));
+          const fmt = Kalkulasi.formatKebutuhan(c.kode, c.satuan, kebutuhan);
+          return `<tr style="border-bottom:1px solid #f0f0f0">
+            <td style="padding:4px 8px;font-family:monospace;font-size:0.72rem;color:#888">${Utils.escHtml(c.kode)}</td>
+            <td style="padding:4px 8px">${Utils.escHtml(c.nama)}</td>
+            <td style="padding:4px 8px;text-align:right">${Utils.formatKoef(c.koefisien)}</td>
+            <td style="padding:4px 8px;text-align:center;color:#888">${Utils.escHtml(c.satuan)}</td>
+            <td style="padding:4px 8px;text-align:right;font-family:monospace;font-size:0.8rem;color:var(--primary);font-weight:600">${fmt.display}</td>
+            <td style="padding:4px 8px;text-align:right;font-family:monospace;font-size:0.78rem">${Utils.formatRp(c.hsd)}</td>
+            <td style="padding:4px 8px;text-align:right;font-family:monospace;font-size:0.78rem">${Utils.formatRp(Math.round(c.koefisien * vol * c.hsd))}</td>
+          </tr>`;
+        }).join('');
+        return headerRow + rows;
+      };
+
+      return `
+        <details style="margin-top:6px">
+          <summary style="font-size:0.78rem;font-weight:600;color:var(--primary);cursor:pointer;padding:4px 0">
+            📊 Detail AHSP: ${Utils.escHtml(item.ahsp.kode||'')} per ${satuan} × ${Utils.formatNum(vol,3)} ${satuan} = ${Utils.formatRp(item.jumlah||0)}
+          </summary>
+          <div style="overflow-x:auto;margin-top:6px">
+            <table style="width:100%;border-collapse:collapse;font-size:0.8rem;background:var(--bg-card)">
+              <thead>
+                <tr style="background:var(--bg-hover);font-size:0.75rem">
+                  <th style="padding:5px 8px;text-align:left">Kode</th>
+                  <th style="padding:5px 8px;text-align:left">Komponen</th>
+                  <th style="padding:5px 8px;text-align:right">Koef/sat</th>
+                  <th style="padding:5px 8px;text-align:center">Sat</th>
+                  <th style="padding:5px 8px;text-align:right">Kebutuhan (×${Utils.formatNum(vol,3)})</th>
+                  <th style="padding:5px 8px;text-align:right">HSD (Rp)</th>
+                  <th style="padding:5px 8px;text-align:right">Jumlah (Rp)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(bd.upah, 'A. Upah Tenaga Kerja')}
+                <tr style="background:#f0f7f0;font-weight:700;font-size:0.78rem">
+                  <td colspan="6" style="padding:4px 8px;text-align:right">Jumlah A (Upah)</td>
+                  <td style="padding:4px 8px;text-align:right;font-family:monospace">${Utils.formatRp(bd.totalUpah)}</td>
+                </tr>
+                ${renderRows(bd.bahan, 'B. Bahan & Material')}
+                <tr style="background:#f0f7f0;font-weight:700;font-size:0.78rem">
+                  <td colspan="6" style="padding:4px 8px;text-align:right">Jumlah B (Bahan)</td>
+                  <td style="padding:4px 8px;text-align:right;font-family:monospace">${Utils.formatRp(bd.totalBahan)}</td>
+                </tr>
+                ${renderRows(bd.alat, 'C. Alat & Peralatan')}
+                <tr style="background:#f0f7f0;font-weight:700;font-size:0.78rem">
+                  <td colspan="6" style="padding:4px 8px;text-align:right">Jumlah C (Alat)</td>
+                  <td style="padding:4px 8px;text-align:right;font-family:monospace">${Utils.formatRp(bd.totalAlat)}</td>
+                </tr>
+                <tr style="background:#e3f2fd;font-weight:700;font-size:0.8rem">
+                  <td colspan="6" style="padding:5px 8px;text-align:right">D. Biaya Langsung (A+B+C)</td>
+                  <td style="padding:5px 8px;text-align:right;font-family:monospace">${Utils.formatRp(bd.biayaLangsung)}</td>
+                </tr>
+                ${overhead > 0 ? `
+                <tr style="font-size:0.78rem">
+                  <td colspan="6" style="padding:4px 8px;text-align:right">E. Overhead ${overhead}% × D</td>
+                  <td style="padding:4px 8px;text-align:right;font-family:monospace">${Utils.formatRp(bd.overhead)}</td>
+                </tr>` : ''}
+                <tr style="background:var(--primary);color:#fff;font-weight:800;font-size:0.82rem">
+                  <td colspan="6" style="padding:6px 8px;text-align:right">${overhead > 0 ? 'F.' : 'E.'} HSP ${overhead > 0 ? '(D+E)' : '(=D)'} × ${Utils.formatNum(vol,3)} ${satuan}</td>
+                  <td style="padding:6px 8px;text-align:right;font-family:monospace">${Utils.formatRp(item.jumlah||0)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      `;
+    };
+
+    // Helper render rekap material tabel
+    const renderRekapMaterial = () => {
+      const renderCat = (items, label) => {
+        // Fix e: filter item nilai 0
+        const visibleItems = items.filter(i => i.totalRp > 0 || (i.totalKebutuhanRaw || 0) > 0);
+        if (!visibleItems.length) return '';
+        const rows = visibleItems.map(i => {
+          const fmt = Kalkulasi.formatKebutuhan(i.kode, i.satuan, i.totalKebutuhan || i.totalKebutuhanRaw || 0);
+          // Fix g: HSD semen tampilkan per sak (harga/kg × 40)
+          const hsdDisplay = fmt.isSemen ? Utils.formatRp(i.hsd * 40) : Utils.formatRp(i.hsd);
+          const namaExtra = fmt.isSemen ? ' <small style="color:var(--text-muted)">(1 sak = 40 kg)</small>' : '';
+          return `<tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:6px 10px;font-family:monospace;font-size:0.75rem;color:var(--text-muted)">${Utils.escHtml(i.kode)}</td>
+            <td style="padding:6px 10px;font-weight:500">${Utils.escHtml(i.nama)}${namaExtra}</td>
+            <td style="padding:6px 10px;text-align:right;font-family:monospace;color:var(--primary);font-weight:600">${fmt.display}</td>
+            <td style="padding:6px 10px;text-align:right;font-family:monospace">${hsdDisplay}</td>
+            <td style="padding:6px 10px;text-align:right;font-family:monospace;font-weight:600">${Utils.formatRp(i.totalRp)}</td>
+          </tr>`;
+        }).join('');
+        const headerRow = `<tr style="background:var(--primary)"><td colspan="5" style="padding:6px 10px;color:#fff;font-weight:700;font-size:0.82rem">${label}</td></tr>`;
+        return headerRow + rows;
+      };
+
+      return `
+        <div style="margin-top:28px">
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:8px;color:var(--primary)">V. REKAPITULASI KEBUTUHAN BAHAN, UPAH, SEWA ALAT & ADMINISTRASI</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px">Akumulasi seluruh kebutuhan material, upah, dan alat dari semua item pekerjaan</div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+              <thead>
+                <tr style="background:var(--bg-hover)">
+                  <th style="padding:7px 10px;text-align:left;width:80px">Kode</th>
+                  <th style="padding:7px 10px;text-align:left">Nama</th>
+                  <th style="padding:7px 10px;text-align:right;width:130px">Total Kebutuhan</th>
+                  <th style="padding:7px 10px;text-align:right;width:110px">HSD (Rp)</th>
+                  <th style="padding:7px 10px;text-align:right;width:120px">Total (Rp)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderCat(matRekap.upah,  'A. Upah Tenaga Kerja')}
+                <tr style="background:var(--primary-surface);font-weight:700">
+                  <td colspan="4" style="padding:6px 10px;text-align:right">Sub-Total Upah</td>
+                  <td style="padding:6px 10px;text-align:right;font-family:monospace">${Utils.formatRp(matRekap.totalUpah)}</td>
+                </tr>
+                ${renderCat(matRekap.bahan, 'B. Bahan & Material')}
+                <tr style="background:var(--primary-surface);font-weight:700">
+                  <td colspan="4" style="padding:6px 10px;text-align:right">Sub-Total Bahan</td>
+                  <td style="padding:6px 10px;text-align:right;font-family:monospace">${Utils.formatRp(matRekap.totalBahan)}</td>
+                </tr>
+                ${renderCat(matRekap.alat,  'C. Alat & Peralatan')}
+                <tr style="background:var(--primary-surface);font-weight:700">
+                  <td colspan="4" style="padding:6px 10px;text-align:right">Sub-Total Alat</td>
+                  <td style="padding:6px 10px;text-align:right;font-family:monospace">${Utils.formatRp(matRekap.totalAlat)}</td>
+                </tr>
+                <tr style="background:var(--primary);color:#fff;font-weight:800;font-size:0.9rem">
+                  <td colspan="4" style="padding:8px 10px;text-align:right">Sub-Total Fisik (A+B+C)</td>
+                  <td style="padding:8px 10px;text-align:right;font-family:monospace">${Utils.formatRp(matRekap.grandTotal)}</td>
+                </tr>
+                ${_admTotal > 0 ? `
+                <tr style="background:var(--warning-surface);font-weight:700;font-size:0.85rem">
+                  <td colspan="4" style="padding:7px 10px;text-align:right">D. Administrasi Kegiatan</td>
+                  <td style="padding:7px 10px;text-align:right;font-family:monospace">${Utils.formatRp(_admTotal)}</td>
+                </tr>
+                ${(adm?.items||[]).map(it => `
+                <tr style="border-bottom:1px solid var(--border)">
+                  <td style="padding:5px 10px;font-family:monospace;font-size:0.72rem;color:var(--text-muted)">ADM</td>
+                  <td colspan="2" style="padding:5px 10px">${Utils.escHtml(it.nama)}</td>
+                  <td style="padding:5px 10px;text-align:right;font-family:monospace;color:var(--primary);font-weight:600">1 ${Utils.escHtml(it.satuan||'ls')}</td>
+                  <td style="padding:5px 10px;text-align:right;font-family:monospace;font-weight:600">${Utils.formatRp(it.nilai)}</td>
+                </tr>`).join('')}
+                ` : ''}
+                <tr style="background:#1B3A2D;color:#fff;font-weight:900;font-size:0.95rem">
+                  <td colspan="4" style="padding:9px 10px;text-align:right">GRAND TOTAL RAB (Fisik + Admin)</td>
+                  <td style="padding:9px 10px;text-align:right;font-family:monospace">${Utils.formatRp(_grandTotal)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    };
+
     return `
       <div style="font-family:var(--font-sans);font-size:0.875rem;line-height:1.6">
         <!-- Header -->
@@ -422,11 +612,11 @@ const Pages = {
           <div style="margin-top:6px;color:var(--text-secondary)">
             ${Utils.escHtml(project.lokasi_desa || '')}${project.lokasi_kecamatan ? ', ' + Utils.escHtml(project.lokasi_kecamatan) : ''}${project.lokasi_kabupaten ? ', ' + Utils.escHtml(project.lokasi_kabupaten) : ''}
           </div>
-          <div style="margin-top:4px;color:var(--text-secondary)">Tahun Anggaran: ${project.tahun_anggaran || '–'} | Sumber Dana: ${Utils.sumberDanaLabel(project.sumber_dana)}</div>
+          <div style="margin-top:4px;color:var(--text-secondary)">Tahun Anggaran: ${project.tahun_anggaran || '–'} | Sumber Dana: ${Utils.sumberDanaLabel(project.sumber_dana)} | Overhead: ${overhead}%</div>
           ${project.no_dokumen ? `<div style="margin-top:4px;color:var(--text-muted)">No. Dokumen: ${Utils.escHtml(project.no_dokumen)}</div>` : ''}
         </div>
 
-        <!-- Rekapitulasi -->
+        <!-- I. Rekapitulasi -->
         <div style="margin-bottom:24px">
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:8px;color:var(--primary)">I. REKAPITULASI RAB</div>
           <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
@@ -445,30 +635,40 @@ const Pages = {
                   <td style="padding:8px 12px;text-align:right;font-family:var(--font-mono)">${Utils.formatRp(sec.total)}</td>
                 </tr>
               `).join('')}
-              <tr style="background:var(--primary-surface);font-weight:700;border-top:2px solid var(--primary)">
-                <td colspan="2" style="padding:10px 12px">JUMLAH TOTAL</td>
-                <td style="padding:10px 12px;text-align:right;font-family:var(--font-mono);font-size:1rem;color:var(--primary)">${Utils.formatRp(calc.grandTotal)}</td>
+              <tr style="border-top:2px solid var(--border);font-weight:700">
+                <td colspan="2" style="padding:8px 12px">Subtotal Pekerjaan Fisik</td>
+                <td style="padding:8px 12px;text-align:right;font-family:var(--font-mono)">${Utils.formatRp(_grandTotalFisik)}</td>
+              </tr>
+              ${_admTotal > 0 ? `
+              <tr style="border-bottom:1px solid var(--border)">
+                <td style="padding:8px 12px;color:var(--text-muted)">—</td>
+                <td style="padding:8px 12px">Administrasi Kegiatan</td>
+                <td style="padding:8px 12px;text-align:right;font-family:var(--font-mono)">${Utils.formatRp(_admTotal)}</td>
+              </tr>` : ''}
+              <tr style="background:var(--primary);color:#fff;font-weight:800;border-top:2px solid var(--primary)">
+                <td colspan="2" style="padding:10px 12px">GRAND TOTAL RAB</td>
+                <td style="padding:10px 12px;text-align:right;font-family:var(--font-mono);font-size:1rem">${Utils.formatRp(_grandTotal)}</td>
               </tr>
             </tbody>
           </table>
-          <div style="margin-top:8px;font-style:italic;font-size:0.8rem">Terbilang: ${Utils.terbilang(calc.grandTotal)}</div>
+          <div style="margin-top:8px;font-style:italic;font-size:0.8rem">Terbilang: ${Utils.terbilang(_grandTotal)}</div>
         </div>
 
-        <!-- Per Section Detail -->
+        <!-- II. Per Section Detail + AHSP Breakdown -->
         ${calc.sections.map((sec, si) => `
           <div style="margin-bottom:20px">
             <div style="font-weight:700;font-size:0.9rem;margin-bottom:8px;color:var(--primary)">
-              ${si + 1}. ${Utils.escHtml(sec.nama)}
+              II. ANALISA HARGA SATUAN PEKERJAAN (AHSP) — ${si + 1}. ${Utils.escHtml(sec.nama)}
             </div>
             <table style="width:100%;border-collapse:collapse;font-size:0.8rem">
               <thead>
                 <tr style="background:var(--bg-hover)">
                   <th style="padding:6px 10px;text-align:left;width:30px">No</th>
                   <th style="padding:6px 10px;text-align:left">Uraian Pekerjaan</th>
-                  <th style="padding:6px 10px;text-align:right;width:80px">Sat</th>
-                  <th style="padding:6px 10px;text-align:right;width:90px">Volume</th>
+                  <th style="padding:6px 10px;text-align:right;width:60px">Sat</th>
+                  <th style="padding:6px 10px;text-align:right;width:80px">Volume</th>
                   <th style="padding:6px 10px;text-align:right;width:110px">Harga Sat (Rp)</th>
-                  <th style="padding:6px 10px;text-align:right;width:120px">Jumlah (Rp)</th>
+                  <th style="padding:6px 10px;text-align:right;width:110px">Jumlah (Rp)</th>
                 </tr>
               </thead>
               <tbody>
@@ -477,8 +677,10 @@ const Pages = {
                     <td style="padding:6px 10px">${ii + 1}</td>
                     <td style="padding:6px 10px">
                       <div style="font-weight:500">${Utils.escHtml(item.nama_tampil || item.ahsp?.nama || '')}</div>
+                      ${item.ahsp?.kode ? `<div style="font-size:0.7rem;color:var(--text-muted)">[${Utils.escHtml(item.ahsp.kode)}]</div>` : ''}
                       ${item.ahsp?.mutu_fc ? `<div style="font-size:0.7rem;color:var(--text-muted)">f'c ${item.ahsp.mutu_fc} MPa / K-${item.ahsp.mutu_k || Utils.fcToK(item.ahsp.mutu_fc)}</div>` : ''}
                       ${item.keterangan ? `<div style="font-size:0.72rem;color:var(--text-muted);font-style:italic">${Utils.escHtml(item.keterangan)}</div>` : ''}
+                      ${renderItemBreakdown(item)}
                     </td>
                     <td style="padding:6px 10px;text-align:right">${Utils.escHtml(item.display_satuan || item.ahsp?.satuan || '')}</td>
                     <td style="padding:6px 10px;text-align:right;font-family:var(--font-mono)">${Utils.formatNum(item.display_volume || 0, 3)}</td>
@@ -492,11 +694,84 @@ const Pages = {
                 </tr>
               </tbody>
             </table>
+
+            <!-- III. HSP x Volume per pekerjaan di section ini -->
+            <div style="margin-top:10px;margin-bottom:4px;font-size:0.78rem;font-weight:700;color:var(--primary)">
+              III. VOLUME × HSP — ${Utils.escHtml(sec.nama)}
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:0.78rem;margin-bottom:6px">
+              <thead><tr style="background:var(--bg-hover)">
+                <th style="padding:5px 8px;text-align:left">No</th>
+                <th style="padding:5px 8px;text-align:left">Uraian</th>
+                <th style="padding:5px 8px;text-align:right">Volume</th>
+                <th style="padding:5px 8px;text-align:center">Sat</th>
+                <th style="padding:5px 8px;text-align:right">HSP/Sat (Rp)</th>
+                <th style="padding:5px 8px;text-align:right">Jumlah (Rp)</th>
+              </tr></thead>
+              <tbody>
+                ${sec.items.map((item, ii) => `
+                  <tr style="border-bottom:1px solid var(--border)">
+                    <td style="padding:4px 8px">${ii+1}</td>
+                    <td style="padding:4px 8px">${Utils.escHtml(item.nama_tampil||item.ahsp?.nama||'')}</td>
+                    <td style="padding:4px 8px;text-align:right;font-family:monospace">${Utils.formatNum(item.display_volume||0,3)}</td>
+                    <td style="padding:4px 8px;text-align:center">${Utils.escHtml(item.display_satuan||item.ahsp?.satuan||'')}</td>
+                    <td style="padding:4px 8px;text-align:right;font-family:monospace">${Utils.formatRp(item.hsp||0)}</td>
+                    <td style="padding:4px 8px;text-align:right;font-family:monospace;font-weight:600">${Utils.formatRp(item.jumlah||0)}</td>
+                  </tr>
+                  ${(item.sta_mode==='sta'||item.sta_mode==='subrows') && item.sta_rows?.length ? `
+                    <tr style="background:#f8fafc">
+                      <td colspan="6" style="padding:6px 8px 8px 20px">
+                        <div style="font-size:0.72rem;font-weight:700;color:var(--primary);margin-bottom:4px">
+                          📍 Breakdown per STA (${item.sta_rows.length} segmen):
+                        </div>
+                        <table style="width:100%;border-collapse:collapse;font-size:0.7rem">
+                          <thead>
+                            <tr style="background:var(--bg-hover)">
+                              <th style="padding:3px 6px;text-align:left">STA Dari</th>
+                              <th style="padding:3px 6px;text-align:left">STA Ke</th>
+                              <th style="padding:3px 6px;text-align:right">Panjang (m)</th>
+                              <th style="padding:3px 6px;text-align:right">Lebar (m)</th>
+                              <th style="padding:3px 6px;text-align:right">Tebal (m)</th>
+                              <th style="padding:3px 6px;text-align:right">Volume (m³)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            ${item.sta_rows.map(r => {
+                              const vol = parseFloat(((r.panjang||0)*(r.lebar||0)*(r.tinggi||0)).toFixed(3));
+                              return '<tr style="border-bottom:1px solid var(--border)">'
+                                + '<td style="padding:3px 6px">' + Utils.escHtml(r.sta_dari||'') + '</td>'
+                                + '<td style="padding:3px 6px">' + Utils.escHtml(r.sta_ke||'') + '</td>'
+                                + '<td style="padding:3px 6px;text-align:right">' + Utils.formatNum(r.panjang||0,2) + '</td>'
+                                + '<td style="padding:3px 6px;text-align:right">' + Utils.formatNum(r.lebar||0,2) + '</td>'
+                                + '<td style="padding:3px 6px;text-align:right">' + Utils.formatNum(r.tinggi||0,3) + '</td>'
+                                + '<td style="padding:3px 6px;text-align:right;font-weight:600;color:var(--primary)">' + Utils.formatNum(vol,3) + '</td>'
+                                + '</tr>';
+                            }).join('')}
+                            <tr style="background:var(--primary-surface);font-weight:700">
+                              <td colspan="5" style="padding:3px 6px;text-align:right">Total Volume</td>
+                              <td style="padding:3px 6px;text-align:right;color:var(--primary)">
+                                ${Utils.formatNum(item.sta_rows.reduce((s,r)=>s+parseFloat(((r.panjang||0)*(r.lebar||0)*(r.tinggi||0)).toFixed(3)),0),3)} m³
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>` : ''}
+                `).join('')}
+                <tr style="background:var(--primary-surface);font-weight:700">
+                  <td colspan="5" style="padding:6px 8px;text-align:right">Sub-Total ${Utils.escHtml(sec.nama)}</td>
+                  <td style="padding:6px 8px;text-align:right;font-family:monospace">${Utils.formatRp(sec.total)}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         `).join('')}
 
+        <!-- V. Rekap Material Total + Admin -->
+        ${renderRekapMaterial()}
+
         <div style="margin-top:24px;font-size:0.78rem;color:var(--text-muted);border-top:1px solid var(--border);padding-top:12px">
-          Dicetak: ${now} | e-RAB Desa v1.0 | Berdasarkan Permen PUPR No.8/2023
+          Dicetak: ${now} | e-RAB Desa v1.2 | Berdasarkan Permen PUPR No.8/2023
         </div>
       </div>
     `;

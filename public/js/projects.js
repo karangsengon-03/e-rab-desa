@@ -147,7 +147,7 @@ const Projects = {
     const { db, doc, updateDoc, serverTimestamp } = window._firebase;
     try {
       await updateDoc(doc(db, 'projects', id), {
-        locked: false, status: 'review',
+        locked: false, status: 'draft',
         unlockedAt: serverTimestamp(),
         unlockedBy: Auth.currentUser?.uid,
         unlockReason: alasan
@@ -333,6 +333,8 @@ const Projects = {
           <div class="form-group">
             <label class="lbl lbl-req">Overhead (%)</label>
             <select class="sel" id="p-overhead">
+              <option value="0">0% (Tanpa Overhead)</option>
+              <option value="5">5%</option>
               <option value="10">10%</option>
               <option value="12">12%</option>
               <option value="15" selected>15% (Default)</option>
@@ -367,7 +369,7 @@ const Projects = {
     const lokasi_kabupaten = document.getElementById('p-kabupaten')?.value?.trim();
     const lokasi_provinsi = document.getElementById('p-provinsi')?.value?.trim();
     const no_dokumen = document.getElementById('p-nodok')?.value?.trim();
-    const overhead_pct = parseInt(document.getElementById('p-overhead')?.value) || 15;
+    const overhead_pct = parseInt(document.getElementById('p-overhead')?.value ?? '15');
     const sta_mode = document.getElementById('p-sta-mode')?.value || 'subrows';
     const keterangan = document.getElementById('p-keterangan')?.value?.trim();
 
@@ -384,6 +386,150 @@ const Projects = {
     if (id) {
       await this.loadAll();
       navigate('rab-detail', id);
+    }
+  },
+
+  // ===== EDIT PROJECT INFO MODAL =====
+  async openEditModal(projectId) {
+    const project = await this.load(projectId);
+    if (!project) { showToast('Proyek tidak ditemukan', 'error'); return; }
+    if (project.locked) { showToast('RAB dikunci. Buka kunci dulu untuk mengedit info proyek.', 'error'); return; }
+
+    openModal({
+      title: 'Edit Info Proyek',
+      size: 'modal-lg',
+      body: `
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="lbl lbl-req">Nama Kegiatan / Proyek</label>
+          <input type="text" class="inp" id="ep-nama" value="${Utils.escHtml(project.nama||'')}">
+        </div>
+        <div class="form-row form-row-2" style="margin-bottom:12px">
+          <div class="form-group">
+            <label class="lbl lbl-req">Tahun Anggaran</label>
+            <input type="number" class="inp" id="ep-tahun" value="${project.tahun_anggaran||new Date().getFullYear()}" min="2020" max="2040">
+          </div>
+          <div class="form-group">
+            <label class="lbl lbl-req">Sumber Dana</label>
+            <select class="sel" id="ep-sumber">
+              <option value="dd" ${project.sumber_dana==='dd'?'selected':''}>DD (Dana Desa)</option>
+              <option value="add" ${project.sumber_dana==='add'?'selected':''}>ADD</option>
+              <option value="apbdes" ${project.sumber_dana==='apbdes'?'selected':''}>APBDes</option>
+              <option value="dak" ${project.sumber_dana==='dak'?'selected':''}>DAK</option>
+              <option value="bankeu" ${project.sumber_dana==='bankeu'?'selected':''}>Bantuan Keuangan Provinsi/Kab</option>
+              <option value="pad" ${project.sumber_dana==='pad'?'selected':''}>PAD Desa</option>
+              <option value="swadaya" ${project.sumber_dana==='swadaya'?'selected':''}>Swadaya Masyarakat</option>
+              <option value="hibah" ${project.sumber_dana==='hibah'?'selected':''}>Hibah</option>
+              <option value="lainnya" ${project.sumber_dana==='lainnya'?'selected':''}>Lainnya</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row form-row-2" style="margin-bottom:12px">
+          <div class="form-group">
+            <label class="lbl">Desa</label>
+            <input type="text" class="inp" id="ep-desa" value="${Utils.escHtml(project.lokasi_desa||'')}">
+          </div>
+          <div class="form-group">
+            <label class="lbl">Kecamatan</label>
+            <input type="text" class="inp" id="ep-kecamatan" value="${Utils.escHtml(project.lokasi_kecamatan||'')}">
+          </div>
+        </div>
+        <div class="form-row form-row-2" style="margin-bottom:12px">
+          <div class="form-group">
+            <label class="lbl">Kabupaten</label>
+            <input type="text" class="inp" id="ep-kabupaten" value="${Utils.escHtml(project.lokasi_kabupaten||'')}" placeholder="Nama kabupaten">
+          </div>
+          <div class="form-group">
+            <label class="lbl">Provinsi</label>
+            <input type="text" class="inp" id="ep-provinsi" value="${Utils.escHtml(project.lokasi_provinsi||'')}" placeholder="Nama provinsi">
+          </div>
+        </div>
+        <div class="form-row form-row-2" style="margin-bottom:12px">
+          <div class="form-group">
+            <label class="lbl">No. Dokumen</label>
+            <input type="text" class="inp" id="ep-nodok" value="${Utils.escHtml(project.no_dokumen||'')}">
+          </div>
+          <div class="form-group">
+            <label class="lbl">Overhead (%)</label>
+            <select class="sel" id="ep-overhead">
+              <option value="0" ${project.overhead_pct===0?'selected':''}>0% (Tanpa Overhead)</option>
+              <option value="5" ${project.overhead_pct===5?'selected':''}>5%</option>
+              <option value="10" ${project.overhead_pct===10?'selected':''}>10%</option>
+              <option value="12" ${project.overhead_pct===12?'selected':''}>12%</option>
+              <option value="15" ${project.overhead_pct===15||(project.overhead_pct===undefined||project.overhead_pct===null)?'selected':''}>15% (Default)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="lbl">Keterangan</label>
+          <textarea class="txa" id="ep-ket" rows="2">${Utils.escHtml(project.keterangan||'')}</textarea>
+        </div>
+      `,
+      footer: `
+        <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button class="btn btn-primary" onclick="Projects._doEdit('${projectId}')">💾 Simpan Perubahan</button>
+      `
+    });
+  },
+
+  async _doEdit(projectId) {
+    const nama     = document.getElementById('ep-nama')?.value?.trim();
+    const tahun    = parseInt(document.getElementById('ep-tahun')?.value) || new Date().getFullYear();
+    const sumber   = document.getElementById('ep-sumber')?.value;
+    const desa     = document.getElementById('ep-desa')?.value?.trim();
+    const kec      = document.getElementById('ep-kecamatan')?.value?.trim();
+    const nodok    = document.getElementById('ep-nodok')?.value?.trim();
+    const overhead = parseInt(document.getElementById('ep-overhead')?.value ?? '15');
+    const ket      = document.getElementById('ep-ket')?.value?.trim();
+    if (!nama) { showToast('Nama kegiatan wajib diisi', 'error'); return; }
+
+    const kab  = document.getElementById('ep-kabupaten')?.value?.trim();
+    const prov = document.getElementById('ep-provinsi')?.value?.trim();
+    const ok = await this.update(projectId, {
+      nama, tahun_anggaran: tahun, sumber_dana: sumber,
+      lokasi_desa: desa, lokasi_kecamatan: kec,
+      lokasi_kabupaten: kab, lokasi_provinsi: prov,
+      no_dokumen: nodok, overhead_pct: overhead, keterangan: ket
+    });
+    if (ok) {
+      closeModal();
+      showToast('Info proyek berhasil diperbarui ✓', 'success');
+      // Reload current page to show changes
+      if (window.RABInput?._projectId === projectId) {
+        await Pages.renderRABDetail(document.getElementById('page-content'), projectId);
+      } else {
+        await this.renderPage('page-content');
+      }
+    }
+  },
+
+  // ===== CONFIRM DELETE PROJECT =====
+  confirmDelete(projectId, nama) {
+    openModal({
+      title: 'Hapus Proyek',
+      body: `
+        <div style="background:var(--danger-surface);border-radius:var(--radius-sm);padding:12px 14px;color:var(--danger);margin-bottom:12px">
+          ⚠️ <strong>Tindakan ini tidak dapat dibatalkan.</strong>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.875rem">Proyek <strong>"${Utils.escHtml(nama)}"</strong> beserta seluruh data RAB di dalamnya akan dihapus permanen.</p>
+        <div class="form-group" style="margin-top:14px">
+          <label class="lbl">Ketik nama proyek untuk konfirmasi:</label>
+          <input type="text" class="inp" id="delete-confirm-input" placeholder="${Utils.escHtml(nama)}">
+        </div>
+      `,
+      footer: `
+        <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button class="btn btn-danger" onclick="Projects._doDelete('${projectId}','${Utils.escHtml(nama)}')">🗑️ Hapus Permanen</button>
+      `
+    });
+  },
+
+  async _doDelete(projectId, nama) {
+    const input = document.getElementById('delete-confirm-input')?.value?.trim();
+    if (input !== nama) { showToast('Nama proyek tidak sesuai. Ketik ulang dengan benar.', 'error'); return; }
+    closeModal();
+    const ok = await this.delete(projectId);
+    if (ok) {
+      navigate('projects');
     }
   },
 

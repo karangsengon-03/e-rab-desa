@@ -1,19 +1,21 @@
 /* ============================================================
-   e-RAB Desa v1.0 — master-harga.js
-   Master price management: Global + per-project override
-   2 options: (A) all-in price, (B) base price + transport cost
+   e-RAB Desa v1.2 — master-harga.js
+   Master Harga dengan Dual Satuan Semen (kg/sak) yang lebih bersih
    ============================================================ */
 
 'use strict';
 
 const MasterHarga = {
-  _data: null,        // loaded AHSP default data
-  _globalHarga: null, // from Firestore 'master_harga' doc
-  _projectOverrides: {}, // projectId → { kode: overrideObj }
-  _activeTab: 'upah',
+  _data: null,
+  _globalUpah:  [],
+  _globalBahan: [],
+  _globalAlat:  [],
+  _loaded: false,
+  _projectOverrides: {},
+  _activeTab: 'bahan',
   _activeProjectId: null,
 
-  // ===== LOAD DEFAULT FROM JSON =====
+  // Load default dari JSON
   async loadDefault() {
     if (this._data) return this._data;
     try {
@@ -21,523 +23,350 @@ const MasterHarga = {
       this._data = await res.json();
       return this._data;
     } catch (err) {
-      console.error('Failed to load AHSP data:', err);
+      console.error('loadDefault error:', err);
       return null;
     }
   },
 
-  // ===== LOAD GLOBAL FROM FIRESTORE =====
-  async loadGlobal() {
-    if (!window._firebaseReady) return null;
+  // Load global dari Firestore
+  async loadGlobal(forceRefresh = false) {
+    if (this._loaded && !forceRefresh) return true;
+    if (!window._firebaseReady) return false;
+
     const { db, doc, getDoc } = window._firebase;
     try {
       const snap = await getDoc(doc(db, 'master_harga', 'global'));
       if (snap.exists()) {
-        this._globalHarga = snap.data();
-        return this._globalHarga;
+        const d = snap.data();
+        this._globalUpah  = this._toArray(d.upah);
+        this._globalBahan = this._toArray(d.bahan);
+        this._globalAlat  = this._toArray(d.alat);
+        this._loaded = true;
+        return true;
       }
-      // First time: seed from JSON default
       await this.seedFromDefault();
-      return this._globalHarga;
-    } catch (err) {
-      console.error('Load global harga error:', err);
-      return null;
-    }
-  },
-
-  // ===== SEED GLOBAL FROM JSON =====
-  async seedFromDefault() {
-    const data = await this.loadDefault();
-    if (!data) return;
-    const { db, doc, setDoc, serverTimestamp } = window._firebase;
-
-    const harga = { upah: {}, bahan: {}, alat: {}, updatedAt: serverTimestamp() };
-    data.master_harga_default.upah.forEach(i => { harga.upah[i.kode] = { ...i }; });
-    data.master_harga_default.bahan.forEach(i => { harga.bahan[i.kode] = { ...i }; });
-    data.master_harga_default.alat.forEach(i => { harga.alat[i.kode] = { ...i }; });
-
-    await setDoc(doc(db, 'master_harga', 'global'), harga);
-    this._globalHarga = harga;
-  },
-
-  // ===== GET EFFECTIVE PRICE FOR A COMPONENT =====
-  // Returns effective harga considering project override
-  getHarga(kode, projectId = null) {
-    // Check project override first
-    if (projectId && this._projectOverrides[projectId]) {
-      const ov = this._projectOverrides[projectId][kode];
-      if (ov) {
-        // Option A: all-in price
-        if (ov.mode === 'allin') return Math.round(ov.harga_allin || 0);
-        // Option B: base + transport
-        if (ov.mode === 'transport') return Math.round((ov.harga_base || 0) + (ov.harga_transport || 0));
-      }
-    }
-
-    // Fall back to global
-    if (this._globalHarga) {
-      for (const cat of ['upah', 'bahan', 'alat']) {
-        if (this._globalHarga[cat]?.[kode]) {
-          return Math.round(this._globalHarga[cat][kode].harga || 0);
-        }
-      }
-    }
-    return 0;
-  },
-
-  // ===== GET ITEM INFO =====
-  getItem(kode) {
-    if (this._globalHarga) {
-      for (const cat of ['upah', 'bahan', 'alat']) {
-        if (this._globalHarga[cat]?.[kode]) {
-          return { ...this._globalHarga[cat][kode], kategori: cat };
-        }
-      }
-    }
-    // fallback from default data
-    if (this._data?.master_harga_default) {
-      for (const cat of ['upah', 'bahan', 'alat']) {
-        const found = this._data.master_harga_default[cat]?.find(i => i.kode === kode);
-        if (found) return { ...found, kategori: cat };
-      }
-    }
-    return null;
-  },
-
-  // ===== LOAD PROJECT OVERRIDES =====
-  async loadProjectOverrides(projectId) {
-    if (!projectId || !window._firebaseReady) return {};
-    const { db, doc, getDoc } = window._firebase;
-    try {
-      const snap = await getDoc(doc(db, 'projects', projectId, 'settings', 'harga_override'));
-      if (snap.exists()) {
-        this._projectOverrides[projectId] = snap.data().items || {};
-      } else {
-        this._projectOverrides[projectId] = {};
-      }
-      return this._projectOverrides[projectId];
-    } catch (err) {
-      console.warn('Load override error:', err);
-      this._projectOverrides[projectId] = {};
-      return {};
-    }
-  },
-
-  // ===== SAVE PROJECT OVERRIDE =====
-  async saveProjectOverride(projectId, kode, overrideData) {
-    if (!projectId || !window._firebaseReady) return;
-    if (!Auth.can('edit_project')) { showToast('Tidak ada izin', 'error'); return; }
-    const { db, doc, setDoc, serverTimestamp } = window._firebase;
-
-    if (!this._projectOverrides[projectId]) this._projectOverrides[projectId] = {};
-    this._projectOverrides[projectId][kode] = overrideData;
-
-    try {
-      await setDoc(doc(db, 'projects', projectId, 'settings', 'harga_override'), {
-        items: this._projectOverrides[projectId],
-        updatedAt: serverTimestamp(),
-        updatedBy: Auth.currentUser?.uid
-      }, { merge: true });
-
-      ActivityLog.hargaUpdate(kode,
-        `global: ${Utils.formatRp(this.getHarga(kode))}`,
-        `override: ${JSON.stringify(overrideData)}`
-      );
-      showToast('Override harga disimpan', 'success');
-    } catch (err) {
-      showToast('Gagal menyimpan override: ' + err.message, 'error');
-    }
-  },
-
-  // ===== REMOVE PROJECT OVERRIDE =====
-  async removeProjectOverride(projectId, kode) {
-    if (!projectId || !window._firebaseReady) return;
-    if (!this._projectOverrides[projectId]) return;
-    delete this._projectOverrides[projectId][kode];
-
-    const { db, doc, setDoc, serverTimestamp } = window._firebase;
-    try {
-      await setDoc(doc(db, 'projects', projectId, 'settings', 'harga_override'), {
-        items: this._projectOverrides[projectId],
-        updatedAt: serverTimestamp(),
-        updatedBy: Auth.currentUser?.uid
-      }, { merge: true });
-      showToast('Override dihapus, kembali ke harga global', 'info');
-    } catch (err) {
-      showToast('Gagal hapus override', 'error');
-    }
-  },
-
-  // ===== UPDATE GLOBAL PRICE =====
-  async updateGlobal(kode, kategori, newHarga, catatan = '') {
-    if (!Auth.can('update_harga')) { showToast('Tidak ada izin untuk mengubah harga', 'error'); return false; }
-    if (!window._firebaseReady) return false;
-
-    const oldHarga = this._globalHarga?.[kategori]?.[kode]?.harga || 0;
-    const { db, doc, updateDoc, serverTimestamp } = window._firebase;
-
-    try {
-      // Update in memory
-      if (!this._globalHarga[kategori]) this._globalHarga[kategori] = {};
-      if (!this._globalHarga[kategori][kode]) this._globalHarga[kategori][kode] = { kode };
-      this._globalHarga[kategori][kode].harga = Math.round(newHarga);
-      if (catatan) this._globalHarga[kategori][kode].catatan = catatan;
-
-      // Update Firestore
-      await updateDoc(doc(db, 'master_harga', 'global'), {
-        [`${kategori}.${kode}.harga`]: Math.round(newHarga),
-        [`${kategori}.${kode}.catatan`]: catatan || '',
-        updatedAt: serverTimestamp(),
-        updatedBy: Auth.currentUser?.uid
-      });
-
-      ActivityLog.hargaUpdate(kode, oldHarga, Math.round(newHarga));
       return true;
     } catch (err) {
-      showToast('Gagal update harga: ' + err.message, 'error');
+      console.error('loadGlobal error:', err);
       return false;
     }
   },
 
-  // ===== RENDER MASTER HARGA PAGE =====
-  async renderPage(containerId, projectId = null) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    this._activeProjectId = projectId;
-    container.innerHTML = `<div class="loading-text text-center" style="padding:40px">Memuat harga...</div>`;
-
-    await this.loadGlobal();
-    if (projectId) await this.loadProjectOverrides(projectId);
-
-    const isProject = !!projectId;
-    const canEdit = Auth.can('update_harga') || (isProject && Auth.can('edit_project'));
-
-    container.innerHTML = `
-      <div class="card-header">
-        <div>
-          <div class="card-title">${isProject ? 'Harga Lokal Proyek' : 'Master Harga Global'}</div>
-          <div class="card-subtitle">${isProject ? 'Override harga untuk proyek ini. Kosong = pakai harga global.' : 'Harga dasar berlaku untuk semua proyek.'}</div>
-        </div>
-        ${canEdit && !isProject ? `<button class="btn btn-primary btn-sm" onclick="MasterHarga.openAddModal()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Tambah Bahan/Alat
-        </button>` : ''}
-      </div>
-
-      <div class="harga-tabs" id="harga-tabs">
-        <div class="harga-tab active" onclick="MasterHarga.switchTab('upah',this)">👷 Upah Tenaga</div>
-        <div class="harga-tab" onclick="MasterHarga.switchTab('bahan',this)">🧱 Bahan & Material</div>
-        <div class="harga-tab" onclick="MasterHarga.switchTab('alat',this)">⚙️ Sewa Alat</div>
-      </div>
-
-      <div class="search-bar">
-        <div class="search-input-wrap">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <input type="text" class="search-inp" id="harga-search" placeholder="Cari nama atau kode bahan..." oninput="MasterHarga.filterTable(this.value)">
-        </div>
-      </div>
-
-      <div id="harga-table-wrap" class="table-wrap">
-        ${this._renderTable('upah', projectId, canEdit)}
-      </div>
-    `;
-    this._activeTab = 'upah';
+  _toArray(data) {
+    if (!data) return [];
+    if (Array.isArray(data)) return data;
+    return Object.entries(data).map(([kode, v]) => ({
+      kode, 
+      nama: v.nama || kode, 
+      satuan: v.satuan || '',
+      harga: Math.round(v.harga || 0),
+      catatan: v.catatan || '',
+      harga_per_sak: v.harga_per_sak || null,
+      kg_per_sak: v.kg_per_sak || null
+    }));
   },
 
-  switchTab(tab, el) {
-    this._activeTab = tab;
-    document.querySelectorAll('.harga-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    const wrap = document.getElementById('harga-table-wrap');
-    if (wrap) wrap.innerHTML = this._renderTable(tab, this._activeProjectId, Auth.can('update_harga') || Auth.can('edit_project'));
-    const search = document.getElementById('harga-search');
-    if (search) search.value = '';
-  },
+  async seedFromDefault() {
+    const data = await this.loadDefault();
+    if (!data) return;
+    const def = data.master_harga_default;
+    this._globalUpah  = def.upah  || [];
+    this._globalBahan = def.bahan || [];
+    this._globalAlat  = def.alat  || [];
 
-  filterTable(q) {
-    const rows = document.querySelectorAll('#harga-table-body tr');
-    const ql = q.toLowerCase();
-    rows.forEach(row => {
-      const text = row.textContent.toLowerCase();
-      row.style.display = text.includes(ql) ? '' : 'none';
+    const { db, doc, setDoc, serverTimestamp } = window._firebase;
+    await setDoc(doc(db, 'master_harga', 'global'), {
+      upah: this._globalUpah,
+      bahan: this._globalBahan,
+      alat: this._globalAlat,
+      updatedAt: serverTimestamp(),
+      seeded: true
     });
+    this._loaded = true;
   },
 
-  _renderTable(kategori, projectId, canEdit) {
-    const data = this._globalHarga?.[kategori] || {};
-    const items = Object.values(data).sort((a, b) => (a.kode || '').localeCompare(b.kode || ''));
-    const overrides = (projectId && this._projectOverrides[projectId]) || {};
+  _getArr(k) {
+    if (k === 'upah')  return this._globalUpah;
+    if (k === 'bahan') return this._globalBahan;
+    if (k === 'alat')  return this._globalAlat;
+    return [];
+  },
 
-    const rows = items.map(item => {
-      const override = projectId ? overrides[item.kode] : null;
-      const effectiveHarga = this.getHarga(item.kode, projectId);
-      const hasOverride = !!override;
+  // Ambil harga efektif
+  getHarga(kode, projectId = null) {
+    // Project override
+    if (projectId && this._projectOverrides[projectId]) {
+      const ov = this._projectOverrides[projectId][kode];
+      if (ov) {
+        if (ov.mode === 'allin') return Math.round(ov.harga_allin || 0);
+        if (ov.mode === 'transport') return Math.round((ov.harga_base || 0) + (ov.harga_transport || 0));
+      }
+    }
+
+    // Global
+    for (const arr of [this._globalUpah, this._globalBahan, this._globalAlat]) {
+      const it = arr.find(i => i.kode === kode);
+      if (it) return Math.round(it.harga || 0);
+    }
+    return 0;
+  },
+
+  getItem(kode) {
+    for (const [k, arr] of [['upah', this._globalUpah], ['bahan', this._globalBahan], ['alat', this._globalAlat]]) {
+      const it = arr.find(i => i.kode === kode);
+      if (it) return { ...it, kategori: k };
+    }
+    return null;
+  },
+
+  // Save ke Firestore
+  async _save(kategori) {
+    if (!window._firebaseReady) return false;
+    const { db, doc, updateDoc, serverTimestamp } = window._firebase;
+    try {
+      await updateDoc(doc(db, 'master_harga', 'global'), {
+        [kategori]: this._getArr(kategori),
+        updatedAt: serverTimestamp(),
+        updatedBy: Auth.currentUser?.uid
+      });
+      return true;
+    } catch (err) {
+      showToast('Gagal simpan: ' + err.message, 'error');
+      return false;
+    }
+  },
+
+  // Update harga global
+  async updateGlobal(kode, kategori, newHarga, catatan = '') {
+    if (!Auth.can('update_harga')) { showToast('Tidak ada izin', 'error'); return false; }
+
+    const arr = this._getArr(kategori);
+    const idx = arr.findIndex(i => i.kode === kode);
+    if (idx < 0) return false;
+
+    const oldH = arr[idx].harga;
+    arr[idx].harga = Math.round(newHarga);
+    if (catatan) arr[idx].catatan = catatan;
+
+    // Khusus semen: simpan juga harga per sak
+    if (kode === 'M01a_kg') {
+      arr[idx].harga_per_sak = Math.round(newHarga * 40);
+      arr[idx].kg_per_sak = 40;
+    }
+
+    const ok = await this._save(kategori);
+    if (!ok) {
+      arr[idx].harga = oldH;
+      return false;
+    }
+    return true;
+  },
+
+  // Render tabel harga (sudah diperbaiki tampilan semen)
+  _renderTable(kat, projectId, canEdit) {
+    const items = this._getArr(kat);
+    const ovs = (projectId && this._projectOverrides[projectId]) || {};
+
+    const rows = items.map(it => {
+      const ov = projectId ? ovs[it.kode] : null;
+      const eff = this.getHarga(it.kode, projectId);
+      const isSemen = it.kode === 'M01a_kg';
+
+      let satuanDisplay = it.satuan;
+      if (isSemen) satuanDisplay = 'sak (40 kg)';
 
       return `<tr>
-        <td><code style="font-size:0.72rem;font-family:var(--font-mono);color:var(--text-muted)">${Utils.escHtml(item.kode)}</code></td>
-        <td style="font-weight:500">${Utils.escHtml(item.nama)}</td>
-        <td>${Utils.escHtml(item.satuan)}</td>
-        <td class="td-num">
-          ${hasOverride
-            ? `<span style="color:var(--warning);font-weight:600">${Utils.formatRp(effectiveHarga)}</span>
-               <br><small style="color:var(--text-muted);text-decoration:line-through;font-size:0.72rem">${Utils.formatRp(this.getHarga(item.kode))}</small>`
-            : `<span style="font-weight:600">${Utils.formatRp(effectiveHarga)}</span>`
-          }
-        </td>
-        <td style="font-size:0.78rem;color:var(--text-muted);max-width:180px">${Utils.escHtml(item.catatan || '')}</td>
+        <td><code>${Utils.escHtml(it.kode)}</code></td>
+        <td>${Utils.escHtml(it.nama)}${it.catatan ? `<br><small style="color:var(--text-muted)">${Utils.escHtml(it.catatan)}</small>` : ''}</td>
+        <td>${Utils.escHtml(satuanDisplay)}</td>
+        <td class="td-num">${Utils.formatRp(eff)}</td>
         <td class="td-actions">
-          ${hasOverride ? `<span class="badge badge-warning" style="margin-right:4px">Override</span>` : ''}
           ${canEdit ? `
-            <button class="btn btn-ghost btn-icon btn-sm" onclick="MasterHarga.openEditModal('${Utils.escHtml(item.kode)}','${kategori}','${projectId || ''}')" title="Edit harga">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/></svg>
-            </button>
-            ${hasOverride ? `<button class="btn btn-ghost btn-icon btn-sm" onclick="MasterHarga.removeProjectOverride('${projectId}','${Utils.escHtml(item.kode)}')" title="Hapus override">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="2"/></svg>
-            </button>` : ''}
+            <button class="btn btn-ghost btn-icon btn-sm" onclick="MasterHarga.openEditModal('${Utils.escHtml(it.kode)}','${kat}','${projectId||''}')">✏️</button>
           ` : ''}
         </td>
       </tr>`;
     }).join('');
 
     return `<table class="table">
-      <thead>
-        <tr>
-          <th>Kode</th>
-          <th>Nama</th>
-          <th>Satuan</th>
-          <th class="text-right">Harga (Rp)</th>
-          <th>Catatan</th>
-          <th class="text-center">Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="harga-table-body">${rows || '<tr><td colspan="6" class="text-center text-muted" style="padding:24px">Belum ada data</td></tr>'}</tbody>
+      <thead><tr><th>Kode</th><th>Nama</th><th>Satuan</th><th class="text-right">Harga (Rp)</th><th>Aksi</th></tr></thead>
+      <tbody>${rows}</tbody>
     </table>`;
   },
 
-  // ===== EDIT MODAL =====
-  openEditModal(kode, kategori, projectId) {
-    const item = this.getItem(kode);
-    if (!item) return;
-    const isProject = !!projectId && projectId !== '';
-    const override = isProject ? this._projectOverrides[projectId]?.[kode] : null;
-    const currentHarga = Math.round(item.harga || 0);
+  // Edit modal khusus semen (dual satuan)
+  openEditModal(kode, kat, projectId) {
+    const it = this.getItem(kode);
+    if (!it) return;
 
-    const modeA = override?.mode === 'allin' ? 'checked' : (!override ? 'checked' : '');
-    const modeB = override?.mode === 'transport' ? 'checked' : '';
-    const hargaAllin = override?.harga_allin || currentHarga;
-    const hargaBase = override?.harga_base || currentHarga;
-    const hargaTransport = override?.harga_transport || 0;
-    const catatan = override?.catatan || item.catatan || '';
+    const isSemen = kode === 'M01a_kg';
+    const hargaKg = it.harga || 0;
+    const hargaSak = isSemen ? Math.round(hargaKg * 40) : 0;
 
     openModal({
-      title: `Edit Harga: ${item.nama}`,
+      title: `Edit Harga: ${Utils.escHtml(it.nama)}`,
       size: 'modal-lg',
       body: `
-        <div style="margin-bottom:16px">
-          <div class="flex gap-3" style="flex-wrap:wrap;margin-bottom:12px">
-            <span class="badge badge-primary">${kode}</span>
-            <span class="badge badge-muted">${item.satuan}</span>
-            <span class="badge badge-muted">${Utils.roleLabel(kategori === 'upah' ? 'Tenaga Kerja' : kategori === 'bahan' ? 'Bahan' : 'Alat')}</span>
-          </div>
-          <div style="background:var(--bg-hover);border-radius:var(--radius-sm);padding:10px 14px;font-size:0.85rem;color:var(--text-secondary)">
-            Harga global saat ini: <strong style="color:var(--text-primary)">${Utils.formatRp(currentHarga)} / ${item.satuan}</strong>
-            ${isProject ? '<br><span style="color:var(--text-muted);font-size:0.78rem">Harga ini akan jadi override untuk proyek ini saja.</span>' : ''}
-          </div>
+        <div style="background:var(--bg-hover);padding:12px;border-radius:8px;margin-bottom:16px">
+          <strong>${Utils.escHtml(it.nama)}</strong> — Kode: <code>${kode}</code>
         </div>
 
-        ${isProject ? `
-        <div class="form-group" style="margin-bottom:16px">
-          <label class="lbl">Mode Penetapan Harga</label>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);transition:border-color 0.2s" id="mode-a-wrap">
-              <input type="radio" name="harga-mode" value="allin" ${modeA} onchange="MasterHarga._toggleModeFields('allin')" style="margin-top:2px">
-              <div>
-                <div style="font-weight:600;font-size:0.875rem">Opsi A — Harga Langsung (All-in)</div>
-                <div style="font-size:0.78rem;color:var(--text-muted)">Masukkan harga sudah termasuk ongkos kirim, PPN, PPh22, dll.</div>
+        ${isSemen ? `
+        <div style="background:#e3f2fd;padding:12px;border-radius:8px;margin-bottom:16px">
+          <strong>🧱 Semen — Dual Satuan (otomatis convert)</strong><br><br>
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label>Harga per kg (Rp)</label>
+              <div class="inp-group">
+                <span class="inp-group-addon">Rp</span>
+                <input type="number" class="inp" id="semen-harga-kg" value="${hargaKg}" oninput="MasterHarga._semenConvert('kg')">
               </div>
-            </label>
-            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);transition:border-color 0.2s" id="mode-b-wrap">
-              <input type="radio" name="harga-mode" value="transport" ${modeB} onchange="MasterHarga._toggleModeFields('transport')" style="margin-top:2px">
-              <div>
-                <div style="font-weight:600;font-size:0.875rem">Opsi B — Harga Dasar + Biaya Angkut Terpisah</div>
-                <div style="font-size:0.78rem;color:var(--text-muted)">Transparan untuk audit: harga bahan + biaya angkut dicatat terpisah.</div>
+            </div>
+            <div class="form-group">
+              <label>Harga per sak (40 kg)</label>
+              <div class="inp-group">
+                <span class="inp-group-addon">Rp</span>
+                <input type="number" class="inp" id="semen-harga-sak" value="${hargaSak}" oninput="MasterHarga._semenConvert('sak')">
               </div>
-            </label>
+            </div>
           </div>
+          <small style="color:#555">Isi salah satu, yang lain otomatis terupdate. AHSP pakai satuan kg.</small>
         </div>` : ''}
 
-        <div id="field-allin" style="display:${modeB ? 'none' : 'block'}">
-          <div class="form-group">
-            <label class="lbl lbl-req">Harga per ${item.satuan} (Rp)</label>
-            <div class="inp-group">
-              <span class="inp-group-addon">Rp</span>
-              <input type="number" class="inp" id="harga-input-allin" value="${hargaAllin}" min="0" step="100" placeholder="Masukkan harga">
-              <span class="inp-group-addon">/ ${Utils.escHtml(item.satuan)}</span>
-            </div>
-            <div class="field-hint">Sudah termasuk PPN + PPh22 jika ada</div>
+        <div class="form-group">
+          <label class="lbl lbl-req">Harga per ${isSemen ? 'kg' : it.satuan} (Rp)</label>
+          <div class="inp-group">
+            <span class="inp-group-addon">Rp</span>
+            <input type="number" class="inp" id="harga-allin" value="${hargaKg}" ${isSemen ? 'readonly' : ''}>
           </div>
         </div>
 
-        <div id="field-transport" style="display:${modeB ? 'block' : 'none'}">
-          <div class="form-row form-row-2" style="margin-bottom:12px">
-            <div class="form-group">
-              <label class="lbl lbl-req">Harga Dasar / ${item.satuan} (Rp)</label>
-              <div class="inp-group">
-                <span class="inp-group-addon">Rp</span>
-                <input type="number" class="inp" id="harga-input-base" value="${hargaBase}" min="0" step="100" oninput="MasterHarga._calcTransportTotal()">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="lbl lbl-req">Biaya Angkut / ${item.satuan} (Rp)</label>
-              <div class="inp-group">
-                <span class="inp-group-addon">Rp</span>
-                <input type="number" class="inp" id="harga-input-transport" value="${hargaTransport}" min="0" step="100" oninput="MasterHarga._calcTransportTotal()">
-              </div>
-              <div class="field-hint">Misal: jarak 3-5 km, kendaraan pick-up</div>
-            </div>
-          </div>
-          <div style="background:var(--primary-surface);border:1px solid var(--primary-border);border-radius:var(--radius-sm);padding:10px 14px;font-size:0.875rem">
-            Total harga pakai: <strong id="transport-total" style="color:var(--primary)">${Utils.formatRp(hargaBase + hargaTransport)}</strong>
-          </div>
-        </div>
-
-        <div class="form-group" style="margin-top:14px">
+        <div class="form-group">
           <label class="lbl">Catatan (opsional)</label>
-          <input type="text" class="inp" id="harga-catatan" value="${Utils.escHtml(catatan)}" placeholder="Misal: harga sudah termasuk PPN 11% + PPh22 1.5%">
+          <input type="text" class="inp" id="harga-catatan" value="${Utils.escHtml(it.catatan || '')}">
         </div>
       `,
       footer: `
         <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
-        <button class="btn btn-primary" onclick="MasterHarga._saveEdit('${kode}','${kategori}','${projectId || ''}')">Simpan</button>
+        <button class="btn btn-primary" onclick="MasterHarga._saveEdit('${Utils.escHtml(kode)}','${kat}','${projectId||''}')">Simpan</button>
       `
     });
+
+    if (isSemen) setTimeout(() => MasterHarga._semenSync(), 100);
   },
 
-  _toggleModeFields(mode) {
-    document.getElementById('field-allin').style.display = mode === 'allin' ? 'block' : 'none';
-    document.getElementById('field-transport').style.display = mode === 'transport' ? 'block' : 'none';
+  _semenConvert(source) {
+    const KG_PER_SAK = 40;
+    if (source === 'kg') {
+      const kg = parseFloat(document.getElementById('semen-harga-kg')?.value) || 0;
+      const sakEl = document.getElementById('semen-harga-sak');
+      if (sakEl) sakEl.value = Math.round(kg * KG_PER_SAK);
+      const allinEl = document.getElementById('harga-allin');
+      if (allinEl) allinEl.value = kg;
+    } else {
+      const sak = parseFloat(document.getElementById('semen-harga-sak')?.value) || 0;
+      const kg = sak / KG_PER_SAK;
+      const kgEl = document.getElementById('semen-harga-kg');
+      if (kgEl) kgEl.value = kg.toFixed(2);
+      const allinEl = document.getElementById('harga-allin');
+      if (allinEl) allinEl.value = kg.toFixed(2);
+    }
   },
 
-  _calcTransportTotal() {
-    const base = parseFloat(document.getElementById('harga-input-base')?.value) || 0;
-    const transport = parseFloat(document.getElementById('harga-input-transport')?.value) || 0;
-    const total = document.getElementById('transport-total');
-    if (total) total.textContent = Utils.formatRp(base + transport);
+  _semenSync() {
+    MasterHarga._semenConvert('kg');
   },
 
-  async _saveEdit(kode, kategori, projectId) {
-    const isProject = !!projectId && projectId !== '';
+  async _saveEdit(kode, kat, projectId) {
+    const isSemen = kode === 'M01a_kg';
+    let finalHarga = parseFloat(document.getElementById('harga-allin')?.value) || 0;
+
+    if (isSemen) {
+      finalHarga = parseFloat(document.getElementById('semen-harga-kg')?.value) || 0;
+    }
+
     const catatan = document.getElementById('harga-catatan')?.value || '';
 
-    if (isProject) {
-      const mode = document.querySelector('input[name="harga-mode"]:checked')?.value || 'allin';
-      let overrideData = { mode, catatan };
-
-      if (mode === 'allin') {
-        const h = parseFloat(document.getElementById('harga-input-allin')?.value) || 0;
-        if (h <= 0) { showToast('Harga harus lebih dari 0', 'error'); return; }
-        overrideData.harga_allin = Math.round(h);
-      } else {
-        const base = parseFloat(document.getElementById('harga-input-base')?.value) || 0;
-        const transport = parseFloat(document.getElementById('harga-input-transport')?.value) || 0;
-        if (base <= 0) { showToast('Harga dasar harus lebih dari 0', 'error'); return; }
-        overrideData.harga_base = Math.round(base);
-        overrideData.harga_transport = Math.round(transport);
-      }
-      await this.saveProjectOverride(projectId, kode, overrideData);
-    } else {
-      const h = parseFloat(document.getElementById('harga-input-allin')?.value) || 0;
-      if (h <= 0) { showToast('Harga harus lebih dari 0', 'error'); return; }
-      const ok = await this.updateGlobal(kode, kategori, Math.round(h), catatan);
-      if (!ok) return;
-      showToast('Harga global diperbarui', 'success');
-    }
-
-    closeModal();
-    // Re-render table
-    const wrap = document.getElementById('harga-table-wrap');
-    if (wrap) wrap.innerHTML = this._renderTable(this._activeTab, this._activeProjectId, true);
-  },
-
-  openAddModal() {
-    openModal({
-      title: 'Tambah Item Harga',
-      body: `
-        <div class="form-row form-row-2">
-          <div class="form-group">
-            <label class="lbl lbl-req">Kode</label>
-            <input type="text" class="inp" id="new-kode" placeholder="M.XX.00 / E.XX" style="text-transform:uppercase">
-          </div>
-          <div class="form-group">
-            <label class="lbl lbl-req">Kategori</label>
-            <select class="sel" id="new-kategori">
-              <option value="bahan">Bahan & Material</option>
-              <option value="alat">Sewa Alat</option>
-              <option value="upah">Upah Tenaga</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="lbl lbl-req">Nama</label>
-          <input type="text" class="inp" id="new-nama" placeholder="Nama bahan/alat/tenaga">
-        </div>
-        <div class="form-row form-row-2">
-          <div class="form-group">
-            <label class="lbl lbl-req">Satuan</label>
-            <input type="text" class="inp" id="new-satuan" placeholder="m³, kg, OH, Jam, dll">
-          </div>
-          <div class="form-group">
-            <label class="lbl lbl-req">Harga (Rp)</label>
-            <div class="inp-group">
-              <span class="inp-group-addon">Rp</span>
-              <input type="number" class="inp" id="new-harga" min="0" step="100" placeholder="0">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="lbl">Catatan</label>
-          <input type="text" class="inp" id="new-catatan" placeholder="Keterangan tambahan...">
-        </div>
-      `,
-      footer: `
-        <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
-        <button class="btn btn-primary" onclick="MasterHarga._saveNew()">Tambah</button>
-      `
-    });
-  },
-
-  async _saveNew() {
-    const kode = (document.getElementById('new-kode')?.value || '').trim().toUpperCase();
-    const kategori = document.getElementById('new-kategori')?.value;
-    const nama = (document.getElementById('new-nama')?.value || '').trim();
-    const satuan = (document.getElementById('new-satuan')?.value || '').trim();
-    const harga = parseFloat(document.getElementById('new-harga')?.value) || 0;
-    const catatan = (document.getElementById('new-catatan')?.value || '').trim();
-
-    if (!kode || !nama || !satuan) { showToast('Kode, nama, dan satuan wajib diisi', 'error'); return; }
-    if (this._globalHarga?.[kategori]?.[kode]) { showToast('Kode sudah ada', 'error'); return; }
-
-    const { db, doc, updateDoc, serverTimestamp } = window._firebase;
-    const newItem = { kode, nama, satuan, harga: Math.round(harga), catatan };
-
-    try {
-      if (!this._globalHarga[kategori]) this._globalHarga[kategori] = {};
-      this._globalHarga[kategori][kode] = newItem;
-
-      await updateDoc(doc(db, 'master_harga', 'global'), {
-        [`${kategori}.${kode}`]: newItem,
-        updatedAt: serverTimestamp()
-      });
-
-      ActivityLog.create('master_harga', kode, nama, `Tambah ${kategori} baru`);
-      showToast('Item berhasil ditambahkan', 'success');
+    const ok = await this.updateGlobal(kode, kat, finalHarga, catatan);
+    if (ok) {
+      showToast('Harga berhasil diperbarui', 'success');
       closeModal();
+      // Refresh tabel
       const wrap = document.getElementById('harga-table-wrap');
-      if (wrap) wrap.innerHTML = this._renderTable(kategori, null, true);
-    } catch (err) {
-      showToast('Gagal menambah: ' + err.message, 'error');
+      if (wrap) wrap.innerHTML = this._renderTable(this._activeTab, this._activeProjectId, true);
     }
+  },
+
+  // Load project-specific overrides
+  async loadProjectOverrides(projectId) {
+    if (!projectId || !window._firebaseReady) return;
+    if (this._projectOverrides[projectId]) return; // already loaded
+
+    const { db, doc, getDoc } = window._firebase;
+    try {
+      const snap = await getDoc(doc(db, 'projects', projectId, 'harga_override', 'data'));
+      if (snap.exists()) {
+        this._projectOverrides[projectId] = snap.data() || {};
+      } else {
+        this._projectOverrides[projectId] = {};
+      }
+    } catch (err) {
+      console.error('loadProjectOverrides error:', err);
+      this._projectOverrides[projectId] = {};
+    }
+  },
+
+  // Render full Master Harga page
+  async renderPage(containerId, projectId) {
+    this._activeProjectId = projectId || null;
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = `<div class="loading-text text-center" style="padding:40px">Memuat master harga...</div>`;
+
+    await this.loadGlobal();
+    if (projectId) await this.loadProjectOverrides(projectId);
+
+    const canEdit = Auth.can('update_harga');
+    const tabs = [
+      { id: 'bahan', label: '🧱 Bahan & Material' },
+      { id: 'upah',  label: '👷 Upah Tenaga Kerja' },
+      { id: 'alat',  label: '🔧 Sewa Alat' }
+    ];
+
+    container.innerHTML = `
+      <div class="card-header" style="margin-bottom:0">
+        <div>
+          <div class="card-title">Master Harga Satuan Dasar (HSD)</div>
+          <div class="card-subtitle">${projectId ? 'Harga per-proyek (override dari global)' : 'Harga global berlaku untuk semua proyek'}</div>
+        </div>
+      </div>
+
+      <div class="tab-bar" style="margin-bottom:16px;border-bottom:1.5px solid var(--border);display:flex;gap:4px;padding-top:12px">
+        ${tabs.map(t => `
+          <button class="btn ${this._activeTab === t.id ? 'btn-primary' : 'btn-ghost'} btn-sm"
+            id="tab-btn-${t.id}"
+            onclick="MasterHarga._switchTab('${t.id}','${containerId}','${projectId||''}')">
+            ${t.label}
+          </button>`).join('')}
+      </div>
+
+      <div id="harga-table-wrap">
+        ${this._renderTable(this._activeTab, projectId, canEdit)}
+      </div>
+    `;
+  },
+
+  _switchTab(kat, containerId, projectId) {
+    this._activeTab = kat;
+    // Update tab button styles
+    ['bahan', 'upah', 'alat'].forEach(t => {
+      const btn = document.getElementById('tab-btn-' + t);
+      if (!btn) return;
+      btn.className = `btn ${t === kat ? 'btn-primary' : 'btn-ghost'} btn-sm`;
+    });
+    const wrap = document.getElementById('harga-table-wrap');
+    if (wrap) wrap.innerHTML = this._renderTable(kat, projectId || null, Auth.can('update_harga'));
   }
 };
 
